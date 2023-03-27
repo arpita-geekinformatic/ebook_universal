@@ -1,0 +1,1205 @@
+@import '../../../../assets/scss/style.scss';
+@import '../../../../assets/scss/varibales.scss';
+
+// stemper section start
+.contentPart {
+    .background {
+        background-color: white;
+        padding-top: 70px;
+        padding-bottom: 70px;
+
+        .stemperImg {
+            position: relative;
+
+            button.openBookTop {
+                background: #3080FF;
+                width: 60px;
+                height: 60px;
+                border-radius: 100px;
+                border: 1px solid #3080FF;
+                position: absolute;
+                top: -30px;
+                // right: 35px;
+                right: 0px;
+                cursor: default;
+
+                img {
+                    width: auto;
+                }
+            }
+
+            button.openBookTop.yellow {
+                background: #FF9D0C;
+                width: 60px;
+                height: 60px;
+                border-radius: 100px;
+                border: 1px solid #FF9D0C;
+                position: absolute;
+                top: -30px;
+                // right: 35px;
+                right: 0px;
+                cursor: default;
+
+                img {
+                    width: auto;
+                }
+            }
+
+            img {
+                width: 100%;
+            }
+
+            .mainBookImgDetail {
+                height: 520px;
+            }
+        }
+
+        .headerStemper {
+            h2 {
+                font-family: 'Inter';
+                font-style: normal;
+                font-weight: 700;
+                font-size: 52px;
+                line-height: 36px;
+                color: #333333;
+            }
+
+
+            .timeIng {
+                margin-top: 15px;
+                display: flex;
+                align-items: center;
+
+                .rateing {
+                    display: flex;
+                    align-items: center;
+                    align-content: center;
+                    padding-left: 8px;
+                    border-left: 2px solid #333;
+                    margin-left: 8px;
+
+                    .starImg {
+                        margin-left: 5px;
+
+                        img {
+                            vertical-align: sub;
+                        }
+                    }
+
+                    .rateText {
+                        padding: 0 6px;
+                    }
+                }
+            }
+
+            .authMain {
+                // display: flex;
+                margin: 5px 0;
+            }
+
+            .ParagraphPart {
+                margin-top: 20px;
+                width: 100%;
+
+                p {
+                    font-family: 'Inter';
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 16px;
+                    line-height: 28px;
+                    letter-spacing: 0.03em;
+                    color: #000000;
+                    margin-bottom: 10px;
+                }
+            }
+
+            .readButton {
+                cursor: default;
+                font-family: 'Inter';
+                font-style: normal;
+                font-weight: 500;
+                font-size: 16px;
+                line-height: 16px;
+                color: #A4353B;
+                text-decoration: none;
+                margin-top: 20px;
+
+                span {
+                    cursor: pointer;
+                }
+            }
+
+            .limitTextHeight {
+                height: 22px;
+                overflow: hidden;
+            }
+
+            .buttonRow {
+                display: flex;
+                margin: 20px 0;
+
+                button {
+                    margin-right: 20px;
+
+                    &:last-child {
+                        margin-right: 0px;
+                    }
+                }
+
+                button.logodetail {
+                    background-color: white;
+                    border: 0px;
+                    padding: 0px;
+                }
+
+                button.buttonlogoDetails {
+                    background: #A4353B;
+                    height: 56px;
+                    width: 227px;
+                    border-radius: 100px;
+                    border: 1px;
+                    border-color: #A4353B;
+                    font-weight: 600;
+                    font-size: 15px;
+                    line-height: 16px;
+                    color: #FFFFFF;
+
+                    img {
+                        margin-right: 10px;
+                    }
+                }
+
+                button.buttonlogoDetailsSecond {
+                    background: white;
+                    height: 56px;
+                    width: auto;
+                    border-radius: 100px;
+                    border: 1px solid #A4353B;
+
+                    img {
+                        margin-left: 10px;
+                        margin-right: 10px;
+                    }
+                }
+            }
+
+            .genre {
+                font-weight: 500;
+                font-size: 22px;
+                line-height: 20px;
+                color: #000000;
+                margin-bottom: 15px;
+            }
+
+            .GroupButtoms {
+                .alteleButton {
+                    border-radius: 100px;
+                    background: #18311E;
+                    border: 1px solid #516856;
+                    padding: 12px 32px;
+                    font-weight: 400;
+                    font-size: 14px;
+                    line-height: 14px;
+                    text-align: center;
+                    color: #C4E5C6;
+                }
+
+                .LiteraturaButton {
+                    background: #192C32;
+                    border: 1px solid #3B5C63;
+                    border-radius: 100px;
+                    padding: 12px 32px;
+                    font-weight: 400;
+                    font-size: 14px;
+                    line-height: 14px;
+                    color: #7ED7E7;
+                    text-align: center;
+                }
+
+                .ThrillerButton {
+                    background: #311718;
+                    border: 1px solid #65444B;
+                    border-radius: 100px;
+                    color: #E6ADBC;
+                    font-weight: 400;
+                    font-size: 14px;
+                    line-height: 14px;
+                    text-align: center;
+                    padding: 12px 32px;
+
+                }
+
+                button {
+                    margin-right: 24px;
+
+                    &:last-child {
+                        margin-right: 0px;
+                    }
+                }
+            }
+        }
+
+        .addRating {
+            margin-top: 20px;
+        }
+    }
+
+    .background.bookCollection {
+        padding-top: 0px;
+
+        .titleText {
+            h2 {
+                font-weight: 700;
+                font-size: 46px;
+                line-height: 58px;
+                color: #000000;
+                margin-bottom: 20px;
+            }
+        }
+
+        .bookCollectionImg {
+            img {
+                width: 100%;
+            }
+        }
+    }
+
+    .productline {
+        margin-bottom: 30px;
+
+        .col {
+            flex: 0 0 auto;
+            width: 25%;
+
+            .singleProduct {
+                box-shadow: 2px 2px 10px rgb(0 0 0 / 10%);
+                border-radius: 0px 0px 3px 3px;
+                height: 100%;
+                position: relative;
+                // width: $width100Per;
+                width: 230px;
+
+                button.bookBtn {
+                    position: absolute;
+                    background: #3080FF;
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 100px;
+                    border: 1px solid #3080FF;
+                    right: 0;
+                    top: -20px;
+                    z-index: 3;
+                }
+
+                button.bookBtn.yellow {
+                    background: #FF9D0C;
+                    border: 1px solid #FF9D0C;
+                }
+
+                .singleProductInner {
+                    .productImage {
+                        img {
+                            width: 230px;
+                            height: 346px;
+                        }
+                    }
+
+                    cursor: pointer;
+                }
+
+                .productTxt {
+                    padding: 12px 20px 20px;
+
+                    h2 {
+                        font-weight: 500;
+                        font-size: 18px;
+                        line-height: 15px;
+                        letter-spacing: -0.03em;
+                        color: #000000;
+                    }
+
+                    p {
+                        font-weight: 400;
+                        font-size: 18px;
+                        line-height: 15px;
+                        color: #000000;
+                        opacity: 0.75;
+                    }
+
+                    ul.ratingWrap {
+                        padding: 0;
+                        list-style: none;
+                        display: flex;
+                        margin-bottom: 0;
+
+                        li {
+                            margin-right: 5px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .shareWrap {
+        position: relative;
+
+        button.logodetail.shareBtn {
+            margin-right: 20px !important;
+        }
+
+        .share-buttons {
+            position: absolute;
+            left: 0;
+            background: #fff;
+            transition: 0.5s all ease-in-out;
+
+            ::ng-deep .sb-circles-dark.sb-group {
+                display: flex !important;
+                //width: auto;
+                justify-content: center;
+                padding: 3px 0;
+                box-shadow: 0 0 10px rgb(0 0 0 / 12%);
+                border-radius: 5px;
+
+                ::ng-deep button {
+                    min-width: 25px;
+                    min-height: 25px;
+
+                    ::ng-deep .sb-icon {
+                        width: 30px !important;
+                        height: 30px !important;
+                        min-width: 30px !important;
+                        min-height: 30px !important;
+                        margin: 0 0px !important;
+
+                        ::ng-deep fa-icon.ng-fa-icon {
+                            font-size: 12px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Special Offer Section CSS Start 
+    .offerSection.homeOffer {
+        margin: 0 0 30px 0;
+        position: relative;
+
+        &::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 420px;
+            background: #A4353B;
+            top: 0;
+            bottom: 0;
+            z-index: -1;
+        }
+
+        .offerText {
+            margin-bottom: 15%;
+
+            h4 {
+                font-weight: 600;
+                font-size: 24px;
+                line-height: 16px;
+                letter-spacing: -0.02em;
+                text-transform: uppercase;
+                color: #FFFFFF;
+            }
+
+            h2 {
+                font-weight: 700;
+                font-size: 46px;
+                line-height: 46px;
+                color: #FFFFFF;
+                margin: 20px 0;
+            }
+
+            p {
+                font-weight: 400;
+                font-size: 18px;
+                line-height: 32px;
+                letter-spacing: -0.02em;
+                color: #FFFEFE;
+            }
+
+            button.offerBtn {
+                font-size: 15px;
+                line-height: 16px;
+                text-align: center;
+                letter-spacing: -0.02em;
+                text-transform: uppercase;
+                color: #FFFFFF;
+                border-radius: 100px;
+                border: 1px solid #fff;
+                width: 220px;
+                height: 57px;
+                background: transparent;
+                font-weight: 700;
+                transition: 0.5s all ease-in-out;
+
+                &:hover {
+                    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+                }
+            }
+
+            .buttonRow {
+                button.buttonlogoDetails {
+                    border: 1px solid #fff;
+                    background: #fff;
+                    padding: 10px 25px;
+                    font-weight: 600;
+                    font-size: 15px;
+                    line-height: 16px;
+                    color: #A4353B;
+                    height: 55px;
+                    margin-right: 15px;
+                    width: 230px;
+                    border-radius: 100px;
+
+                    img {
+                        margin-right: 10px;
+                    }
+                }
+
+                button.buttonlogoDetailsSecond {
+                    border: 2px solid #fff;
+                    background: transparent;
+                    color: #fff;
+                    padding: 10px 25px;
+                    border-radius: 100px;
+                    height: 55px;
+
+                    img {
+                        margin: 0 5px;
+                    }
+                }
+            }
+
+        }
+
+        .mobileImage {
+            position: relative;
+            top: -75px;
+
+            img {
+                width: 100%;
+            }
+        }
+    }
+    // Special Offer Section CSS End
+
+}
+
+.headerStemper button#sortMenu {
+    // width: 150px;
+    text-align: center;
+    background: #A4353B;
+    height: 56px;
+    width: 227px;
+    border-radius: 100px;
+    border: 1px;
+    border-color: #A4353B;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 16px;
+    color: #FFFFFF;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+    color: var(--bs-dropdown-link-hover-color);
+    background-color: #A4353B;
+}
+
+.limitTextHeight p {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #000;
+    // max-width: 400px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.ratingTitle {
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.startModal {
+    .modal-header {
+        padding-bottom: 0;
+    }
+
+    .modal-body {
+        padding-top: 0;
+    }
+}
+
+.starRate {
+    margin: 10px 0 20px;
+
+    ::ng-deep span {
+        font-size: 50px;
+        color: #e69b00;
+        line-height: 40px;
+    }
+}
+
+.addRating {
+    button.btn.btn-lg.btn-outline-primary {
+        background-color: #A4353B;
+        color: #fff;
+        border-color: #A4353B;
+        border-radius: 100px;
+        font-size: 16px;
+        letter-spacing: 0.5px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+
+.ratingSaveBtn {
+    button.btn.btn-outline-dark {
+        background: #A4353B;
+        border-color: #A4353B;
+        color: #fff;
+        width: 90px;
+        border-radius: 100px;
+    }
+}
+
+@media only screen and (max-width: 1440px) {
+    .contentPart {
+        .background {
+            .headerStemper {
+                h2 {
+                    font-size: 36px;
+                    line-height: 42px;
+
+                }
+
+                .GroupButtoms {
+                    button {
+                        margin: 0 10px 10px 0px;
+                    }
+                }
+            }
+
+
+            .addRating {
+                margin-top: 20px;
+            }
+        }
+
+        .background.bookCollection {
+            .titleText {
+                h2 {
+                    font-size: 36px;
+                    line-height: 42px;
+                    margin-bottom: 3rem;
+                }
+            }
+        }
+
+        .offerSection.homeOffer {
+            &::after {
+                height: 340px;
+            }
+
+            .offerText {
+                h4 {
+                    font-size: 18px;
+                }
+
+                h2 {
+                    font-size: 30px;
+                    line-height: 36px;
+                    margin: 10px 0;
+                }
+
+                p {
+                    font-size: 16px;
+                    line-height: 24px;
+                }
+
+                button.offerBtn {
+                    width: 200px;
+                    height: 42px;
+                }
+            }
+
+            .mobileImage {
+                top: -58px;
+            }
+        }
+    }
+}
+
+
+@media only screen and (max-width: 991px) {
+    .contentPart {
+        .background.productDetail {
+            .container {
+                max-width: 100%;
+            }
+        }
+
+        .background {
+            .headerStemper {
+                .buttonRow {
+                    flex-wrap: wrap;
+
+                    button {
+                        margin: 0px 10px 10px 0;
+                    }
+
+                    button.buttonlogoDetails {
+                        height: 42px;
+                        width: 200px;
+                    }
+
+                    button.buttonlogoDetailsSecond {
+                        height: 42px;
+                        width: 245px;
+                    }
+                }
+            }
+
+
+            .addRating {
+                margin-top: 20px;
+            }
+        }
+
+        .offerSection.homeOffer {
+            &::after {
+                height: 215px;
+            }
+
+            .offerText {
+                top: -25px;
+
+                h2 {
+                    font-size: 22px;
+                    line-height: 15px;
+                    margin: 10px 0;
+                }
+
+                p {
+                    margin-bottom: 5px;
+                }
+
+                h4 {
+                    font-size: 16px;
+                    line-height: 16px;
+                }
+
+                button.offerBtn {
+                    font-size: 14px;
+                    line-height: 16px;
+                    width: 180px;
+                    height: 40px;
+                }
+
+                .buttonRow {
+                    button.buttonlogoDetails {
+                        padding: 10px;
+                        font-size: 14px;
+                        height: 40px;
+                        margin-right: 5px;
+                        width: 190px;
+                    }
+
+                    button.buttonlogoDetailsSecond {
+                        padding: 6px 10px;
+                        height: 40px;
+                        font-size: 14px;
+                    }
+                }
+            }
+
+            .mobileImage {
+                top: -35px;
+            }
+        }
+
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .contentPart {
+        .background.productDetail {
+            padding-top: 10px;
+            padding-bottom: 30px;
+
+            .headerStemper {
+                margin: 50px 0 0;
+
+                h2 {
+                    font-size: 28px;
+                    line-height: 34px;
+                }
+            }
+
+            .addRating {
+                margin-top: 20px;
+            }
+        }
+
+        .background.bookCollection {
+            .titleText {
+                h2 {
+                    font-size: 28px;
+                    line-height: 34px;
+                }
+            }
+        }
+
+        .background.bookCollection {
+            padding-bottom: 30px;
+        }
+
+        .workSection {
+            .workSectionInner {
+                padding: 30px 0;
+            }
+        }
+
+        .audioSection {
+            .audioSectionInner {
+                .row.align-items-center {
+                    .audioTextWrap {
+                        h2 {
+                            font-size: 26px;
+                            line-height: 32px;
+                        }
+                    }
+                }
+            }
+        }
+
+        .offerSection.homeOffer {
+            background: #A4353B;
+            padding-top: 20px;
+            margin-top: 0;
+
+            &::after {
+                display: none;
+            }
+
+            .offerText {
+                top: 0px;
+
+                h2 {
+                    line-height: 28px;
+                }
+            }
+
+            .mobileImage {
+                margin-top: 50px;
+                top: 0;
+            }
+        }
+    }
+
+}
+
+@media only screen and (max-width: 480px) {
+    .contentPart {
+        .background.productDetail {
+            .headerStemper {
+                .timeIng {
+                    flex-wrap: wrap;
+                }
+
+                .ParagraphPart {
+                    p {
+                        font-size: 14px;
+                        line-height: 24px;
+                    }
+                }
+
+                .buttonRow {
+
+                    button.buttonlogoDetails,
+                    button.buttonlogoDetailsSecond {
+                        height: 42px;
+                        width: 100%;
+                        margin-right: 0px;
+                    }
+                }
+
+                .GroupButtoms {
+                    button {
+                        margin: 0 10px 10px 0px;
+                        width: 100%;
+                    }
+                }
+            }
+
+            .addRating {
+                margin-top: 20px;
+            }
+        }
+
+        .workSection {
+            .workSectionInner {
+                padding: 40px 0;
+
+                .headingTitle {
+                    h2 {
+                        font-size: 28px;
+                        line-height: 34px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+//music player
+.musicSystem img {
+    width: 300px;
+}
+
+.backCustom {
+    background: linear-gradient(180deg, #A4353B 0%, #000000 102.5%);
+    border-radius: 7px;
+}
+
+.modal-title {
+    color: #fff;
+}
+
+.musicImg {
+    width: 100%
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.audioContent {
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.audioContent h6 {
+    text-align: center;
+    font-weight: 400;
+}
+
+.modal-header {
+    border-bottom: 0px;
+}
+
+.audioContent h4 {
+    font-size: 20px;
+    margin-bottom: 2px;
+}
+
+.audioImg {
+    text-align: center;
+
+    img {
+        max-height: 300px;
+        width: 100%;
+        object-fit: contain;
+    }
+}
+
+.audioTextRight {
+    color: #fff;
+}
+
+.musicAppMain {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.backCustom .modal-body {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.audioTextRight h4 {
+    font-size: 20px;
+}
+
+.audioTextRight h6 {
+    font-size: 16px;
+}
+
+button.iconMusic {
+    background: transparent;
+    border: 1px solid transparent;
+}
+
+.audioPlayer {
+    margin: 0px;
+}
+
+audio {
+    background: transparent !important;
+    width: 100% !important;
+}
+
+.musicIcon {
+    width: 100%;
+}
+
+button.btn-close img {
+    width: 100%;
+    margin-bottom: 14px;
+}
+
+.favourite {
+    width: 35px;
+}
+
+.notFavourite {
+    background-color: white;
+}
+
+
+
+/* Shimmer Css Start */
+.shimmer,
+.shimmerLight {
+    width: 100%;
+    height: 100%;
+}
+
+.shimmerLight {
+    background: #f6f6f6;
+    background-image: linear-gradient(to right, #e6e6e6 0%, #e5e5e6 20%, #e6e4e4 40%, #d9dcdd 100%);
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: inline-block;
+    position: relative;
+
+    animation-duration: 1.5s;
+    -webkit-animation-duration: 1.5s;
+    animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    -webkit-animation-iteration-count: infinite;
+    animation-name: placeholderShimmer;
+    -webkit-animation-name: placeholderShimmer;
+    animation-timing-function: linear;
+    -webkit-animation-timing-function: linear;
+}
+
+.shimmer,
+.btn.btn-primary.downloadtBtn.shimmer {
+    background: #cdd0d3;
+    background-image: linear-gradient(to right, #c8cbcd 0%, #c7c8cb 20%, #bbbdbf 40%, #9b9d9f 100%);
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: inline-block;
+    position: relative;
+
+    animation-duration: 1.5s;
+    -webkit-animation-duration: 1.5s;
+    animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    -webkit-animation-iteration-count: infinite;
+    animation-name: placeholderShimmer;
+    -webkit-animation-name: placeholderShimmer;
+    animation-timing-function: linear;
+    -webkit-animation-timing-function: linear;
+}
+
+
+
+@keyframes placeholderShimmer {
+    0% {
+        background-position: -468px 0;
+    }
+
+    100% {
+        background-position: 468px 0;
+    }
+}
+
+.titleShimmer {
+    height: 50px;
+    margin: 15px 0;
+}
+
+button.titleShimmer.shimmer {
+    border: none;
+    margin: 15px 0;
+}
+
+h2.shimmer.titleShimmer {
+    margin: 15px 0;
+}
+
+label.genre.titleShimmer.shimmer {
+    display: inline-block;
+    width: 130px;
+}
+
+.readButton.titleShimmer.shimmer {
+    width: 58.33333333%;
+    //margin-top: 0 !important;
+}
+
+.background.productDetail.shimmerWrapper {
+    padding: 70px 0;
+}
+
+/* Shimmer Css End */
+
+
+ul.ratingWrap {
+    padding: 0;
+    list-style: none;
+    display: flex;
+    margin-bottom: 0;
+
+    li {
+        margin-right: 5px !important;
+    }
+
+}
+
+.modal-footer.ratingSaveBtn {
+    justify-content: center;
+}
+
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+.audio-progress-area {
+    height: 6px;
+    width: 100%;
+}
+
+.audio-progress-area .audio-progress-bar {
+    height: inherit;
+    position: relative;
+    border-radius: inherit;
+}
+.audio-progress-area .audio-progress-bar {
+    height: inherit;
+    position: relative;
+    border-radius: inherit;
+}
+
+ngb-progressbar.progress {
+    background: gray;
+    height: 6px;
+}
+
+.audio-progress-bar::before {
+    content: "";
+    position: absolute;
+    height: 12px;
+    width: 12px;
+    background: #000;
+    border-radius: inherit;
+    top: 50%;
+    right: -5px;
+    transform: translateY(-50%);
+    background: inherit;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.audio-progress-area:hover .audio-progress-bar::before {
+    opacity: 1;
+}
+
+.audio-progress-area .timer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 2px;
+}
+
+.timer span {
+    font-size: 13px;
+    color: white;
+}
+
+.controls {
+    margin: 40px 0 5px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.controls #prev {
+    margin-right: -13px;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+}
+
+.controls #next {
+    margin-left: -13px;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+}
+
+.controls #repeat-plist,
+#more-music {
+    cursor: pointer;
+    background: transparent;
+    border: none;
+}
+
+.controls .play-pause {
+    height: 54px;
+    width: 54px;
+    align-items: center;
+    background: transparent;
+    border: none;
+}
+
+.play-pause::before {
+    content: "";
+    position: absolute;
+}
+
+.margin-list .chapterlist {
+    margin: 10px 0;
+    max-height: 260px;
+    overflow-y: auto !important;
+}
+
+.chapterlist li {
+    cursor: pointer;
+    list-style: none;
+    padding-bottom: 10px;
+    margin-bottom: 5px;
+    color: gray;
+    border-bottom: 1px solid #e5e5e5;
+}
+.cus-audio-progress {
+    width: 100%; position: absolute; top: -5px; left: -1px;z-index: 9;opacity: 0; cursor: pointer;
+}
+
+.mini-player .audioImg, 
+.mini-player .musicAppMain, 
+.mini-player .controls .skip {
+    display: none;
+}
+.mini-player {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 400px;
+}

@@ -1,0 +1,109 @@
+html {
+    box-sizing: border-box;
+    font-size: 10px;
+    line-height: 1.42857143;
+  }
+  *,
+  *:before,
+  *:after {
+    box-sizing: inherit;
+  }
+  .newsletter-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: calc(100vh - 100px);
+    position: relative;
+    
+  }
+ 
+  .newsletter-content__inner {
+    background: #993238;
+    color: #FFF;
+    width: 70%;
+    border-radius: 4px;
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+    padding: 4rem;
+    position: relative;
+  }
+  .modal__icon {
+    position: absolute;
+    top: -3rem;
+    left: 39%;
+    margin-left: -7rem;
+    background: #993238;
+    padding: 3rem 12rem 0 12rem;
+    border-radius: 50%;
+  }
+  .modal__heading {
+    text-transform: uppercase;
+    font-size: 2.6rem;
+  }
+  .modal p {
+    font-size: 1.5rem;
+  }
+  .email-box {
+    position: absolute;
+    bottom: -2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 40rem;
+    width: 100%;
+  }
+  .email-box__input {
+    color: #333333;
+    display: block;
+    width: 100%;
+    height: 4rem;
+    border-radius: 4px;
+    border: 1px solid #993238;
+    font-size: 1.4rem;
+    padding: 1rem;
+  }
+  .email-box__button {
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+    border: none;
+    background: transparent;
+    font-size: 2rem;
+    position: absolute;
+    color: #993238;
+    right: 0.8rem;
+    top: 0.5rem;
+    padding: 0;
+  }
+  .email-box__button:hover,
+  .email-box__button:focus {
+    color: #a32815;
+  }
+  .email-box .text-danger {
+    position: absolute;
+    left: 0;
+    right: 0;
+    text-align: center;
+  }
+  @media only screen and (max-width: 767px) {
+      .newsletter-main {
+        margin: 100px auto;
+        height: auto;
+    }
+  }
+  @media only screen and (max-width: 600px) {
+    .modal {
+      width: 30rem;
+    }
+    .modal__icon {
+      margin-left: -105px;
+      padding: 3rem 6rem 0 6rem;
+      border-radius: 50%;
+    }
+    .email-box {
+      // margin-left: -12.5rem;
+      width: 25rem;
+    }
+  }
+  

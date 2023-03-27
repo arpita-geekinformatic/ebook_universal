@@ -1,0 +1,212 @@
+@import '../../../assets/scss/style.scss';
+@import '../../../assets/scss/varibales.scss';
+
+footer.footerWrapper {
+    background: linear-gradient(180deg, $MaroonColor -28.09%, $BlackColor 69.94%);
+    padding-top: $padding60px;
+
+    .footerLogo {
+        img {
+            margin-bottom: $margin25px;
+            width: 85%;
+        }
+
+        p {
+            font-family: $fontFamilyInter;
+            font-weight: $fontWeight400;
+            font-size: 12px;
+            line-height: 22px;
+            color: $ColorBDBCBD;
+            width: 17rem;
+        }
+    }
+
+    .footerLinks.withlogoLinks {
+        padding-left: 70px;
+    }
+
+    .footerLinks {
+        padding: 15px 0 0 0px;
+
+        h4 {
+            font-weight: $fontWeight500;
+            font-size: $font15;
+            line-height: $lineHeight12px;
+            color: $WhiteColor;
+            font-family: $fontFamilyInter;
+        }
+
+        .appIconsWrap {
+            li {
+                margin: $margin10px $marginZero;
+                width: $width100Per;
+            }
+        }
+
+        ul {
+            list-style: $d-none;
+            padding: $paddingZero;
+            margin: $marginZero;
+
+            li {
+                a {
+                    font-weight: $fontWeight400;
+                    font-size: $font14;
+                    margin: 15px 0;
+                    // line-height: $lineHeight42px;
+                    color: $ColorBDBCBD;
+                    text-decoration: $d-none;
+                    display: block;
+
+                    &:hover {
+                        opacity: $opacitySix;
+                    }
+                }
+            }
+
+            ul.socialIcons {
+                display: $d-flex;
+
+                li {
+                    margin: $marginZero $margin10px $marginZero $marginZero;
+                    width: $widthAuto;
+                }
+            }
+        }
+    }
+
+    .copyrightWrapper {
+        padding: $padding15px $paddingZero;
+        margin-top: $margin50px;
+        border-top: 1px solid rgba(189, 188, 189, 0.3);
+
+        ul.cardIcons {
+            display: $d-flex;
+            padding: $paddingZero;
+            margin-bottom: $marginZero;
+            list-style: $d-none;
+
+            li {
+                margin-right: 3px;
+            }
+        }
+
+        p {
+            font-weight: $fontWeight300;
+            font-size: $font14;
+            line-height: $lineHeight14px;
+            text-align: $textCenter;
+            letter-spacing: 0.03em;
+            color: $WhiteColor;
+            margin-bottom: $marginZero;
+        }
+    }
+}
+
+img.heatLogoFooter {
+    width: 26px;
+}
+
+@media only screen and (max-width: 1024px) {
+    footer.footerWrapper {
+        .footerLogo {
+            p {
+                width: 100%;
+            }
+        }
+
+        .footerLinks.withlogoLinks {
+            padding-left: 40px;
+        }
+
+        .footerLinks {
+            ul {
+                li {
+                    a {
+                        img {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+
+            ul.socialIcons {
+                flex-wrap: wrap;
+
+                li {
+                    a {
+                        margin: 5px 0;
+
+                        img {
+                            width: auto;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+@media only screen and (max-width: 767px) {
+    footer.footerWrapper {
+        .copyrightWrapper {
+            flex-direction: $flexDirectionColumn;
+            align-items: $alignItemsCenter;
+
+            ul.d-flex.cardIcons {
+                margin: $margin20px $marginZero $margin10px $marginZero;
+                flex-direction: $flexDirectionColumn;
+                flex-direction: row;
+            }
+
+            p {
+                margin: $margin10px $marginZero;
+            }
+
+        }
+
+        .footerLinks {
+            margin: $margin15px $marginZero;
+
+            ul {
+                li {
+                    a {
+                        line-height: $lineHeight28px;
+                    }
+                }
+            }
+        }
+
+        .footerLinks.withlogoLinks {
+            padding-left: 0px;
+        }
+
+        .footerLinks {
+            ul {
+                li {
+                    a {
+                        img {
+                            width: auto;
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+}
+
+@media only screen and (max-width: 479px) {
+    footer.footerWrapper {
+        .copyrightWrapper {
+            ul.cardIcons {
+                li {
+                    img {
+                        width: $width30px;
+                    }
+                }
+            }
+        }
+    }
+}

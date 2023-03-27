@@ -1,0 +1,468 @@
+<app-header></app-header>
+
+<div class="contentPart">
+  <div class="warpper" *ngFor="let item of audioBookDetail;">
+
+    <!-- stemper section start -->
+    <div class="background productDetail">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="stemperImg">
+              <button
+                [ngClass]="(item.bookType == 'ebooks' || item.bookType == 'Ebook') ? 'openBookTop' : 'openBookTop yellow'">
+                <img
+                  [src]="(item.bookType == 'ebooks' || item.bookType == 'Ebook') ? 'assets/images/openBookIcon.svg' : 'assets/images/headphoneIcon.svg'" />
+              </button>
+              <img
+                [src]="item['photo'] ? this.IMAGE_URL + item['photo'] : 'assets/images/largeDefaultBook.png'"
+                alt="stemperbook" class="mainBookImgDetail" />
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="headerStemper">
+              <h2>{{item ? (item.name | titlecase) :'The Gravity of us'}}</h2>
+              <div class="timeIng">
+                <span>{{ bookDuration }}</span>
+                <div class="rateing">
+                  <ul class="ratingWrap" [innerHtml]="getRating(averageRating)">
+                  </ul>
+                  <span class="rateText">({{ averageRating }} Vērtējums)</span>
+                </div>
+              </div>
+              <div class="authMain">
+                <div class="row">
+                  <div class="col-lg-5 col-md-6  col-sm-6">
+                    <span>Sarakstījis:
+                      <strong *ngFor="let author of item.author">{{ author | titlecase }}, </strong>
+                    </span>
+                  </div>
+                  <div class="col-lg-5 col-md-6  col-sm-6" *ngIf="item.bookType == 'Audiobook'">
+                    <span>Ierunājis : <strong>{{ item.narrator | titlecase }}</strong> </span>
+                  </div>
+                </div>
+              </div>
+              <div class="authMain">
+                <div class="row">
+                  <div class="col-lg-5 col-md-6 col-sm-6">
+                    <span>Apakškategorija:
+                      <strong *ngFor="let genre of item.genre">{{ genre.item_text_LV | titlecase }}, </strong>
+                    </span>
+                  </div>
+                  <div class="col-lg-5 col-md-6  col-sm-6">
+                    <span>Izdevējs: <strong>{{ item.publisher | titlecase }}</strong> </span>
+                  </div>
+                </div>
+              </div>
+              <div class="authMain">
+                <div class="row">
+                  <div class="col-lg-5 col-md-6 col-sm-6">
+                    <span>Izdots : <strong> {{ item.releasedDate ? (item.releasedDate | date:'MM-yyyy') :
+                        '-'}}</strong></span>
+                  </div>
+                  <div class="col-lg-5 col-md-6 col-sm-6">
+                    <span>Cena : <strong>{{ item.salePrice ? item.salePrice : 0}} €</strong> </span>
+                  </div>
+                </div>
+              </div>
+
+              <div [ngClass]="isReadMore ? 'month-recomm' : ''">
+                <p>{{ item.description }}</p>
+              </div>
+              <div class="readButton" type="button" (click)="showText()" *ngIf="showReadMoreButton">
+                <span>{{ isReadMore ? 'Lasi vairāk (pilns apraksts)': 'Lasi mazāk' }}</span>
+              </div>
+
+              <div class="buttonRow align-items-center">
+                <button class="logodetail">
+                  <img
+                    [src]="isFavourite ? 'assets/images/heartIcon.svg' : 'assets/images/heat.png'"
+                    alt="heat" (click)="favouriteBook(item._id, isFavourite)"
+                    [ngClass]="isFavourite ? 'favourite' : 'notFavourite'" />
+                </button>
+
+                <div class="shareWrap">
+                  <button class="logodetail shareBtn">
+                    <img (click)="isShare=!isShare" src="assets/images/share.svg" alt="share" />
+                  </button>
+                  <share-buttons *ngIf="isShare" class="share-buttons" theme="circles-dark"
+                    [include]="['copy', 'facebook', 'email', 'twitter']" [showIcon]="true" [showText]="false"
+                    url="currentUrl">
+                  </share-buttons>
+                </div>
+
+                <button class="buttonlogoDetails"
+                  (click)="openModal(content, item.bookFragment ? item.bookFragment : item.entireBook, tabType, 'bookFragment', '')">
+                  <img
+                    [src]="tabType == 'ebooks'? 'assets/images/openBookIcon.svg' : 'assets/images/playlogo.svg'"
+                    alt="playlogo" />
+                  <span>{{ tabType == 'ebooks' ? 'Read a fragment' : 'Noklausies fragmentu' }}</span>
+                </button>
+
+                <button class="buttonlogoDetailsSecond"
+                  (click)="openModal(content, item.entireBook ? item.entireBook : item.bookFragment, tabType, 'entireBook','')"
+                  type="button" *ngIf="item.entireBook || item.bookByChapters.length < 1">
+                  <img [src]="tabType == 'ebooks'? 
+                    'assets/images/openBookIcon.svg' : 
+                    'assets/images/headphonelogo.svg'" alt="headphone" />
+                  <span>{{ tabType == 'ebooks' && item.entireBook != '' ? 'Read entire book' : 'noklausies visu grāmatu'
+                    }}</span>
+                  <img src="assets/images/105 €.svg" alt="doller" />
+                </button>
+
+                <div ngbDropdown class="d-inline-block"
+                  *ngIf="item.bookByChapters.length > 0 && item.bookByChapters[0].chapterUrl != ''">
+                  <button type="button" class="btn btn-outline-danger dropWidth" id="sortMenu"
+                    ngbDropdownToggle>{{selectedChapter ? selectedChapter : selectedSortOrder}}</button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                    <button class="dropdown-item" type="button" *ngFor="let sortOrder of sortOrders"
+                      (click)="ChangeSortOrder(sortOrder[0], content, item.bookByChapters ? item.bookByChapters : item.bookFragment, tabType, 'bookByChapters'); startTimer()">{{sortOrder}}</button>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <label class="genre">Kategorija</label>
+              </div>
+              <div class="GroupButtoms">
+                <ng-container *ngFor="let category of modifiedCategory">
+                  <button [ngClass]="category.className"
+                    (click)="viewBookByCategory(category._id, category.name_EN, item.bookType)">{{category.name_LV |
+                    titlecase}}</button>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rating start -->
+        <div class="addRating">
+          <button class="btn btn-lg btn-outline-primary" type="button" (click)="openSm(contentOne)">Uzrakstīt atsauksmi
+            par šo grāmatu</button>
+        </div>
+        <!-- Rating end -->
+
+      </div>
+    </div>
+    <!-- stemper section end -->
+
+    <!--  music player start  -->
+    <ng-template #content let-c="close" let-d="dismiss">
+      <!-- <div class="backCustom">
+        <div class="modal-header">
+          <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')">
+            <img src="assets/images/close.png" />
+          </button>
+          <i class="fa fa-trash fa-fw" (click)="miniPlayer()"></i>
+        </div>
+
+        <div>
+          <div class="modal-body wrapper">
+            <div class="audioContent">
+              <h4>
+                <marquee direction="left">{{item ? (item.name | titlecase) :'The Gravity of us'}}</marquee>
+              </h4>
+              <h6 *ngFor="let author of item.author">{{ author | titlecase }}</h6>
+            </div>
+            <div class="audioImg">
+              <img class="musicImg"
+                [src]="item ? this.IMAGE_URL + item['photo'] : 'assets/images/smallDefaultBook.png'"
+                alt="stemperbook" />
+            </div>
+
+            <div class="musicIcon">
+              <div class="musicAppMain mb-3">
+                <div class="audioTextRight" *ngIf="playerType == ('bookFragment' || 'entireBook')">
+                  <h4>{{ item ? (item.name | titlecase) : 'The Gravity of us'}}</h4>
+                  <h6 *ngFor="let author of item.author">{{ author | titlecase }}</h6>
+                </div>
+
+                <div class="audioTextRight" *ngIf="playerType == 'bookByChapters'">
+                  <h4>{{ selectedChapter ? (selectedChapter | titlecase ) : item.name }}</h4>
+                </div>
+
+                <div class="imgLogo">
+                  <button type="button" class="iconMusic" (click)="favouriteBook(item._id, isFavourite)">
+                    <img
+                      [src]="isFavourite ? 'assets/images/filledHeart.png' : 'assets/images/heartIconWhite.svg'"
+                      height="30" width="30" />
+                  </button>
+                </div>
+              </div>
+
+              <div class="audioPlayer">
+
+                <div class="audio-progress-area">
+                  <p class="audio-progress-bar" style="position: relative;">
+                    <input id="dur" [value]="timeCount" type="range" name="rng" min="0" [max]="mainAudioLength" step="1" (change)="mSet()" class="cus-audio-progress">
+                    <ngb-progressbar type="danger" class="cus-progress-bar" [value]="timeCount" [max]="mainAudioLength"></ngb-progressbar>
+                  </p>
+                  <div class="timer">
+                    <span class="current">{{timeCountString}}</span>
+                    <span class="current">-{{timeLeftString}}</span>
+                  </div>
+                  <audio id="main-audio" loop [src]="mainAudio" autoplay #ref></audio>
+                </div>
+
+                <div class="controls">
+                  <button type="button" (click)="restartAudio(); ref.play();" id="repeat-plist">
+                    <img src="assets/images/reload.png" />
+                  </button>
+                 
+                  <button type="button" (click)="previousAudioChapter(); ref.play(); isPlay = false"  id="prev">
+                    <img src="assets/images/prevButton.png" />
+                  </button>
+
+                  <button type="button" class="skip" (click)="prevAudio10sec();"  id="prev">
+                    <img src="assets/images/30secPrv1.png" />
+                  </button>
+
+                  <div>
+                    <button type="button" class="play-pause" (click)="ref.play(); isPlay = false; startTimer()" *ngIf="isPlay">
+                      <img src="assets/images/play.png" height="35" width="35" />
+                    </button>
+
+                    <button type="button" class="play-pause" (click)="ref.pause(); isPlay = true; pauseTimer()" *ngIf="!isPlay">
+                      <img src="assets/images/pause.png" height="35" width="35" />
+                    </button>
+                  </div>
+
+                  <button type="button" class="skip" (click)="fwdAudio10sec(); "  id="next">
+                    <img src="assets/images/30secFwd1.png" />
+                  </button>
+
+                  <button type="button" (click)="nextAudioChapter(); ref.play(); isPlay = false"  id="next">
+                    <img src="assets/images/nextButton.png" />
+                  </button>
+
+                  <div ngbDropdown class="d-inline-block">
+                    <button type="button" (click)="allAudioChapterList()"  id="more-music" ngbDropdownToggle>
+                      <img src="assets/images/list.png" />
+                    </button>
+                    <div ngbDropdownMenu aria-labelledby="more-music" placement="right" style="width: 300px;max-height: 200px;overflow: auto;">
+                      <ul class="chapterlist p-0" *ngFor="let chapters of sortOrders">
+                        <li (click)="loadMusic(chapters[0], playerType); isPlay = false" class="d-flex px-3 justify-content-between">
+                          <div class="row">
+                            <span>{{chapters[0]}}</span>
+                          </div>
+                          <span class="audio-duration">{{chapters[1]}}</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                 
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div> -->
+    </ng-template>
+    <!-- <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button> -->
+
+    <!-- Books collection start -->
+    <div class="background bookCollection">
+      <div class="container titleText">
+        <h2>Līdzīgas grāmatas</h2>
+        <div class="productWrapper">
+          <div class="productline">
+            <div class="row">
+
+              <div class="col mb-4" *ngFor="let book of similarBooks">
+                <div class="singleProduct" (click)="detailBook(book['_id'])">
+                  <div class="singleProductInner">
+                    <button
+                      [ngClass]="(book.bookType == 'ebooks' || book.bookType == 'Ebook') ? 'bookBtn' : 'bookBtn yellow'">
+                      <img
+                        [src]="(book.bookType == 'ebooks' || book.bookType == 'Ebook')? 'assets/images/openBookIcon.svg' : 'assets/images/headphoneIcon.svg'" />
+                    </button>
+                    <div class="productImage">
+                      <img
+                        [src]="book['photo'] ? this.IMAGE_URL + book['photo'] : 'assets/images/smallDefaultBook.png'"
+                        alt="stemperbook" />
+                    </div>
+                    <div class="productTxt">
+                      <h2>{{ book.name | titlecase }}</h2>
+                      <p><span *ngFor="let author of book.author">{{ author | titlecase }}
+                        </span></p>
+
+                      <div class="rateing">
+                        <ul class="ratingWrap" [innerHtml]="getRating(book.rating)">
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <h6>{{ errorMessage }}</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Books collection end -->
+
+    <!-- Special Offer Section start Html -->
+    <div class="offerSection homeOffer">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-7">
+            <div class="offerText">
+              <h4>Atklāj Audiolasītavu!</h4>
+              <h2>Lasi, klausies un baudi!</h2>
+              <p>
+              Kad vingrojat, gatavojat ēst, darbojaties dārzā, remontējat dzīvokli, sēžat automašīnas sēdeklī vai
+              vienkārši atpūšaties: audiogrāmatas vienmēr ir jums līdzās. Izvēlieties, kura būs nākamā audiogrāmata, ko
+              klausīsieties, vai sekojiet mūsu ieteikumam!
+              </p>
+              <!-- <button class="offerBtn">Special Offer</button> -->
+            <div class="buttonRow">
+              <button class="buttonlogoDetailsSecond"><span>Pieraksties mūsu jaunumiem</span></button>
+            </div>
+            </div>
+          </div>
+          <div class="col-md-5">
+            <div class="mobileImage">
+              <img src="assets/images/mobileImgdetailPage.svg" alt="mobiel View" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Special Offer Section End Html -->
+
+    <!-- Lasitava Work Section HTML Start-->
+    <div class="workSection">
+      <div class="workSectionInner">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 text-center">
+              <div class="headingTitle">
+                <h2>Kā darbojas Audiolasītava?</h2>
+                <p>
+                  Izbaudiet audiogrāmatu klausīšanās pieredzi jebkurā laikā savā mobilajā tālrunī, datorā vai automašīnā
+                  -
+                  vienkārši un ērti!
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 text-center">
+              <div class="blockWrap">
+                <img src="assets/images/appIcon.svg">
+                <h3>1. Instalē mūsu lietotni</h3>
+                <p> Ērti lejupielādējiet mūsu Android vai iOS mobilo lietotni, lai vienmēr varētu piekļūt visam saturam.
+                </p>
+              </div>
+
+            </div>
+            <div class="col-md-4 text-center">
+              <div class="blockWrap icons">
+                <span class="leftArrow"> <img src="assets/images/arrowRight.svg" alt='' /></span>
+                <img src="assets/images/setupIcon.svg">
+                <h3>2. Izveido savu kontu</h3>
+                <p>
+                  Reģistrējieties, lai varētu baudīt visu mūsu platformā pieejamo audiogrāmatu klāstu.
+                </p>
+                <span class="rightArrow"> <img src="assets/images/arrowRight.svg" alt='' /></span>
+              </div>
+
+            </div>
+            <div class="col-md-4 text-center">
+              <div class="blockWrap">
+                <img src="assets/images/enjoyIcon.svg">
+                <h3>3. Izvēlies savas iecienītākās audiogrāmatas</h3>
+                <p>
+                  Klausieties savas iecienītākās audiogrāmatas no mobilā tālruņa, datora vai jebkuras ierīces, kas
+                  savienota ar Bluetooth. Ērti un vienkārši!
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Lasitava Work Section HTML End-->
+  </div>
+</div>
+
+<!-- shimmer section start -->
+<div class="background productDetail shimmerWrapper" *ngIf="audioBookDetail.length == 0">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="stemperImg shimmer"> </div>
+      </div>
+      <div class="col-md-8">
+        <div class="headerStemper">
+          <div class="row">
+            <div class="col-sm-7">
+              <h2 class="shimmer titleShimmer"></h2>
+            </div>
+            <div class="col-sm-5"></div>
+          </div>
+          <div class="row">
+            <div class="col-sm-7">
+              <div class="timeIng">
+                <span class="titleShimmer shimmer"></span>
+              </div>
+            </div>
+            <div class="col-sm-5"></div>
+          </div>
+          <div class="authMain">
+            <div class="row">
+              <div class="col-lg-5 col-md-6  col-sm-6">
+                <span class="titleShimmer shimmer"></span>
+              </div>
+              <div class="col-lg-5 col-md-6  col-sm-6">
+                <span class="titleShimmer shimmer"></span>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="readButton titleShimmer shimmer" type="button" (click)="showText()"></div>
+          <div>
+            <label class="genre titleShimmer shimmer"></label>
+          </div>
+          <div class="GroupButtoms d-flex">
+            <ng-container *ngFor="let item of modifiedCategory">
+              <button class="titleShimmer shimmer"></button>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- shimmer section end -->
+
+
+<!-- Rating popup modal start -->
+<ng-template #contentOne let-modal>
+  <div class="startModal">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Add Rating:</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="ratingForm">
+        <div class="ratingTitle">Add Rating: </div>
+        <div class="starRate">
+          <ngb-rating [max]="5" [(rate)]="currentRate"></ngb-rating>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer ratingSaveBtn">
+      <button type="button" class="btn btn-outline-dark"
+        (click)="addBookRating(currentRate, audioBookDetail[0], modal)">Save</button>
+    </div>
+  </div>
+</ng-template>
+<!-- Rating popup modal end -->
+
+<app-footer></app-footer>

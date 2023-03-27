@@ -1,0 +1,779 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Montserrat:wght@500;600&family=Mulish:wght@500&display=swap');
+@import './varibales.scss';
+
+::-webkit-input-placeholder {
+    opacity: $opacityOne;
+    color: $WhiteColor;
+}
+
+:-moz-placeholder {
+    opacity: $opacityOne;
+    color: $WhiteColor;
+}
+
+::-moz-placeholder {
+    opacity: $opacityOne;
+    color: $WhiteColor;
+}
+
+:-ms-input-placeholder {
+    opacity: $opacityOne;
+    color: $WhiteColor;
+}
+
+body {
+    font-family: $fontFamilyInter;
+}
+
+a,
+.btn,
+button {
+    transition: 0.5s all ease-in-out;
+}
+
+.carousel-control-prev {
+    opacity: 0;
+    filter: alpha(opacity=0);
+    /* IE support */
+}
+
+// Special Offer Section CSS Start
+.audioSection {
+    .audioSectionInner {
+        // background-image: url("../images/offerimage2.jpg");
+        background-repeat: $backgroundNoRepeat;
+        background-position: center center;
+        background-size: $backgroundSize;
+        height: $height500px;
+        background-color: #FFF2CC;
+        margin: 70px 0;
+
+        .audioTextWrap {
+            padding: 0 0 10% 0;
+
+
+            h4 {
+                font-weight: $fontWeight600;
+                font-size: $font24;
+                line-height: $lineHeight16px;
+                letter-spacing: -0.02em;
+                text-transform: $textUppercase;
+                color: $BlackColor;
+            }
+
+            h2 {
+                font-weight: $fontWeight700;
+                font-size: $font46;
+                line-height: $lineHeight52px;
+                text-transform: $textCapitalize;
+                color: $BlackColor;
+            }
+
+            p {
+                font-weight: $fontWeight500;
+                font-size: $font18;
+                line-height: $lineHeight32px;
+                letter-spacing: -0.02em;
+                text-transform: $textCapitalize;
+                color: $BlackColor;
+            }
+
+            button.fragmentbtn {
+                font-weight: $fontWeight700;
+                font-size: $font15;
+                line-height: $lineHeight16px;
+                text-align: $textCenter;
+                letter-spacing: -0.02em;
+                color: $WhiteColor;
+                border: 2px solid $BlackColor;
+                border-radius: $borderRadius100;
+                background: $BlackColor;
+                padding: 18px 35px;
+                margin-right: 15px;
+                &:hover {
+                    background-color: $backgroundTransparent;
+                    color: $BlackColor;
+                }
+            }
+
+            button.entireBtn {
+                font-weight: $fontWeight700;
+                font-size: $font15;
+                line-height: $lineHeight16px;
+                text-align: $textCenter;
+                letter-spacing: -0.02em;
+                color: $BlackColor;
+                border: 2px solid $BlackColor;
+                border-radius: $borderRadius100;
+                background: $backgroundTransparent;
+                padding: 18px 35px;
+                &:hover {
+                    color: $WhiteColor;
+                    border: 2px solid $BlackColor;
+                    border-radius: $borderRadius100;
+                    background: $BlackColor;                    
+                }
+            }
+        }
+
+        .mobileImageWrap {
+            position: $positionRelative;
+            bottom: 50px;
+            width: 85%;
+            display: flex;
+            justify-content: flex-end;
+
+            img {
+                max-width: $width100Per;
+                transform: rotateZ(10deg);
+                border: 20px solid $WhiteColor;
+                max-height: 590px;
+                min-height: 590px;
+                // outline: 2px solid red;
+            }
+        }
+
+    }
+}
+
+// Special Offer Section CSS End
+
+// Breadcrumb Start 
+ul.breadcrumb {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    li {
+        padding: 0 20px;
+        position: relative;
+        &:after{
+            background-image: url('../images/arrowLeft.svg');
+            position: absolute;
+            content: '';
+            right: -7px;
+            width: 14px;
+            height: 9px;
+            background-size: 14px 10px;
+            transform: translateY(-50%);
+            top: 50%;
+        }
+        &:last-child {
+            &::after{
+                display: none;
+            }
+        }
+        a {
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 12px;
+            letter-spacing: -0.02em;
+            color: #A4353B;
+            text-decoration: none;
+        }
+        span {
+            color: #fff;
+        }
+    }
+}
+// Breadcrumb End 
+
+// Special Offer Section CSS Start
+.workSection {
+    .workSectionInner {
+        padding: 50px 0 120px 0;
+
+        .headingTitle {
+            max-width: 750px;
+            margin: auto;
+            padding: 0 15px;
+
+            h2 {
+                font-weight: 600;
+                font-size: 32px;
+                line-height: 20px;
+                text-align: center;
+                // text-transform: capitalize;
+                color: #000000;
+            }
+
+            p {
+                margin: 40px 0 70px 0;
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 24px;
+                text-align: center;
+                // text-transform: capitalize;
+                color: #000000;
+            }
+        }
+
+        .blockWrap {
+            padding: 0 50px;
+
+            h3 {
+                margin: 20px 0;
+                font-weight: 600;
+                font-size: 24px;
+                line-height: 24px;
+                text-align: center;
+                // text-transform: capitalize;
+                color: #000000;
+            }
+
+            p {
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 24px;
+                text-align: center;
+                // text-transform: capitalize;
+                color: #000000;
+            }
+        }
+
+        .blockWrap.icons {
+            position: relative;
+
+            span.leftArrow {
+                position: absolute;
+                left: 0;
+                transform: translateY(-50%);
+                top: 50%;
+            }
+
+            span.rightArrow {
+                position: absolute;
+                right: 0;
+                transform: translateY(-50%);
+                top: 50%;
+            }
+        }
+    }
+}
+
+// Offer End
+
+
+
+// Special Offer Section CSS Start 
+.offerSection {
+    margin: 30px 0;
+    position: relative;
+
+    &::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 440px;
+        background: #A4353B;
+        top: 55px;
+        bottom: 0;
+        z-index: -1;
+    }
+
+    .offerText {
+        h4 {
+            font-weight: 600;
+            font-size: 24px;
+            line-height: 16px;
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+            color: #FFFFFF;
+        }
+
+        h2 {
+            font-weight: 700;
+            font-size: 46px;
+            line-height: 46px;
+            // text-transform: capitalize;
+            color: #FFFFFF;
+            margin: 20px 0;
+        }
+
+        p {
+            font-weight: 400;
+            font-size: 18px;
+            line-height: 32px;
+            letter-spacing: -0.02em;
+            // text-transform: capitalize;
+            color: #FFFEFE;
+        }
+
+        button.offerBtn {
+            font-size: 15px;
+            line-height: 16px;
+            text-align: center;
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+            color: #FFFFFF;
+            border-radius: 100px;
+            border: 1px solid #fff;
+            width: 220px;
+            height: 57px;
+            background: transparent;
+            font-weight: 700;
+            transition: 0.5s all ease-in-out;
+
+            &:hover {
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            }
+        }
+    }
+
+    .mobileImage {
+        img {
+            width: 100%;
+        }
+    }
+}
+
+ul .ratingWrap {
+    li.img {
+        padding: 4px;
+    }
+}
+
+// Special Offer Section CSS End
+footer.footerWrapper {
+    padding-bottom: 70px;
+}
+.padding100 {
+    padding: 100px 0;
+}
+/* About us page & work with us page CSS Start */
+.about-image {
+    img {
+        width: 100%;
+    }
+}
+.about-text {
+    h2 {
+        font-style: normal;
+        font-weight: 600;
+        font-size: 40px;
+        line-height: 18px;
+        color: #333333;
+        margin-bottom: 25px;
+    }
+    p {
+        font-weight: 400;
+        font-size: 21px;
+        line-height: 33px;
+        letter-spacing: 0.02em;
+        color: #000000;
+    }
+    span.read-more {
+        font-style: normal;
+        font-weight: 600;
+        font-size: 22px;
+        line-height: 16px;
+        color: #A4353B;
+        cursor: pointer;
+    }
+}
+
+
+
+/* About us page & work with us page CSS End */
+
+
+/* Media Query Start */
+@media (min-width: 100px) {
+    .order-sm-1 {
+        order: 1 !important;
+    }
+    .order-sm-2 {
+        order: 2 !important;
+    }
+}
+
+@media (min-width: 1500px) {
+
+    .container-xxl,
+    .container-xl,
+    .container-lg,
+    .container-md,
+    .container-sm,
+    .container {
+        max-width: 1440px;
+    }
+}
+
+@media only screen and (max-width: 1499px) {
+    .offerSection {
+        &::after {
+            height: 400px;
+        }
+    }
+}
+
+@media only screen and (max-width: 1399px) {
+    .contentPart {
+        .offerSection {
+            &::after {
+                height: 350px;
+                top: 45px;
+            }
+
+            .offerText {
+                h2 {
+                    font-size: 34px;
+                    line-height: 36px;
+                    margin: 12px 0;
+                }
+
+                p {
+                    line-height: 26px;
+                    font-size: 16px;
+                }
+            }
+        }
+
+        .audioSection {
+            .audioSectionInner {
+                //  height: 455px;
+                .mobileImageWrap {
+                    bottom: 20px;
+                    img {
+                        max-height: 520px;
+                        min-height: 520px;
+                    }
+                }
+                .row.align-items-center {
+                    align-items: flex-start !important;
+
+                    .audioTextWrap {
+                        padding: 5% 0;
+
+                        h2 {
+                            font-size: 38px;
+                            line-height: 44px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 1199px) {
+    .contentPart {
+        .audioSection {
+            .audioSectionInner {
+                height: 400px;
+
+                h4 {
+                    font-size: 18px;
+                }
+
+                .row.align-items-center {
+                    align-items: flex-start !important;
+
+                    .audioTextWrap {
+                        padding: 2% 0;
+                        h2 {
+                            font-size: 30px;
+                            line-height: 36px;
+                        }
+
+                        p {
+                            font-weight: 400;
+                            font-size: 16px;
+                            line-height: 22px;
+                        }
+                    }
+                }
+
+                h2 {
+                    font-size: 30px;
+                    line-height: 36px;
+                }
+
+                p {
+                    font-weight: 400;
+                    font-size: 16px;
+                    line-height: 22px;
+                }
+                .mobileImageWrap {
+                    img {
+                        max-height: 420px;
+                        min-height: 420px;
+                    }
+                }
+            }
+        }
+
+        .offerSection {
+            &::after {
+                height: 280px;
+            }
+
+            .offerText {
+                h4 {
+                    font-size: 20px;
+                }
+
+                h2 {
+                    font-size: 30px;
+                    line-height: 36px;
+                    margin: 12px 0;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    .about-image {
+        margin-bottom: 30px;
+    }
+    .contentPart {
+        .workSection {
+            .workSectionInner {
+                padding: 80px 0;
+
+                .headingTitle {
+                    p {
+                        margin: 20px 0 40px 0;
+                    }
+                }
+
+                .blockWrap {
+                    padding: 0 20px;
+                }
+            }
+        }
+
+
+        .audioSection {
+            .audioSectionInner {
+                height: 300px;
+
+                .row.align-items-center {
+
+                    .audioTextWrap {
+                        padding: 3% 0;
+
+                        h4 {
+                            font-size: 16px;
+                        }
+
+                        h2 {
+                            font-size: 18px;
+                            line-height: 22px;
+                        }
+
+                        button {
+                            font-size: 14px;
+                            line-height: 16px;
+                            padding: 12px 15px;
+                        }
+
+                        p {
+                            font-size: 12px;
+                            line-height: 16px;
+                        }
+                    }
+
+                    .mobileImageWrap {
+                        bottom: 20px;
+                        img {
+                            max-height: 320px;
+                            min-height: 320px;
+                        }
+                    }
+                }
+            }
+        }
+
+        .offerSection {
+            &::after {
+                height: 250px;
+                top: 10px;
+            }
+
+            .offerText {
+                h2 {
+                    font-size: 24px;
+                    line-height: 30px;
+                    margin: 8px 0;
+                }
+
+                p {
+                    line-height: 20px;
+                    font-size: 14px;
+                }
+
+                button.offerBtn {
+                    font-size: 14px;
+                    width: 200px;
+                    height: 42px;
+                }
+            }
+        }
+
+        .background.bookCollection {
+            .container {
+                max-width: 95%;
+            }
+        }
+
+        .productWrapper {
+            .productline {
+                .singleProduct {
+                    .productTxt {
+                        padding: 10px !important;
+
+                        h2 {
+                            font-size: 15px !important;
+                            margin-bottom: 5px !important;
+                        }
+
+                        p {
+                            font-size: 14px !important;
+                            margin-bottom: 5px !important;
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+}
+
+@media only screen and (max-width: 850px) {
+    .contentPart {
+        .productWrapper {
+            .productline {
+                .row {
+                    justify-content: center;
+
+                    .col {
+                        flex: 0 0 auto;
+                        width: 50%;
+                        margin-top: 1.5rem;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .contentPart {
+        .workSection {
+            .workSectionInner {
+                .blockWrap.icons {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    margin: 15px 0;
+
+                    span.leftArrow,
+                    span.rightArrow {
+                        position: inherit;
+                        left: 0;
+                        transform: none;
+                        top: 0;
+                        right: auto;
+                        margin: 10px 0;
+                    }
+                }
+            }
+        }
+
+        .audioSection {
+            .audioSectionInner {
+                height: auto;
+                background-size: cover;
+                padding: 30px 0;
+
+                .row.align-items-center {
+                    .audioTextWrap {
+                        padding-bottom: 30px !important;
+
+                        h2 {
+                            font-size: 30px;
+                            line-height: 40px;
+                        }
+                    }
+
+                    .mobileImageWrap {
+                        bottom: 0px;
+                        justify-content: center;
+                        img {
+                            margin: 20px auto;
+                        }
+                    }
+                }
+            }
+        }
+
+        .offerSection {
+            background: #A4353B;
+            padding: 30px 0;
+
+            &::after {
+                display: none;
+            }
+
+            .mobileImage {
+                margin-top: 20px;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .workSection {
+        .workSectionInner {
+            padding: 40px 0;
+
+            .headingTitle {
+                h2 {
+                    font-size: 32px;
+                    line-height: 40px;
+                }
+            }
+        }
+    }
+
+    .contentPart {
+        .audioSection {
+            .audioSectionInner {
+                .row.align-items-center {
+                    .audioTextWrap {
+                        .btnsWrap.d-flex {
+                            flex-direction: column;
+
+                            button {
+                                margin: 10px 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .productWrapper {
+            .productline {
+                .row {
+                    .col {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+
+        .offerSection {
+            margin: 0;
+
+            .offerText {
+                h2 {
+                    font-size: 30px;
+                    line-height: 36px;
+                }
+            }
+        }
+    }
+}

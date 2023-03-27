@@ -1,0 +1,101 @@
+<app-header (newItemEvent)="getType($event)"></app-header>
+<div class="contentPart">
+    <ng-container>
+        <div class="container">
+            <div class="productTitle">
+                <div class="d-flex justify-content-between align-items-center productTitleInner mb-4">
+                    <h2>{{selectedCategory}}</h2>
+                </div>
+            </div>
+            <div class="productline">
+                <div class="row" infiniteScroll [infiniteScrollDistance]="0.1" (scrolled)="onScroll()">
+                    <div class="col-md-4 col-sm-12 mb-5 five-image-row" *ngFor='let data of dataList; let i = index'>
+                        <div class="singleProduct" (click)="detailBook(data['_id'])">
+                            <div class="singleProductInner">
+                                <button class="bookBtn yellow">
+                                    <img src="assets/images/mic.svg"
+                                        alt="Book icon" />
+                                </button>
+                                <div class="productImage">
+                                    <img [src]="data['image'] ? this.IMAGE_URL + data['image'] : 'assets/images/smallDefaultBook.png'"
+                                        alt="prduct Image" />
+                                </div>
+                                <div class="productTxt">
+                                    <h2 placement="top" ngbTooltip="{{ data['name'] }}">{{ data['name'] }}</h2>
+                                    <p placement="top" ngbTooltip="{{ data.author }}">{{ data.author }}</p>
+                                    <ul class="ratingWrap" [innerHtml]="getRating(data.rating)">
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h6>{{ errorMessage }}</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</div>
+
+<!-- Shimmer Start -->
+<div class="contentPart" *ngIf="!isSpinner">
+    <ng-container>
+        <div class="container">
+
+            <div class="productline">
+                <div class="row">
+                    <div class="col-md-3 mb-4 ">
+                        <div class="singleProduct shimmer">
+                            <div class="singleProductInner">
+                                <div class="productImage">
+                                    <span class=""></span>
+                                </div>
+                                <div class="productTxt">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-4 ">
+                        <div class="singleProduct shimmer">
+                            <div class="singleProductInner">
+                                <div class="productImage">
+                                    <span class=""></span>
+                                </div>
+                                <div class="productTxt">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-4 ">
+                        <div class="singleProduct shimmer">
+                            <div class="singleProductInner">
+                                <div class="productImage">
+                                    <span class=""></span>
+                                </div>
+                                <div class="productTxt">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-4 ">
+                        <div class="singleProduct shimmer">
+                            <div class="singleProductInner">
+                                <div class="productImage">
+                                    <span class=""></span>
+                                </div>
+                                <div class="productTxt">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </ng-container>
+</div>
+<!-- Shimmer Ends -->
+
+<app-footer></app-footer>

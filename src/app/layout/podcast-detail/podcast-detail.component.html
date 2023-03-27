@@ -1,0 +1,452 @@
+<app-header></app-header>
+
+<div class="contentPart">
+  <div class="warpper">
+    <!--WrapperDiv-->
+    <div class="wrapperView" *ngIf="!showShimmer">
+      <!-- stemper section start -->
+      <div class="background productDetail">
+        <div class="container">
+          <!-- Podcast details start -->
+          <div class="row">
+            <div class="col-md-4">
+              <div class="stemperImg">
+                <button class="openBookTop yellow">
+                  <img src="/assets/images/mic.svg" alt="Mic icon" />
+                </button>
+                <img
+                  [src]="podcastDetail['image'] ? this.IMAGE_URL + podcastDetail['image'] : '/assets/images/largeDefaultBook.png'"
+                  alt="stemperbook" class="mainBookImgDetail" />
+              </div>
+
+              <!-- Rating start -->
+              <div class="addRating">
+                <button class="btn btn-lg btn-outline-primary" type="button" (click)="openSm(contentOne)">Rate this
+                  book</button>
+              </div>
+              <!-- Rating end -->
+            </div>
+
+            <div class="col-md-8">
+              <div class="headerStemper">
+                <h2>{{podcastDetail ? (podcastDetail.name | titlecase) :'The Gravity of us'}}</h2>
+                <div class="timeIng">
+                  <span>{{ podcastChapters ? podcastChapters.length : '0'}}</span>
+                  <div class="rating">
+                    <ul class="ratingWrap" [innerHtml]="getRating(averageRating)">
+                    </ul>
+                    <span class="rateText">({{ averageRating }} Vērtējums)</span>
+                  </div>
+                </div>
+
+                <div class="authMain">
+                  <div class="row">
+                    <div class="col-lg-5 col-md-6  col-sm-6">
+                      <span>Sarakstījis:
+                        <strong>{{ podcastDetail.author | titlecase }} </strong>
+                      </span>
+                    </div>
+
+                    <div class="col-lg-5 col-md-6 col-sm-6">
+                      <span>Valoda: <strong>{{ podcastDetail.language | titlecase }}</strong> </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="authMain">
+                  <div class="row">
+                    <div class="col-lg-5 col-md-6  col-sm-6">
+                      <span>Abonenti: <strong>{{ totalSubscribers }}</strong> </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div [ngClass]="isReadMore ? 'month-recomm' : ''">
+                  <span class="text-capitalize">
+                    <P>{{ podcastDetail.description }}</P>
+                  </span>
+                </div>
+                <div class="readButton" type="button" (click)="showText()" *ngIf="descriptionReadMoreButton">
+                  <span>{{ isReadMore ? 'Lasi vairāk (pilns apraksts)': 'Lasi mazāk' }}</span>
+                </div>
+
+                <div class="buttonRow align-items-center">
+                  <button class="logodetail">
+                    <img [src]="isFavourite ? '/assets/images/heartIcon.svg' : '/assets/images/heat.png'" alt="heat"
+                      (click)="favouriteBook(podcastDetail._id, isFavourite)"
+                      [ngClass]="isFavourite ? 'favourite' : 'notFavourite'" />
+                  </button>
+
+                  <div class="shareWrap">
+                    <button class="logodetail shareBtn">
+                      <img (click)="isShare=!isShare" src="/assets/images/share.svg" alt="share" />
+                    </button>
+                    <share-buttons *ngIf="isShare" class="share-buttons" theme="circles-dark"
+                      [include]="['copy', 'facebook', 'email', 'twitter']" [showIcon]="true" [showText]="false"
+                      url="currentUrl">
+                    </share-buttons>
+                  </div>
+
+                  <button class="logodetail">
+                    <img [src]="isSubscribed ? '/assets/images/bellIcon_3.png' : '/assets/images/bellIcon_2.png'" alt="Bell icon" (click)="subscribePodcast(podcastDetail._id, isSubscribed)"/>
+                  </button>
+
+                  <div *ngIf="podcastDetail.audioPresentation">
+                    <button class="buttonlogoDetails"
+                      (click)="openModal('', podcastDetail.audioPresentation , tabType, 'audioPresentation', '','')">
+                      <span><img src="/assets/images/mic.svg" alt="Mic icon" /> Ieskats podkāstā</span>
+                    </button>
+                  </div>
+
+                  <div>
+                    <button class="buttonlogoDetails" (click)="allEpisodes(podcastDetail._id)" type="button">
+                      <span><img src="/assets/images/mic.svg" alt="Mic icon" />Listen all episodes</span>
+                    </button>
+                  </div>
+
+                  <!-- <div *ngIf="!isSubscribed">
+                    <button class="buttonlogoDetailsSecond" (click)="subscribeBook(podcastDetail._id)" type="button">
+                      <span><img src="/assets/images/bell.png" alt="Mic icon" /> Paraksties uz podkāstu</span>
+                    </button>
+                  </div> -->
+
+                  <!-- <div ngbDropdown class="d-inline-block" *ngIf="isSubscribed">
+                    <button type="button" class="btn btn-outline-danger dropWidth" id="sortMenu"
+                      ngbDropdownToggle>{{selectedSortOrder}}</button>
+                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                      <button class="dropdown-item" type="button" *ngFor="let sortOrder of sortOrders"
+                        (click)="ChangeSortOrder(sortOrder[0], '', podcastChapters, tabType, 'podcastByChapters')">{{sortOrder}}</button>
+                    </div>
+                  </div> -->
+
+                </div>
+
+                <div>
+                  <label class="genre">Kategorija</label>
+                </div>
+                <div class="GroupButtoms">
+                  <ng-container *ngFor="let item of modifiedCategory">
+                    <button [ngClass]="item.className" (click)="viewPodcastByCategoryId(tabType, item._id)">{{item.name |
+                      titlecase}}</button>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Podcast details end -->
+
+        </div>
+      </div>
+      <!-- stemper section end -->
+
+      <!-- Last chapter section start  --> 
+      <div class="last-episodes">
+        <div class="container">
+          <div class="last-episodes__wrapper">
+            <h2>{{ podcastDetail.name | titlecase }} - Pēdējās epizodes </h2>
+
+            <ul>
+              <li *ngFor="let episodes of lastEpisodes">
+
+                <div class="last-episodes__img"
+                  (click)="!isSubscribed && (episodes.episode != 1) && (episodes.season !=1) ? notSubscribedError() : playLatestEpisode(episodes.episodeName, '', lastEpisodes, tabType, 'podcastByChapters')">
+                  <img
+                    [src]="podcastDetail['image'] ? this.IMAGE_URL + podcastDetail['image'] : '/assets/images/largeDefaultBook.png'"
+                    alt="" class="img-fluid" />
+                  <div class="hover">
+                    <img src="/assets/images/play.png" alt="">
+                  </div>
+                </div>
+
+                <div class="last-episodes__content">
+                  <span>{{ episodes. uploadDate | date:'dd/MM/yyy' }}</span>
+                  <h6>S{{ episodes.season }} E{{ episodes.episode }} - {{ episodes.episodeName }} </h6>
+
+                  <div [ngClass]="{'spisodeDescriptionHeight': isChapterReadMore}">
+                    <P>{{ episodes.episodeDescription }}</P>
+                  </div>
+                  <div class="readButton" type="button" (click)="showChapterText()" *ngIf="episodes.showReadMoreButton">
+                    <span>{{ isChapterReadMore ? 'Lasi vairāk (pilns apraksts)': 'Lasi mazāk' }}</span>
+                  </div>
+                  <p class="last-episodes__time m-0">{{ chapterTimeFormat(episodes.episodeLength) }}</p>
+
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="container">
+        <div class="latest-episode_logo">
+          <img src="/assets/images/logo_podcast.png" alt="">
+        </div>        
+      </div>
+      </div>
+      <!-- Last chapter section end  -->
+    </div>
+
+    <!-- Shimmer start-->
+    <div class="wrapperShimmer" *ngIf="showShimmer">
+      <!-- stemper section start -->
+      <div class="background productDetail">
+        <div class="container">
+          <!-- Podcast details start -->
+          <div class="row">
+            <div class="col-md-4">
+              <div class="stemperImg shimmer">
+              </div>
+
+              <div class="addRating">
+                <span class="shimmer height-50"></span>
+              </div>
+            </div>
+
+            <div class="col-md-8">
+              <div class="headerStemper">
+                <h2 class="shimmer height-50"></h2>
+                <div class="timeIng">
+                  <span class="shimmer height-50"></span>
+                </div>
+                <div class="rating ratingShimmer">
+                  <ul class="ratingWrap shimmer height-50">
+                  </ul>
+                  <span class="rateText shimmer height-50"></span>
+                </div>
+
+                <div class="authMain">
+                </div>
+
+                <div [ngClass]="isReadMore ? 'month-recomm' : ''">
+                  <span class="text-capitalize">
+                    <p class="height-120 shimmer"></p>
+                  </span>
+                </div>
+                <div class="readButton" type="button" (click)="showText()" *ngIf="descriptionReadMoreButton">
+                  <span class="shimmer width-200 height-50 "></span>
+                </div>
+
+                <div class="">
+                  <div class="rating ratingShimmer">
+                    <ul class="ratingWrap shimmer height-50">
+                    </ul>
+                    <span class="rateText shimmer height-50"></span>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="shimmer width-200 height-50 "></label>
+                </div>
+                <div class="GroupButtoms d-flex flex-wrap">
+                  <ul>
+                    <li class="shimmer width-200 height-50 mr-2"></li>
+                    <li class="shimmer width-200 height-50 mr-2"></li>
+                    <li class="shimmer width-200 height-50 mr-2"></li>
+                    <li class="shimmer width-200 height-50 mr-2"></li>
+                    <li class="shimmer width-200 height-50 mr-2"></li>
+                    <li class="shimmer width-200 height-50 mr-2"></li>
+                    <li class="shimmer width-200 height-50 mr-2"></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Podcast details end -->
+
+        </div>
+      </div>
+      <!-- stemper section end -->
+
+      <!-- Last chapter section start  -->
+      <div class="last-episodes bgtransparent">
+        <div class="container">
+          <div class="last-episodes__wrapper">
+
+            <ul>
+              <li *ngFor="let episodes of lastEpisodes">
+                <div class="shimmer height-120"></div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- Last chapter section end  -->
+    </div>
+    <!-- Shimmer start-->
+
+    <div class="background bookCollection">
+      <!-- Similar Podcast start -->
+      <div class="container titleText">
+        <h2 class="mb-5">Similar Podcasts</h2>
+        <div class="productWrapper">
+          <div class="productline">
+            <div class="row">
+
+              <div class="col mb-4" *ngFor="let book of similarPodcasts">
+                <div class="singleProduct" (click)="similarBookDetail(book['_id'])">
+                  <div class="singleProductInner">
+                    <button class="bookBtn yellow">
+                      <img src="/assets/images/mic.svg" />
+                    </button>
+                    <div class="productImage">
+                      <img
+                        [src]="book['image'] ? this.IMAGE_URL + book['image'] : '/assets/images/smallDefaultBook.png'"
+                        alt="stemperbook" />
+                    </div>
+                    <div class="productTxt">
+                      <h2>{{ book.name | titlecase }}</h2>
+                      <p><span>{{ book.author | titlecase }}</span></p>
+
+                      <div class="rating">
+                        <ul class="ratingWrap" [innerHtml]="getRating(book.rating)">
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <h6>{{ errorMessage }}</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Similar Podcast end -->
+
+      <!-- Most Popular Podcasts start -->
+      <div class="container titleText">
+        <h2 class="mb-5">Most Popular Podcasts</h2>
+        <div class="productWrapper">
+          <div class="productline">
+            <div class="row">
+              <div class="col mb-4" *ngFor="let book of popularPodcastList">
+                <div class="singleProduct" (click)="similarBookDetail(book['_id'])">
+                  <div class="singleProductInner">
+                    <button class="bookBtn yellow">
+                      <img src="/assets/images/mic.svg" />
+                    </button>
+                    <div class="productImage">
+                      <img
+                        [src]="book['image'] ? this.IMAGE_URL + book['image'] : '/assets/images/smallDefaultBook.png'"
+                        alt="stemperbook" />
+                    </div>
+                    <div class="productTxt">
+                      <h2>{{ book.name | titlecase }}</h2>
+                      <p><span>{{ book.author | titlecase }}</span></p>
+
+                      <div class="rating">
+                        <ul class="ratingWrap" [innerHtml]="getRating(book.rating)">
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <h6>{{ errorMessage }}</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Most Popular Podcasts end -->
+    </div>
+
+    <!-- Special Offer Section start Html -->
+    <div class="offerSection homeOffer">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-7">
+            <div class="offerText">
+              <h4>Atklāj Audiolasītavu!</h4>
+              <h2>Lasi, klausies un baudi!</h2>
+              <p>
+                Kad vingrojat, gatavojat ēst, darbojaties dārzā, remontējat dzīvokli, sēžat automašīnas sēdeklī vai
+              vienkārši atpūšaties: audiogrāmatas vienmēr ir jums līdzās. Izvēlieties, kura būs nākamā audiogrāmata, ko
+              klausīsieties, vai sekojiet mūsu ieteikumam!
+              </p>
+              <!-- <button class="offerBtn">Pieraksties mūsu jaunumiem</button> -->
+
+            <div class="buttonRow">
+              <button class="buttonlogoDetailsSecond"><span>Pieraksties mūsu jaunumiem</span></button>
+            </div>
+            </div>
+          </div>
+          <div class="col-md-5">
+            <div class="mobileImage">
+              <img src="/assets/images/mobileImgdetailPage.svg" alt="mobiel View" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Special Offer Section End Html -->
+
+    <!-- Lasitava Work Section HTML Start-->
+    <div class="workSection">
+      <div class="workSectionInner">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 text-center">
+              <div class="headingTitle">
+                <h2>Kā darbojas Audiolasītava?</h2>
+                <p>Izbaudiet audiogrāmatu klausīšanās pieredzi jebkurā laikā savā mobilajā tālrunī, datorā vai automašīnā -
+                  vienkārši un ērti!</p>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 text-center">
+              <div class="blockWrap">
+                <img src="/assets/images/appIcon.svg">
+                <h3>1. Instalē mūsu lietotni</h3>
+                <p>Ērti lejupielādējiet mūsu Android vai iOS mobilo lietotni, lai vienmēr varētu piekļūt visam saturam.</p>
+              </div>
+
+            </div>
+            <div class="col-md-4 text-center">
+              <div class="blockWrap icons">
+                <span class="leftArrow"> <img src="/assets/images/arrowRight.svg" alt='' /></span>
+                <img src="/assets/images/setupIcon.svg">
+                <h3>2. Izveido savu kontu</h3>
+                <p>Reģistrējieties, lai varētu baudīt visu mūsu platformā pieejamo audiogrāmatu klāstu.</p>
+                <span class="rightArrow"> <img src="/assets/images/arrowRight.svg" alt='' /></span>
+              </div>
+
+            </div>
+            <div class="col-md-4 text-center">
+              <div class="blockWrap">
+                <img src="/assets/images/enjoyIcon.svg">
+                <h3>3. Izvēlies savas iecienītākās audiogrāmatas</h3>
+                <p>Klausieties savas iecienītākās audiogrāmatas no mobilā tālruņa, datora vai jebkuras ierīces, kas
+                  savienota ar Bluetooth. Ērti un vienkārši!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Lasitava Work Section HTML End-->
+  </div>
+</div>
+
+
+<!-- Rating popup modal start -->
+<ng-template #contentOne let-modal>
+  <div class="startModal">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Add Rating:</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="ratingForm">
+        <div class="ratingTitle">Add Rating: </div>
+        <div class="starRate">
+          <ngb-rating [max]="5" [(rate)]="currentRate"></ngb-rating>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer ratingSaveBtn">
+      <button type="button" class="btn btn-outline-dark"
+        (click)="addBookRating(currentRate, podcastDetail, modal)">Save</button>
+    </div>
+  </div>
+</ng-template>
+<!-- Rating popup modal end -->
+
+<app-footer></app-footer>

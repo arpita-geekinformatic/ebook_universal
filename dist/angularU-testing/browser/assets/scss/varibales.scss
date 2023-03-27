@@ -1,0 +1,145 @@
+// FontSize Properties
+
+$font11: 11px;
+$font12: 12px;
+$font13: 13px;
+$font14: 14px;
+$font15: 15px;
+$font16: 16px;
+$font17: 17px;
+$font18: 18px;
+$font24: 24px;
+$font30: 30px;
+$font46: 46px;
+
+// Line-height Properties
+
+$lineHeight12px: 12px;
+$lineHeight14px: 14px;
+$lineHeight16px: 16px;
+$lineHeight22px: 22px;
+$lineHeight28px: 28px;
+$lineHeight32px: 32px;
+$lineHeight42px: 42px;
+$lineHeight52px: 52px;
+
+// Color Properties
+
+$WhiteColor: #fff;
+$BlackColor: #000;
+$MaroonColor: #A4353B;
+$ColorBDBCBD: #BDBCBD;
+$backgroundTransparent: transparent;
+$backgroundNoRepeat: no-repeat;
+
+// margin Properties
+$marginAuto: auto;
+$marginZero: 0px;
+$margin5px: 5px;
+$margin6px: 6px;
+$margin10px: 10px;
+$margin12px: 12px;
+$margin15px: 15px;
+$margin20px: 20px;
+$margin25px: 25px;
+$margin35px: 35px;
+$margin50px: 50px;
+
+// Padding Properties
+$paddingZero: 0px;
+$padding10px: 10px;
+$padding12px: 12px;
+$padding15px: 15px;
+$padding20px: 20px;
+$padding24px: 24px;
+$padding25px: 25px;
+$padding30px: 30px;
+$padding35px: 35px;
+$padding40px: 40px;
+$padding50px: 50px;
+$padding60px: 60px;
+
+// font-family
+$fontFamilyInter: 'Inter';
+
+// Font-wiehgt Properties
+
+$fontWeight300: 300;
+$fontWeight400: 400;
+$fontWeight500: 500;
+$fontWeight600: 600;
+$fontWeight700: 700;
+
+// Height Properties
+$heightAuto: auto;
+$height20px: 20px;
+$height24px: 24px;
+$height34px: 34px;
+$height40px: 40px;
+$height46px: 46px;
+$height500px: 500px;
+$height100vh: 100vh;
+$heiught100per: 100%;
+
+// Width Properties
+$widthAuto: auto;
+$width20px: 20px;
+$width24px: 24px;
+$width30px: 30px;
+$width150px: 150px;
+$width100Per: 100%;
+
+// Display Properties
+$d-block: block;
+$d-flex: flex;
+$d-inline-block: inline-block;
+$d-none: none;
+
+// Flex Properties
+$flexDirectionColumn: column;
+
+// Align Properties
+$alignItemsCenter: center;
+$justifyContentCenter: center;
+
+// Opacity Properties
+$opacityOne: 1;
+$opacityTwo: 0.2;
+$opacityOne: 0.3;
+$opacityfive: 0.5;
+$opacitySix: 0.6;
+$opacitySeven: 0.7;
+$opacityInherit: inherit;
+
+
+// Border Radius Properties
+$borderRadius4: 4px;
+$borderRadius12: 12px;
+$borderRadius100: 100px;
+
+// Text-center Properties
+$textCenter: center;
+
+// Positions Properties
+$positionAbsolute: absolute;
+$positionRelative: relative;
+$positionInherit: inherit;
+
+
+// Cursor Pointer Properties
+$cursorPointer: pointer;
+
+// custom Pixels
+$zeropx: 0px;
+$fivepx: 5px;
+$Tenpx: 10px;
+$fifteenpx: 15px;
+$twentypx: 20px;
+
+// BackgroundSize Properties
+
+$backgroundSize: cover;
+
+// Text Cases Properties
+$textUppercase: uppercase;
+$textCapitalize: capitalize;

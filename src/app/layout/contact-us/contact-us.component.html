@@ -1,0 +1,192 @@
+<app-header></app-header>
+<!-- <div class="container-fluid contact-us-banner p-4">
+    <h3 class="text-center  text-light">Contact Us</h3>
+    <ul class="breadcrumb text-center">
+        <li><a href="http://localhost:4200/home">Home</a></li>
+        <li><span>Contact us</span></li>
+    </ul>
+    <img src='assets/images/aboutUsBanner.png' alt='about-us-banner'/>
+</div> -->
+<div class="container contact-form-wrap py-5 my-5">
+    <div class="row">
+        <div class="col-md-6 contact-left">
+            <h2>Contact Us</h2>
+            <ul class="contact-inner">
+                <li>
+                    <p>
+                        <img src="assets/images/locationIcon.svg" alt="location-icon" />
+                    </p>
+                    <div class="address-wrap">Carretera del Muelle 41 Matet Castellón 12415 Spain</div>
+                </li>
+                <li>
+                    <p>
+                        <img src="assets/images/phoneIcon.svg" alt="phone-icon" />
+                    </p>
+                    <a href="tel:341236547890">+34 123 654 7890</a>
+                </li>
+                <li>
+                    <p>
+                        <img src="assets/images/mailIcon.svg" alt="mail-icon" />
+                    </p>
+                    <a href="mailto:info@audiolasitava.lv">info@audiolasitava.lv</a>
+                </li>
+            </ul>
+            <div class="social_links">
+                <ul>
+                    <li>
+                        <a href="#">
+                            <img src="assets/images/facbook_icon.svg" alt="" />
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="assets/images/twitter_icon.svg" alt="" />
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="assets/images/instagram_icon.svg" alt="Instagram" />
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="assets/images/youtube_icon.svg" alt="Youtube" />
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="full-map">
+                <div class="map-wrap">
+                    <!-- <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3193.182791445716!2d-2.4829145852192305!3d36.838098073266124!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd707674b17813c1%3A0x893ac3be1b5f97d9!2sC.%20Cta.%20del%20Muelle%2C%2004002%20Almer%C3%ADa%2C%20Spain!5e0!3m2!1sen!2sin!4v1670907670839!5m2!1sen!2sin" width="100%" height="390" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> -->
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d3059.1376629341844!2d-0.4701542723483337!3d39.938310290229886!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sCarretera%20del%20Muelle%2041%20Matet%20Castell%C3%B3n%2012415%20Spain!5e0!3m2!1sen!2sin!4v1675331575928!5m2!1sen!2sin"
+                        width="100%" height="390" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <!--Section: Contact v.2-->
+            <div class="row">
+                <!--Grid column-->
+                <div class="col-md-12 mb-md-0 mb-5 px-4"
+                    style="background-color: #F1F1F1;box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;">
+
+                    <form id="contact-form" class="contact-form" name="contact-form" [formGroup]="contactForm"
+                        (ngSubmit)="onSubmit()">
+                        <!--Grid row-->
+                        <div class="row p-2">
+
+                            <!--Grid column-->
+                            <div class="col-md-12 mt-3">
+                                <label for="">Name</label>
+                                <input type="text" id="name" formControlName="name" name="name" placeholder=""
+                                    class="form-control" [ngClass]="{
+                                    'is-invalid':
+                                    submitted && contactForm.controls['name'].invalid
+                                }">
+                                <div class="text-danger" *ngIf="
+                                      submitted &&
+                                      contactForm.get('name')?.hasError('required')
+                                    ">
+                                    Name is required.
+                                </div>
+                            </div>
+                            <!--Grid column-->
+
+                            <!--Grid column-->
+                            <div class="col-md-12">
+                                <label for="">Email</label>
+                                <input type="text" id="email" formControlName="email" name="email" placeholder=""
+                                    class="form-control" [ngClass]="{
+                                        'is-invalid':
+                                        submitted && contactForm.controls['email'].invalid
+                                    }">
+                                <div>
+                                    <div class="text-danger" *ngIf="
+                                          submitted &&
+                                          contactForm.get('email')?.hasError('required')
+                                        ">
+                                        Email is required.
+                                    </div>
+                                    <div class="text-danger" *ngIf="
+                                          submitted &&
+                                          contactForm.get('email')?.hasError('pattern')
+                                        ">
+                                        Please enter valid address.
+                                    </div>
+                                </div>
+                            </div>
+                            <!--Grid column-->
+                            <div class="col-md-12">
+                                <label for="">Phone</label>
+                                <input type="text" id="subject" formControlName="phone" name="subject" placeholder=""
+                                    class="form-control" [ngClass]="{
+                                        'is-invalid':
+                                        submitted && contactForm.controls['phone'].invalid
+                                    }">
+                                <div class="text-danger" *ngIf="
+                                submitted &&
+                                contactForm.get('phone')?.hasError('required')
+                                ">
+                                    Phone is required.
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="">Subject</label>
+                                <input type="text" id="subject" formControlName="subject" name="subject" placeholder=""
+                                    class="form-control" [ngClass]="{
+                                        'is-invalid':
+                                        submitted && contactForm.controls['subject'].invalid
+                                    }">
+                                <div class="text-danger" *ngIf="
+                                submitted &&
+                                contactForm.get('subject')?.hasError('required')
+                                ">
+                                    Subject is required.
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="">Message</label>
+                                <textarea type="text" id="message" formControlName="description" name="message" rows="2"
+                                    class="form-control md-textarea" placeholder="" [ngClass]="{
+                                        'is-invalid':
+                                        submitted && contactForm.controls['description'].invalid
+                                    }"></textarea>
+                                <div class="text-danger" *ngIf="
+                                submitted &&
+                                contactForm.get('description')?.hasError('required')
+                                ">
+                                    Description is required.
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-3">
+
+                                <label for="confirm" class="text-wrap"><input formControlName="isConsent"
+                                        type="checkbox" id="confirm" name="confirm">I consent to having this website
+                                    store my
+                                    submitted information so they can respond to my query.</label><br>
+                                <div class="text-danger" *ngIf="
+                                    submitted &&
+                                    contactForm.get('isConsent')?.hasError('required')
+                                    ">
+                                    This field is required.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-md-left mb-5">
+                            <button type="submit" class="btn btn-danger send-message">Send
+                                Message</button>
+                        </div>
+                    </form>
+                </div>
+                <!--Grid column-->
+            </div>
+            <!--Section: Contact v.2-->
+        </div>
+    </div><!-- Row End-->
+</div>
+
+<app-footer></app-footer>

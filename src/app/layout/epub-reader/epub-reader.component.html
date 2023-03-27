@@ -1,0 +1,24 @@
+<app-header></app-header>
+<div class="contentPart">
+
+    <div class="pdf-container my-5 container">
+      <carousel [(activeSlide)]="activeSlideIndex" [interval]="0" *ngIf="!showSpin" >
+        <slide *ngFor="let img of images; let i = index;" class="text-center">
+          <img [src]="img" alt="slide {{i}}" style="margin: 0 auto;max-width: 100%; display: block;">
+        </slide>
+        
+      </carousel>
+      <div *ngIf="showSpin" class="spinner-img">
+          <img src="assets/images/loading-gif.gif" style="width: 70px; height: 70px;margin: 0 auto; display: block;" alt="" srcset="">
+      </div>
+    </div>
+
+    <div class="pdf-footer" *ngIf="!showSpin"> 
+      <div class="pdf-footer__mini">
+            <span (click)="prevSlide()"><img src="assets/images/left.png" alt=""></span>
+            <span>{{activeSlideIndex + 1}} of {{totalPages}}</span>
+            <span (click)="nextSlide()"><img src="assets/images/right.png" alt=""></span>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>

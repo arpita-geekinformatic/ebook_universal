@@ -1,0 +1,554 @@
+@import '../../../assets/scss/style.scss';
+@import '../../../assets/scss/varibales.scss';
+
+.header {
+    .topBar {
+        background: linear-gradient(180deg, #A4353B 0%, #000000 102.5%);
+        padding: $padding24px $paddingZero;
+
+        form.searchWrap {
+            width: 232px;
+            // width: 275px;
+            position: $positionRelative;
+
+            input[type="text"] {
+                background: rgba(223, 223, 223, 0.3);
+                opacity: $opacityInherit;
+                border: 1px solid rgba(223, 223, 223, 0.3);
+                border-radius: $borderRadius100;
+                padding-left: $padding15px;
+                font-size: $font13;
+                font-family: $fontFamilyInter;
+                line-height: $lineHeight12px;
+                height: $height40px;
+                width: $width100Per;
+                color: $WhiteColor;
+
+                &:focus {
+                    outline: $d-none;
+                }
+            }
+
+            button {
+                position: $positionAbsolute;
+                right: $zeropx;
+                border: $d-none;
+                background: $backgroundTransparent;
+                padding: 8px $padding12px;
+            }
+        }
+        .logoWrap {
+            max-width: 350px;
+        }
+
+        ul.headerOptions {
+            display: $d-flex;
+            list-style: $d-none;
+            padding: $paddingZero;
+            margin-bottom: $marginZero;
+            justify-content: flex-end;
+            // width: 275px;
+
+            li {
+                position: $positionRelative;
+                margin: $marginZero $margin15px;
+
+                .count {
+                    width: $width24px;
+                    height: $height24px;
+                    display: $d-inline-block;
+                    background: $BlackColor;
+                    position: $positionAbsolute;
+                    z-index: 1;
+                    text-align: $textCenter;
+                    color: $WhiteColor;
+                    border-radius: $borderRadius100;
+                    top: -15px;
+                    right: -15px;
+                    font-size: $font12;
+                    padding: 3px $paddingZero;
+                }
+
+                a {
+                    img {
+                        width: $width24px;
+                        height: $height24px;
+                    }
+                }
+            }
+        }
+    }
+
+    nav.navbar.navbar-expand-sm.bg-dark.navbar-dark {
+        background-color: $WhiteColor  !important;
+        padding: 21px $paddingZero;
+
+        a.nav-link {
+            font-weight: $fontWeight500;
+            font-size: $font15;
+            line-height: $lineHeight12px;
+            letter-spacing: -0.02em;
+            color: $MaroonColor;
+            position: $positionRelative;
+            cursor: $cursorPointer;
+            padding: 12px 25px;
+            margin: 0 10px;
+            color: #000000;
+            text-transform: uppercase;
+        }
+
+        a.nav-link.active, a.nav-link:hover {
+            background: #A4353B;
+            border-radius: 20px;
+            color: #fff;
+            // &::before {
+            //     content: '';
+            //     position: $positionAbsolute;
+            //     width: 55px;
+            //     height: 2px;
+            //     background: $MaroonColor;
+            //     bottom: -5px;
+            //     left: $zeropx;
+            //     right: $zeropx;
+            //     margin: $marginAuto;
+            // }
+        }
+    }
+    .mobileView {
+        display: $d-none;
+    }
+}
+
+.logoWrap img{
+    width: 100%;
+}
+
+@media only screen and (max-width: 991px) {
+    .header {
+        .logoWrap {
+            img {
+                width: 200px;
+            }
+        }
+    }   
+}
+
+@media only screen and (max-width: 767px) {
+    .header {
+        .topBar {
+            .container {
+                max-width: $width100Per;
+
+                form.searchWrap {
+                    width: 190px;
+
+                    input[type=text] {
+                        padding-left: $padding10px;
+                        font-size: $font12;
+                        line-height: $lineHeight12px;
+                        height: $height34px;
+                    }
+
+                    button {
+                        padding: 3px 9px;
+                    }
+                }
+
+                .logoWrap {
+                    img {
+                        width: $width150px;
+                    }
+                }
+
+                ul.headerOptions {
+                    li {
+                        margin: $marginZero $margin5px;
+                    }
+                }
+            }
+        }
+    }
+}
+@media only screen and (max-width: 500px) {
+    .header {
+        .topBar {
+            padding: $padding10px $paddingZero;
+            .container {
+                max-width: $width100Per;
+
+                .d-flex.justify-content-between.align-items-center {
+                    flex-direction: $flexDirectionColumn;
+
+                    form.searchWrap {
+                        order: 2;
+                        margin: $margin10px $marginZero $margin15px $marginZero;
+
+                        input[type=text] {
+                            padding-left: $padding10px;
+                            font-size: $font12;
+                            line-height: $lineHeight12px;
+                            height: $height34px;
+                        }
+
+                        button {
+                            padding: 4px 9px;
+                        }
+                    }
+
+                    .logoWrap {
+                        order: 1;
+
+                        img {
+                            width: 240px;
+                        }
+                    }
+
+                    ul.headerOptions {
+                        order: 3;
+
+                        li {
+                            margin: $marginZero $margin12px;
+                            .count {
+                                width: $width20px;
+                                height: $height20px;
+                                font-size: $font11;
+                                padding: 1px $paddingZero;
+                                top: -6px;
+                                right: -14px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 479px) {
+
+    .header {
+        .mobileView {
+            display: $d-block;
+        }
+        .desktopView {
+            display: $d-none;
+        }
+        nav.navbar {
+            padding: $padding10px $paddingZero !important;
+            .navbar-toggler {
+                color: #333;
+                background: linear-gradient(180deg, $MaroonColor 0%, $BlackColor 102.5%);
+                border: $zeropx solid #333;
+                border-radius: $borderRadius4;
+            }
+        }
+    }
+}
+
+
+button#dropdownManual {
+    border: 0px solid white;
+    position: relative;
+    bottom: 7px;
+}
+.dropdown-toggle::after {
+    border-right: 0px solid transparent; 
+    border-left: 0px solid transparent; 
+    background-color: #333;
+}
+
+button#dropdownManual:hover {
+    color: #333;
+    background-color: #333;
+}
+
+
+button.dropdown-item {
+    display: flex;
+    margin: 0;
+    padding: 7px 20px;
+}
+.profileText {
+    padding-left: 10px;
+    margin: 0px;
+}
+img.iconEdit {
+    width: 30px;
+}
+
+.iconEditPassword{
+    width: 25px;
+    height: 22px;
+}
+
+.iconLogout{
+    width: 22px;
+    height: 22px;
+}
+.dropdown-item:active {
+    color: var(--bs-dropdown-link-active-color);
+    text-decoration: none;
+    background-color: white;
+}
+
+
+
+/**
+    23 Jan 2023 Player modal css
+*/
+.audio-progress-area {
+    height: 6px;
+    width: 100%;
+}
+
+.audio-progress-area .audio-progress-bar {
+    height: inherit;
+    position: relative;
+    border-radius: inherit;
+}
+.audio-progress-area .audio-progress-bar {
+    height: inherit;
+    position: relative;
+    border-radius: inherit;
+}
+
+ngb-progressbar.progress {
+    background: gray;
+    height: 6px;
+}
+
+.audio-progress-bar::before {
+    content: "";
+    position: absolute;
+    height: 12px;
+    width: 12px;
+    background: #000;
+    border-radius: inherit;
+    top: 50%;
+    right: -5px;
+    transform: translateY(-50%);
+    background: inherit;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.audio-progress-area:hover .audio-progress-bar::before {
+    opacity: 1;
+}
+
+.audio-progress-area .timer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 2px;
+}
+
+.timer span {
+    font-size: 13px;
+    color: white;
+}
+
+.controls {
+    margin: 40px 0 5px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.controls #prev {
+    margin-right: -13px;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+}
+
+.controls #next {
+    margin-left: -13px;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+}
+
+.controls #repeat-plist,
+#more-music {
+    cursor: pointer;
+    background: transparent;
+    border: none;
+}
+
+.controls .play-pause {
+    height: 54px;
+    width: 54px;
+    align-items: center;
+    background: transparent;
+    border: none;
+}
+
+.play-pause::before {
+    content: "";
+    position: absolute;
+}
+
+.margin-list .chapterlist {
+    margin: 10px 0;
+    max-height: 260px;
+    overflow-y: auto !important;
+}
+
+.chapterlist li {
+    cursor: pointer;
+    list-style: none;
+    padding-bottom: 10px;
+    margin-bottom: 5px;
+    color: gray;
+    border-bottom: 1px solid #e5e5e5;
+}
+.cus-audio-progress {
+    width: 100%; position: absolute; top: -5px; left: -1px;z-index: 9;opacity: 0; cursor: pointer;
+}
+
+.mini-player .audioImg, 
+.mini-player .musicAppMain, 
+.mini-player .controls .skip {
+    display: none;
+}
+.mini-player {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 400px;
+}
+.musicImg {
+    width: 100%
+}
+
+.musicSystem img {
+    width: 300px;
+}
+
+.custom-player-main {
+    top: 0;
+    position: fixed;
+    display: flex;
+    width: 100%;
+    z-index: 9;
+    justify-content: center;
+    align-items: center;
+}
+.player-shadow {
+    background: #00000070;
+    height: 100vh;
+}
+.backCustom {
+    background: linear-gradient(180deg, #A4353B 0%, #000000 102.5%);
+    border-radius: 7px;
+    width: 100%;
+    max-width: 500px;
+    padding: 15px;
+}
+
+.modal-title {
+    color: #fff;
+}
+
+.musicImg {
+    width: 100%
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.audioContent {
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.audioContent h6 {
+    text-align: center;
+    font-weight: 400;
+}
+
+.modal-header {
+    border-bottom: 0px;
+    justify-content:end
+}
+
+.audioContent h4 {
+    font-size: 20px;
+    margin-bottom: 2px;
+}
+
+.audioImg {
+    text-align: center;
+
+    img {
+        max-height: 300px;
+        width: 100%;
+        object-fit: contain;
+    }
+}
+
+.audioTextRight {
+    color: #fff;
+}
+
+.musicAppMain {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.backCustom .modal-body {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.audioTextRight h4 {
+    font-size: 20px;
+}
+
+.audioTextRight h6 {
+    font-size: 16px;
+}
+
+button.iconMusic {
+    background: transparent;
+    border: 1px solid transparent;
+}
+
+.audioPlayer {
+    margin: 0px;
+}
+
+audio {
+    background: transparent !important;
+    width: 100% !important;
+}
+
+.musicIcon {
+    width: 100%;
+}
+
+button.btn-close img {
+    width: 100%;
+    margin-bottom: 14px;
+}
+
+.favourite {
+    width: 35px;
+}
+
+.notFavourite {
+    background-color: white;
+}
+
+.minMaxIcon{
+    opacity: 0.5; 
+    margin-right: 1rem; 
+    font-size: 20px;
+    color: white
+}

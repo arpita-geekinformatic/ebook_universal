@@ -1,0 +1,246 @@
+@import '../../../assets/scss/style.scss';
+@import '../../../assets/scss/varibales.scss';
+
+::-webkit-input-placeholder {
+    opacity: $opacityOne;
+    color: $WhiteColor;
+}
+
+:-moz-placeholder {
+    opacity: $opacityOne;
+    color: $WhiteColor;
+}
+
+::-moz-placeholder {
+    opacity: $opacityOne;
+    color: $WhiteColor;
+}
+
+:-ms-input-placeholder {
+    opacity: $opacityOne;
+    color: $WhiteColor;
+}
+
+.signupPage {
+    background: linear-gradient(180deg, #A4353B -28.09%, #000000 69.94%);
+    display: $d-inline-block;
+    width: $width100Per;
+    height: calc($height100vh - 18px);
+    color: $WhiteColor;
+
+    .signupMain {
+        max-width: 480px;
+        padding: $padding20px;
+        box-shadow: $zeropx $zeropx $Tenpx rgba(164, 53, 59, 0.2);
+        border-radius: $borderRadius12;
+        position: $positionAbsolute;
+        width: $width100Per;
+        transform: translate(-50%, -50%);
+        left: 50%;
+        top: 50%;
+
+        img {
+            max-width: 250px;
+        }
+
+        h1 {
+            text-align: $textCenter;
+            font-family: $fontFamilyInter;
+            font-weight: $fontWeight500;
+            margin: $marginZero;
+            font-size: $font30;
+        }
+
+        .form-group {
+            margin: $margin6px $marginZero;
+            display: $d-inline-block;
+            flex-direction: $flexDirectionColumn;
+            width: $width100Per;
+
+            label {
+                font-size: $font16;
+                font-weight: $fontWeight600;
+                margin: $margin5px $marginZero;
+            }
+
+            .userIcon {
+                background-image: url('../../../assets/images/userIcon.svg');
+                background-position: 15px center;
+                background-repeat: $backgroundNoRepeat;
+                background-size: 24px;
+            }
+
+            .emailIcons {
+                background-image: url('../../../assets/images/emailIcon.svg');
+                background-position: 15px center;
+                background-repeat: $backgroundNoRepeat;
+            }
+
+            .passwordIcon {
+                background-image: url('../../../assets/images/lockIcon.svg');
+                background-position: 15px center;
+                background-repeat: $backgroundNoRepeat;
+            }
+
+            input {
+                background-image: $d-none !important;
+                height: $height46px;
+                border: 1px solid $MaroonColor;
+                background-color: $backgroundTransparent;
+                font-size: $font14;
+                color: $WhiteColor;
+                padding-left: $padding50px;
+
+                &:focus {
+                    box-shadow: 0 0 10px rgb(164 53 59 / 50%);
+                }
+            }
+
+            input[type="checkbox"] {
+                height: $height20px;
+                width: $width20px;
+                padding: $paddingZero;
+                background: $backgroundTransparent;
+                border: 1px solid $WhiteColor;
+            }
+
+            .form-check-input:checked[type=checkbox] {
+                background-image: url('../../../assets/images/tickIcon.svg') !important;
+                background-size: 20px 10px;
+                background-color: $MaroonColor;
+                background-repeat: $backgroundNoRepeat;
+                background-position: center center;
+                border-color: $MaroonColor;
+            }
+            label.form-check-label {
+                font-size: $font12;
+                margin: $marginZero;
+            }
+
+            button.btn.btn-primary {
+                background: $MaroonColor;
+                border: 1px solid $MaroonColor;
+                width: $width150px;
+                font-family: $fontFamilyInter;
+                font-weight: $fontWeight500;
+                height: $height46px;
+                margin-top: $margin15px;
+                &:hover {
+                    opacity: $opacitySeven;
+                }
+            }
+        }
+        .lowerLinks {
+            margin-top: $margin5px;
+            ul {
+                padding: $paddingZero;
+                list-style: $d-none;
+                display: $d-flex;
+                align-items: $alignItemsCenter;
+                justify-content: $justifyContentCenter;
+
+                li {
+                    margin: $marginZero $margin10px;
+                }
+            }
+
+            p {
+                font-size: $font14;
+                margin-bottom: $marginZero;
+
+                a {
+                    color: $MaroonColor;
+                    text-decoration: $d-none;
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Media Query Start 
+
+@media only screen and (max-width: 899px) and (min-width: 800px) {
+    .signupPage {
+        height: $heightAuto;
+        padding: $padding50px $paddingZero;
+
+        .signupMain {
+            padding: $padding20px;
+            box-shadow: $zeropx $zeropx $Tenpx rgb(164 53 59 / 20%);
+            border-radius: $borderRadius12;
+            position: $positionInherit;
+            width: $width100Per;
+            transform: translate(0%, 0%);
+            left: auto;
+            top: auto;
+        }
+    }
+}
+
+@media only screen and (max-width: 767px) and (min-width: 480px) {
+    .signupPage {
+        height: $heightAuto;
+        padding: $padding50px $paddingZero;
+
+        .signupMain {
+            padding: $padding20px;
+            position: $positionInherit;
+            transform: translate(0%, 0%);
+            left: auto;
+            top: auto;
+        }
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .signupPage {
+        height: $heightAuto;
+        padding: $padding20px $paddingZero;
+        .signupMain {
+            max-width: $width100Per;
+            padding: $padding10px;
+            position: $positionInherit;
+            transform: translate(0%, 0%);
+            left: auto;
+            top: auto;
+            .form-group {
+                button.btn.btn-primary {
+                    width: $width100Per;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 390px) and (max-height: 844px) {
+    .signupPage {
+        height: $height100vh;
+    }    
+}
+@media screen and (max-width: 414px) and (max-height: 896px) {
+    .signupPage {
+        height: $height100vh;
+    }    
+}
+@media only screen and (max-width: 370px) {
+    .signupPage {
+        height: $heightAuto;
+        padding: $padding20px $paddingZero;
+        .signupMain {
+            max-width: $width100Per;
+            padding: $padding10px;
+            position: $positionInherit;
+            transform: translate(0%, 0%);
+            left: auto;
+            top: auto;
+            .form-group {
+                button.btn.btn-primary {
+                    width: $width100Per;
+                }
+            }
+        }
+    }
+}

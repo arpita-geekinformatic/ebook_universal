@@ -1,0 +1,364 @@
+<app-header (newItemEvent)="getType($event)"></app-header>
+
+<div class="contentPart">
+  <!-- Slider HTML End -->
+  <div class="banner" *ngIf="bannerLists.length > 0">
+    <ngb-carousel *ngIf="images">
+      <ng-template ngbSlide *ngFor="let data of bannerLists;">
+        <div class="picsum-img-wrapper">
+          <img [src]="data.image ? IMAGE_URL + data.image : 'assets/images/slideOne.jpg'" alt="Random first slide'">
+        </div>
+        <div class="carousel-caption">
+          <h3>Audio Lasitava</h3>
+          <h1>Reģistrējieties un </h1>
+          <p>
+            Duis aute irure dolor in reprehenderit in voluptate velit esse
+            cillum dolore eu fugiat nulla pariatur Excepteur sint occaecat
+          </p>
+          <button class="btnGet" (click)="getStarted()" *ngIf="showGetStarted">get started</button>
+        </div>
+      </ng-template>
+    </ngb-carousel>
+  </div>
+  <!-- Slider HTML End-->
+  <div class="partMar">
+  </div>
+
+  <!-- Advertisement HTML Start-->
+  <div class="addWrapper" *ngIf="bannerLists.length > 0">
+
+    <img src="assets/images/after-slider-strip.jpg" class="banner-Img" alt="Advertisement Area" />
+    <!-- <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="addImage">
+            
+          </div>
+        </div>
+      </div>
+    </div> -->
+  </div>
+  <!-- Advertisement HTML End-->
+
+  <!-- Shimmer for Banner Start -->
+  <div class="shimmerBox" *ngIf="bannerLists.length == 0">
+    <!-- Slider HTML End -->
+    <div class="container">
+      <div class="banner shimmer"> </div>
+    </div>
+    <!-- Slider HTML End-->
+    <!-- Advertisement HTML Start-->
+    <div class="container">
+      <div class="addWrapper shimmer">
+        <div class="row">
+          <div class="col-12">
+            <div class="addImage"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Advertisement HTML End-->
+  </div>
+  <!-- Shimmer for Banner End -->
+
+  <!-- Product Section Start-->
+  <div class="productWrapper" *ngIf="finalData.length > 0">
+    <ng-container *ngFor="let data of finalData">
+      <div class="container" *ngIf="
+          ['free', 'recomendations'].includes(
+            data['categoryName_EN']?.toLowerCase()
+          )
+        ">
+        <div class="productTitle" *ngIf="data['data'].length > 0">
+          <div class="d-flex justify-content-between align-items-center productTitleInner mb-4">
+            <h2>{{ data["categoryName_EN"] == 'Recomendations' ? 'Ieteikumi' : 'Bezmaksas' }} </h2>
+            <a class="viewMore" (click)="viewMore(tabType, data['categoryName_EN'])">Lasīt vairāk</a>
+          </div>
+        </div>
+
+        <div class="productline">
+          <div class="row">
+            <div class="col mb-4 md-3" *ngFor="let innerData of data.data; let i = index">
+              <div class="singleProduct" *ngIf="i < 4" (click)="detailBook(innerData['_id'])">
+                <div class="singleProductInner">
+                  <button [ngClass]="tabType == 'ebook' ? 'bookBtn' :'bookBtn yellow'">
+                    <img [src]="
+                        tabType == 'ebook'
+                          ? 'assets/images/openBookIcon.svg'
+                          : 'assets/images/headphoneIcon.svg'
+                      " alt="Book icon" />
+                  </button>
+                  <div class="productImage">
+                    <img
+                      [src]="innerData['photo'] ? this.IMAGE_URL + innerData['photo'] : 'assets/images/smallDefaultBook.png'"
+                      alt="prduct Image" />
+                  </div>
+                  <div class="productTxt">
+                    <h2 placement="top" ngbTooltip="{{ innerData['name'] }}">{{ innerData['name'] | titlecase }}</h2>
+                    <p *ngFor="let author of innerData.author" placement="top" ngbTooltip="{{ author | titlecase }}">{{
+                      author | titlecase }}</p>
+
+                    <ul class="ratingWrap" [innerHtml]="getRating(innerData.rating)">
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+  <!-- Product Section End-->
+
+  <!-- Shimmer for product Start -->
+  <div class="shimmerBox" *ngIf="finalData.length == 0">
+    <!-- Product Section Start-->
+    <div class="productWrapper">
+      <ng-container>
+        <div class="container">
+          <div class="productTitle">
+            <div class="d-flex justify-content-between align-items-center productTitleInner mb-4">
+              <h2 class="shimmer titleShimmer"></h2>
+              <a class="shimmer viewMoreshimmer"></a>
+            </div>
+          </div>
+
+          <div class="productline">
+            <div class="row">
+              <div class="col mb-4 md-3" *ngFor="let innerData of [0,1,2,3]; let i = index">
+                <div class="singleProduct">
+                  <div class="singleProductInner">
+                    <div class="productImage shimmer productImageShimmer">
+
+                    </div>
+                    <div class="productTxt">
+                      <h2 class="shimmer" placement="top"></h2>
+                      <p class="shimmer" *ngFor="let author of [0,1,2,3]" placement="top"></p>
+
+                      <ul class="ratingWrap shimmer">
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+    <!-- Product Section End-->
+  </div>
+  <!-- Shimmer for product End -->
+
+  <!-- Free Audiobook Section HTML Start -->
+  <div class="audioSection">
+    <div class="audioSectionInner">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-7">
+            <div class="audioTextWrap">
+              <h4>OUR MONTHLY RECOMMENDATION</h4>
+              <h2 class="mb-4">{{ recommend.name ? recommend.name : 'The Gravity of us' }}
+                <i>by {{ recommend.author ? recommend.author[0] : '
+                  Phil Stamper' }}</i>
+              </h2>
+              <p class="month-recomm mb-4">
+                {{ recommend.description ? recommend.description : 'As a successful social media journalist with half a
+                million followers, seventeen-year-old Cal is used to
+                sharing his life online. But when his pilot father is selected for a highly publicized NASA mission to
+                Mars, Cal and his family relocate from Brooklyn to Houston and are thrust into a media circus.' }}
+              </p>
+              <div class="btnsWrap d-flex">
+                <button class="fragmentbtn">noklausies fragmentu</button>
+                <button class="entireBtn">noklausies visu grāmatu</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-5">
+            <div class="mobileImageWrap">
+              <img [src]="recommend['photo'] && this.IMAGE_URL + recommend['photo']" alt="" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Free Audiobook Section HTML End -->
+
+  <!-- Product Section Start-->
+  <div class="productWrapper">
+    <ng-container *ngFor="let data of finalData">
+      <div class="container" *ngIf="
+          !['free', 'recomendations'].includes(
+            data['categoryName_EN'].toLowerCase()
+          )
+        ">
+        <div class="productTitle">
+          <div class="d-flex justify-content-between align-items-center productTitleInner mb-4">
+            <h2>{{ data['categoryName_LV'] | titlecase }}</h2>
+            <a class="viewMore" (click)="viewMore(tabType, data['categoryName_EN'])">Lasīt vairāk</a>
+          </div>
+        </div>
+
+        <div class="productline">
+          <div class="row">
+            <div class="col mb-4" *ngFor="let innerData of data.data; let i = index">
+              <div class="singleProduct" *ngIf="i < 4" (click)="detailBook(innerData['_id'])">
+                <div class="singleProductInner">
+                  <button [ngClass]="tabType == 'ebook' ? 'bookBtn' :'bookBtn yellow'">
+                    <img [src]="
+                        tabType == 'ebook'
+                          ? 'assets/images/openBookIcon.svg'
+                          : 'assets/images/headphoneIcon.svg'
+                      " alt="Book icon" />
+                  </button>
+                  <div class="productImage">
+                    <img
+                      [src]="innerData['photo'] ? this.IMAGE_URL + innerData['photo'] : 'assets/images/smallDefaultBook.png'"
+                      alt="prduct Image" />
+                  </div>
+                  <div class="productTxt">
+                    <h2 placement="top" ngbTooltip="{{ innerData['name'] }}">{{ innerData['name'] | titlecase }}</h2>
+                    <p><span *ngFor="let author of innerData.author" placement="top" ngbTooltip="{{ author }}">{{ author
+                        | titlecase }}</span></p>
+                    <ul class="ratingWrap" [innerHtml]="getRating(innerData.rating)">
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+  <!-- Product Section End-->
+
+  <!-- Categories HTML Section Start -->
+  <div class="categoriesSection">
+    <div class="categoriesSectionInner text-center">
+      <h1>Kategorijas</h1>
+      <div class="container">
+        <div class="row">
+          <div class="mainWrap">
+            <div class="mainWrapInner">
+              <div class="d-flex" *ngFor="let category of categoryArr;">
+                <div class="blockInner">
+                  <img [src]="category.image ? this.IMAGE_URL + category.image : 'assets/images/smallDefaultBook.png'"
+                    alt="" />
+                  <div class="blockTxt" type="button" (click)="viewBookByCategory(category._id)">
+                    <h3>{{category ? (category.lvName | titlecase) : '-'}}</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Categories HTML Section End -->
+
+  <!-- Special Offer Section start Html -->
+  <div class="offerSection homeOffer">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-7">
+          <div class="offerText">
+            <h4>Atklāj Audiolasītavu!</h4>
+            <h2>Lasi, klausies un baudi!</h2>
+            <p>
+              Kad vingrojat, gatavojat ēst, darbojaties dārzā, remontējat dzīvokli, sēžat automašīnas sēdeklī vai
+              vienkārši atpūšaties: audiogrāmatas vienmēr ir jums līdzās. Izvēlieties, kura būs nākamā audiogrāmata, ko
+              klausīsieties, vai sekojiet mūsu ieteikumam!
+            </p>
+            <div class="buttonRow">
+              <button class="buttonlogoDetailsSecond"><span>Pieraksties mūsu jaunumiem</span></button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="mobileImage">
+            <img src="assets/images/mobileImgdetailPage.svg" alt="mobiel View" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Special Offer Section End Html -->
+
+  <!-- Lasitava Work Section HTML Start-->
+  <div class="workSection" id="LasitavaWork">
+    <div class="workSectionInner">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 text-center">
+            <div class="headingTitle">
+              <h2>Kā darbojas Audiolasītava?</h2>
+              <p>
+                Izbaudiet audiogrāmatu klausīšanās pieredzi jebkurā laikā savā mobilajā tālrunī, datorā vai automašīnā -
+                vienkārši un ērti!
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 text-center">
+            <div class="blockWrap">
+              <img src="assets/images/appIcon.svg" />
+              <h3>1. Instalē mūsu lietotni</h3>
+              <p>
+                Ērti lejupielādējiet mūsu Android vai iOS mobilo lietotni, lai vienmēr varētu piekļūt visam saturam.
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4 text-center">
+            <div class="blockWrap icons">
+              <span class="leftArrow">
+                <img src="assets/images/arrowRight.svg" alt="" /></span>
+              <img src="assets/images/setupIcon.svg" />
+              <h3>2. Izveido savu kontu</h3>
+              <p>
+                Reģistrējieties, lai varētu baudīt visu mūsu platformā pieejamo audiogrāmatu klāstu.
+              </p>
+              <span class="rightArrow">
+                <img src="assets/images/arrowRight.svg" alt="" /></span>
+            </div>
+          </div>
+          <div class="col-md-4 text-center">
+            <div class="blockWrap">
+              <img src="assets/images/enjoyIcon.svg" />
+              <h3>3. Izvēlies savas iecienītākās audiogrāmatas</h3>
+              <p>
+                Klausieties savas iecienītākās audiogrāmatas no mobilā tālruņa, datora vai jebkuras ierīces, kas
+                savienota ar Bluetooth. Ērti un vienkārši!
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Lasitava Work Section HTML End-->
+
+  <div class="addWrapper">
+    <img src="assets/images/footer-before-strip.jpg" class="banner-Img" alt="Advertisement Area" />
+  </div>
+</div>
+
+
+<!-- === START ====== -->
+<div id="alertCookiePolicy" [ngClass]="hide == 'hide' ? 'alert-cookie-policy hide' : 'alert-cookie-policy'">
+  <div class="alert alert-secondary mb-0 d-flex align-items-center" role="alert">
+    <span class="mr-auto">This website uses cookies to ensure you get the best experience on our website.
+      <a href="/cookiePolicy" class="alert-link">Cookie Policy</a>
+    </span>
+    <button class="btn btn-light mr-3" type="button" (click)="declineCookies()">Decline</button>
+    <button class="btn btn-primary" type="button" (click)="acceptCookies()">Accept</button>
+  </div>
+</div>
+
+<app-scroll-top></app-scroll-top>
+<!-- === END ====== -->
+<app-footer></app-footer>

@@ -1,0 +1,259 @@
+<div class="header">
+  <div class="topBar">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center">
+        <form class="searchWrap" [formGroup]="searchForm">
+          <input type="text" placeholder="Atrodi lielisku grāmatu" formControlName="search"
+            (input)="onSearchChange($event)" name="search2" />
+          <button type="submit">
+            <img src="assets/images/searchIcon.svg" alt="Search Icon" />
+          </button>
+        </form>
+        <div class="logoWrap">
+          <a routerLink="/home"><img src="assets/images/logoMain.svg" alt="" /></a>
+        </div>
+        <ul class="headerOptions">
+          <!-- <li>
+            <a href="#"><img src="assets/images/cartIcon.svg" alt="" /><span class="count">0</span></a>
+          </li> -->
+          <li (click)="favouriteClick('/favourites')">
+            <img src="assets/images/wishlistIcon.svg" alt="" />
+            <span class="count">{{
+              totalRecords ? totalRecords : 0 }}
+            </span>
+            <!-- </a> -->
+          </li>
+          <!-- <li>
+            <a href="#"><img src="assets/images/booksIcon.svg" alt="" /></a>
+          </li> -->
+          <li>
+            <div class="d-inline-block" ngbDropdown #myDrop="ngbDropdown">
+              <button type="button" class="btn me-2" id="dropdownManual" ngbDropdownAnchor (focus)="myDrop.open()">
+                <img src="assets/images/personIcon.svg" alt="" style="width: 25px;height:30px" />
+              </button>
+              <div ngbDropdownMenu aria-labelledby="dropdownManual">
+                <div class="dropdown-inner" *ngIf="token != null">
+                  <div class="profile">
+                    <button ngbDropdownItem type="button" (click)="updateProfile()">
+                      <img src="assets/images/userGrey.png" class="iconEdit" alt="" />
+                      <p class="profileText">{{name}}</p>
+                    </button>
+                  </div>
+                  <div class="Change-Password">
+                    <button ngbDropdownItem type="button" (click)="changePassword()">
+                      <img src="assets/images/lock.png" class="iconEditPassword" />
+                      <p class="profileText">Mainīt paroli</p>
+                    </button>
+                  </div>
+                  <div class="logOut">
+                    <button ngbDropdownItem type="button" (click)="logout()">
+                      <img src="assets/images/power.png" class="iconLogout" />
+                      <p class="profileText">Iziet</p>
+                    </button>
+                  </div>
+                </div>
+                <div class="logIn" *ngIf="token == null">
+                  <button ngbDropdownItem type="button" (click)="logIn()">
+                    <img src="assets/images/power.png" class="iconLogout" />
+                    <p class="profileText">Ieiet</p>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="mobileView" *ngIf="!updateid">
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+      <div class="container align-items-center">
+        <!-- <a class="navbar-brand" href="#">Logo</a> -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" (click)="toggle()"
+          data-bs-target="#collapsibleNavbar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div *ngIf="hide" class="navbar-collapse align-items-center" id="collapsibleNavbar">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active">Audiogrāmatas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link">E-grāmatas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link">Apraide</a>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>
+  <div class="desktopView" *ngIf="!(updateid == '/detail' || updateid == '/favourites' 
+      || updateid == '/search' || updateid == '/all' || updateid == '/cookiePolicy' 
+      || updateid == '/parUznemumu' || updateid == '/darbs' || updateid == '/contactUs' || updateid == '/janumi' || updateid == '/plataforma' || updateid == '/authors' || updateid == '/AudioPodkasti' || updateid == '/faqs' || updateid == '/privataPolitika' || updateid == '/sikdatnes' || updateid == '/lietosanas' || updateid == '/kategorijas'  || updateid == '/dizpardokli'  || updateid == '/jaunumi' || updateid == '/stastnieki'  || updateid == '/izdeveji' )">
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+      <div class="container align-items-center">
+        <!-- <a class="navbar-brand" href="#">Logo</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" (click)="toggle()" data-bs-target="#collapsibleNavbar">
+          <span class="navbar-toggler-icon"></span>
+        </button> -->
+        <div class="navbar-collapse align-items-center " id="collapsibleNavbar">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a (click)="tabClick('audiobook')"
+                [ngClass]="tabType && tabType == 'audiobook' ? 'nav-link active' : tabType == '' ? 'nav-link active' : 'nav-link'">Audiogrāmatas</a>
+            </li>
+            <li class="nav-item">
+              <a [ngClass]="tabType && tabType == 'ebook' ? 'nav-link active' : 'nav-link'"
+                (click)="tabClick('ebook')">E-grāmatas</a>
+            </li>
+            <li class="nav-item">
+              <a [ngClass]="tabType && tabType == 'podcast' ? 'nav-link active' : 'nav-link'"
+                (click)="tabClick('podcast')">Podkāsti</a>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>
+</div>
+
+<!--  music player start  -->
+<div class="custom-player-main" [ngClass]="isMini ? '' : 'player-shadow'" *ngIf="isPlayerShow">
+  <div class="backCustom" [ngClass]="isMini ? 'mini-player' : ' '">
+    <div class="modal-header">
+      <i class="fa fa-minus minMaxIcon" *ngIf="!isMini;" (click)="miniPlayer()"></i>
+      <i class="fa fa-square-o minMaxIcon" *ngIf="isMini ;" (click)="isMini = false;"></i>
+      <button type="button" (click)="isPlayerShow = false; closePlayer()" class="btn-close" aria-label="Close">
+        <img src="assets/images/close.png" />
+      </button>
+    </div>
+
+    <div>
+      <div class="modal-body wrapper">
+        <div class="audioContent" style="width: 70%;">
+          <h4>
+            <marquee scrollamount="5" direction="left">{{modalData ? (modalData.name | titlecase) :'The Gravity of us'}}
+            </marquee>
+          </h4>
+          <div *ngIf="modalData.bookType == 'podcast'">
+            <h6>{{ modalData.author | titlecase }}</h6>
+          </div>
+          <div *ngIf="modalData.bookType != 'podcast'">
+            <h6 *ngFor="let author of modalData.author">{{ author | titlecase }}</h6>
+          </div>
+        </div>
+        <div class="audioImg">
+          <img class="musicImg"
+            [src]="modalData.bookType == 'podcast' ? this.IMAGE_URL + modalData['image'] : modalData['photo'] ? this.IMAGE_URL + modalData['photo'] : '/assets/images/smallDefaultBook.png'"
+            alt="stemperbook" />
+        </div>
+
+        <div class="musicIcon">
+          <div class="musicAppMain mb-3">
+            <div class="audioTextRight" *ngIf="(playerType == 'bookFragment') || (playerType == 'audioPresentation')">
+              <h4>{{ modalData ? (modalData.name | titlecase) : 'The Gravity of us'}}</h4>
+
+              <div *ngIf="modalData.bookType == 'podcast'">
+                <h6>{{ modalData.author | titlecase }}</h6>
+              </div>
+              <div *ngIf="modalData.bookType != 'podcast'">
+                <h6 *ngFor="let author of modalData.author">{{ author | titlecase }}</h6>
+              </div>
+            </div>
+
+            <div class="audioTextRight" *ngIf="(playerType == 'bookByChapters') || (playerType == 'podcastByChapters')">
+              <h4>{{ selectedChapter ? (selectedChapter | titlecase ) : modalData.name }}</h4>
+            </div>
+
+            <!-- <div class="imgLogo">
+              <button type="button" class="iconMusic" (click)="favouriteBook(modalData._id, isFavourite)">
+                <img [src]="isFavourite ? '/assets/images/filledHeart.png' : '/assets/images/heartIconWhite.svg'"
+                  height="30" width="30" />
+              </button>
+            </div> -->
+          </div>
+
+          <div class="audioPlayer">
+
+            <div class="audio-progress-area">
+              <p class="audio-progress-bar" style="position: relative;">
+                <input id="dur" [value]="timeCount" type="range" name="rng" min="0" [max]="mainAudioLength" step="1"
+                  (change)="progressSet()" class="cus-audio-progress">
+                <ngb-progressbar type="danger" class="cus-progress-bar" [value]="timeCount"
+                  [max]="mainAudioLength"></ngb-progressbar>
+              </p>
+              <div class="timer">
+                <span class="current">{{timeCountString}}</span>
+                <span class="current">-{{timeLeftString}}</span>
+              </div>
+              <audio id="main-audio" loop [src]="mainAudio" autoplay #ref></audio>
+            </div>
+
+            <div class="controls">
+              <button type="button" (click)="restartAudio(); ref.play();" id="repeat-plist">
+                <img src="assets/images/reload.png" />
+              </button>
+
+              <button type="button" (click)="previousAudioChapter(); ref.play(); isPlay = false" id="prev">
+                <img src="assets/images/prevButton.png" />
+              </button>
+
+              <button type="button" class="skip" (click)="prevAudio10sec();" id="prev">
+                <img src="/assets/images/30secPrv1.png" />
+              </button>
+
+              <div>
+                <button type="button" class="play-pause" (click)="ref.play(); isPlay = false; startTimer()"
+                  *ngIf="isPlay">
+                  <img src="/assets/images/play.png" height="35" width="35" />
+                </button>
+
+                <button type="button" class="play-pause" (click)="ref.pause(); isPlay = true; pauseTimer()"
+                  *ngIf="!isPlay">
+                  <img src="/assets/images/pause.png" height="35" width="35" />
+                </button>
+              </div>
+
+              <button type="button" class="skip" (click)="fwdAudio10sec(); " id="next">
+                <img src="/assets/images/30secFwd1.png" />
+              </button>
+
+              <button type="button" (click)="nextAudioChapter(); ref.play(); isPlay = false" id="next">
+                <img src="/assets/images/nextButton.png" />
+              </button>
+
+              <div ngbDropdown class="d-inline-block">
+                <button type="button" (click)="allAudioChapterList()" id="more-music" ngbDropdownToggle
+                  [disabled]="(playerType == 'bookFragment') ||  (playerType == 'audioPresentation') || (sortOrders.length ==0)">
+                  <img src="/assets/images/list.png" />
+                </button>
+                <div ngbDropdownMenu aria-labelledby="more-music" placement="right"
+                  style="width: 300px;max-height: 200px;overflow: auto;">
+                  <ul class="chapterlist p-0" *ngFor="let chapters of sortOrders">
+                    <li (click)="loadMusic(chapters[0], playerType); isPlay = false"
+                      class="d-flex px-3 justify-content-between">
+                      <div class="row">
+                        <span>{{chapters[0]}}</span>
+                      </div>
+                      <span class="audio-duration">{{chapters[1]}}</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,194 @@
+<div class="loginPage">
+    <div class="wrapper">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-12">
+                    <div class="text-center">
+
+                    </div>
+                    <div class="loginMain  m-auto">
+                        <div class="m-auto text-center">
+                            <img src="assets/images/logoMain.svg" alt="Logo" />
+                            <h1>Ieiet</h1>
+                        </div>
+
+                        <form [formGroup]="loginForm" (ngSubmit)="login()">
+                            <div class="form-group">
+                                <label for="email">E-pasta adrese:</label>
+                                <div class="emailIcons">
+                                    <input type="email" formControlName="email" class="form-control" id="email"
+                                        placeholder="E-pasta adrese" name="email">
+                                </div>
+                            </div>
+                            <div>
+                                <div class="text-danger" *ngIf="
+								  submitted &&
+								  loginForm.get('email')?.hasError('required')
+								">
+                                    {{ Errormessage }}
+                                </div>
+                                <div class="text-danger" *ngIf="
+								  submitted &&
+								  loginForm.get('email')?.hasError('pattern')
+								">
+                                Lūdzu ievadiet savu e-pasta adresi.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="pwd">Parole:</label>
+                                <div class="passwordIcon">
+                                    <input type="password" formControlName="password" class="form-control" id="pwd"
+                                        placeholder="Parole" name="pswd">
+                                </div>
+                            </div>
+                            <div class="errors">
+                                <div class="text-danger"
+                                    *ngIf="submitted && loginForm.get('password')?.hasError('required')">
+                                    {{ Errormessage }}
+                                </div>
+                                <div class="text-danger"
+                                    *ngIf="submitted && loginForm.get('password')?.hasError('minLength')">
+                                    {{ passwordErrorMessage }}
+                                </div>
+                            </div>
+                            <div class="form-group forgotPassword">
+                                <label class="form-check-label">
+                                    <a (click)="openModal(content)">Aizmirsāt paroli?</a>
+                                </label>
+                            </div>
+                            <div class="form-group text-center">
+                                <button type="submit" class="btn btn-primary">Ieiet</button>
+                            </div>
+                            <div class="lowerLinks text-center">
+                                <p class="or">vai</p>
+                                <ul>
+                                    <li (click)="authService.FacebookAuth('signIn')">
+                                        <img src="assets/images/facebookIcon.png" alt="Facebook" />
+                                    </li>
+                                    <li (click)="authService.GoogleAuth('signIn')">
+                                        <img src="assets/images/googleIcon.png" alt="Google Icon" />
+                                    </li>
+                                </ul>
+                                <p>Neesat reģistrējies? <a href="/signup">Reģistrēties</a></p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="backCustom">
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">{{ forgotPasswordStatus ? 'Verifikācijas kods' :'Forgot
+                Password' }}</h4>
+            <button type="button" class=" btn buttonClose" aria-label="Close" (click)="d('Cross click')">
+                <img src="assets/images/close 2.png" />
+            </button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="forgotPasswordForm" (ngSubmit)="sendLink()" *ngIf="forgotPasswordStatus == 'otp'">
+                <div class="form-group">
+                    <label for="otp">Verifikācijas kods:</label>
+                    <div class="emailIcons">
+                        <input type="text" formControlName="otp" class="form-control" id="otp"
+                            placeholder="Verifikācijas kods" name="otp">
+                    </div>
+                </div>
+                <div>
+                    <div class="text-danger" *ngIf="
+                    submitted &&
+                    forgotPasswordForm.get('otp')?.hasError('required')
+                  ">
+                        {{ Errormessage }}
+                    </div>
+                </div>
+                <div class="form-group popButton">
+                    <button type="submit" class="btn buttonSendLink">Verificējiet</button>
+                </div>
+            </form>
+            <form [formGroup]="forgotPasswordForm" (ngSubmit)="forgotPassword()"
+                *ngIf="forgotPasswordStatus=='forgotPassword'">
+                <div class="form-group">
+                    <label for="email">E-pasta adrese:</label>
+                    <div class="emailIcons">
+                        <input type="email" formControlName="email" class="form-control" id="email"
+                            placeholder="E-pasta adrese" name="email">
+                    </div>
+                </div>
+                <div>
+                    <div class="text-danger" *ngIf="
+                      submitted &&
+                      forgotPasswordForm.get('email')?.hasError('required')
+                    ">
+                        {{ Errormessage }}
+                    </div>
+                    <div class="text-danger" *ngIf="
+                      submitted &&
+                      forgotPasswordForm.get('email')?.hasError('pattern')
+                    ">
+                    Lūdzu ievadiet savu e-pasta adresi.
+                    </div>
+                </div>
+                <div class="form-group popButton">
+                    <button type="submit" class="btn buttonSendLink">Nosūtīt jaunu saiti</button>
+                </div>
+            </form>
+            <form [formGroup]="forgotPasswordForm" (ngSubmit)="changePassword(c())"
+                *ngIf="forgotPasswordStatus=='changePassword'">
+                <div class="form-group">
+                    <label for="pwd">Jauna parole:</label>
+                    <div class="passwordIcon">
+                        <input type="password" formControlName="password" class="form-control" id="pwd"
+                            placeholder="Jauna parole" name="pswd">
+                    </div>
+                </div>
+                <div class="errors">
+                    <div class="text-danger"
+                        *ngIf="submitted && forgotPasswordForm.get('password')?.hasError('required')">
+                        {{ Errormessage }}
+                    </div>
+                    <div class="text-danger" *ngIf="
+                      
+                    forgotPasswordForm.get('password')?.hasError('pattern')
+                    ">
+                        Please enter valid password.
+                    </div>
+                    <div class="text-danger" *ngIf="forgotPasswordForm.get('password')?.hasError('minLength')">
+                        {{ passwordErrorMessage }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="pwd">Apstipriniet paroli:</label>
+                    <div class="passwordIcon">
+                        <input type="password" formControlName="confirmPassword" class="form-control" id="pwd"
+                            placeholder="Apstipriniet paroli" name="pswd">
+                    </div>
+                </div>
+                <div class="errors">
+                    <div class="text-danger"
+                        *ngIf="submitted && forgotPasswordForm.get('confirmPassword')?.hasError('required')">
+                        {{ Errormessage }}
+                    </div>
+                    <div class="text-danger" *ngIf="
+                      
+                    forgotPasswordForm.get('confirmPassword')?.hasError('pattern')
+                    ">
+                        Please enter valid password.
+                    </div>
+                    <div class="text-danger" *ngIf="forgotPasswordForm.get('password')?.hasError('minLength')">
+                        {{ passwordErrorMessage }}
+                    </div>
+                    <div class="text-danger" *ngIf="submitted">
+                        {{ passwordNotMatch }}
+                    </div>
+                </div>
+                <div class="form-group popButton">
+                    <button type="submit" class="btn buttonSendLink">Nosūtīt jaunu saiti</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</ng-template>

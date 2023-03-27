@@ -1,0 +1,41 @@
+<app-header></app-header>
+<section class="newsletter-main">
+    <div class="container">
+        <div class="newsletter-content">
+            <div class="newsletter-content__inner">
+                <h1 class="modal__heading">PIESAKIES TAGAD</h1>
+                <p>Pievienojieties mūsu arvien pieaugošajai grāmatu mīļotāju saimei, abonējot mūsu jaunumu lapu, un
+                    saņemiet jaunākās ziņas par grāmatām un podkāstiem. Labākie stāsti sākas Audiolasītava.lv</p>
+
+                <div class="email-box">
+                    <form id="contact-form" class="contact-form" name="contact-form" [formGroup]="newsletterForm"
+                        (ngSubmit)="onSubmit()">
+
+                        <input type="text" formControlName="email" name="email" placeholder="E-pasta adrese"
+                            class="form-control email-box__input"
+                            [ngClass]="{'is-invalid': submitted && newsletterForm.controls['email'].invalid}">
+
+                        <button type="submit" class="email-box__button"><i class="fa-paper-plane fa"></i>
+                        </button>
+
+                        <div>
+                            <div class="text-danger" *ngIf="
+                          submitted &&
+                          newsletterForm.get('email')?.hasError('required')">
+                                Email is required.
+                            </div>
+                            <div class="text-danger" *ngIf="
+                          submitted &&
+                          newsletterForm.get('email')?.hasError('pattern')">
+                                Please enter valid address.
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</section>
+<app-footer></app-footer>

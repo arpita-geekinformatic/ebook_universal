@@ -1,0 +1,27 @@
+.authors__wrapper ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+.authors__wrapper ul li {
+    width: 22%;
+    margin-bottom: 40px;
+    box-shadow: 0px 0px 7px 6px rgb(48 48 48 / 10%);
+    padding: 15px;
+    margin: 0 15px 35px;
+    text-align: center;
+    border-radius: 50%;
+    height: 250px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.authors__wrapper ul li img{
+    border-radius: 20px;
+}
+.authors__wrapper ul li p{
+    font-size: 16px;
+    font-weight: 700;
+}

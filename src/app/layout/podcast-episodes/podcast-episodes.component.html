@@ -1,0 +1,98 @@
+<app-header></app-header>
+<div class="podcatDetail" *ngIf="!showShimmer">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h1><span>{{ podcastDetail.name | titlecase}} - All Episodes</span></h1>
+                <div class="row" infiniteScroll [infiniteScrollDistance]="0.1" (scrolled)="onScroll()">
+                    <div class="col-12">
+
+                        <div class="singleEpisode d-flex" *ngFor='let data of episodeList; let i = index'>
+                            <div class="episodeImage">
+                                <span class="imageRelative">
+                                    <img [src]="podcastDetail.image ? this.IMAGE_URL + podcastDetail.image : 'assets/images/smallDefaultBook.png'"
+                                        alt="episodeImage" />
+                                    <div class="hover" (click)="checkSubscription(data, contentOne)">
+                                        <button class="btn btn-lg btn-outline-primary" type="button">
+                                            <img src="/assets/images/play.png" alt="">
+                                        </button>
+                                    </div>
+                                </span>
+                            </div>
+
+                            <div class="episodeContent">
+                                <p class="episodeDate"><i>{{ data.uploadDate | date:'dd/MM/yyy' }}</i></p>
+                                <h3>S{{ data.season }} E{{ data.episode }} - {{ data.episodeName }}</h3>
+
+                                <p class="episodeDescription">{{ data.episodeDescription }}</p>
+                                <!-- <button class="read_more">Read More</button> -->
+
+                                <!-- <div [ngClass]="{'spisodeDescriptionHeight': isChapterReadMore}">
+                                    <P>{{ episodes.episodeDescription }}</P>
+                                  </div> -->
+                                <button class="read_more" (click)="showChapterText()" *ngIf="data.showReadMoreButton">
+                                    <span>{{ isChapterReadMore ? 'Lasi vairāk (pilns apraksts)': 'Lasi mazāk' }}</span>
+                                </button>
+
+                                <div class="timeDuration"><label>Time Duration:- </label> <i>{{
+                                        chapterTimeFormat(data.episodeLength) }}</i></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h6>{{ errorMessage }}</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Shimmer html Start -->
+<div class="podcatDetail" *ngIf="showShimmer">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h1><span class="shimmer textshimmer"></span></h1>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="singleEpisode d-flex">
+                            <div class="episodeImage">
+                                <span class="imageRelative shimmer">
+                                </span>
+                            </div>
+                            <div class="episodeContent">
+                                <p class="episodeDate shimmer textshimmer"></p>
+                                <h3 class="shimmer textshimmer"></h3>
+                                <p class="episodeDescription shimmer"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Shimmer Html End -->
+
+<app-footer></app-footer>
+
+<!-- Subscribe popup modal start -->
+<ng-template #contentOne let-modal>
+    <div class="startModal subscribeModal">
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Subscribe Podcast</h4>
+            <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+        </div>
+        <div class="modal-body text-center">
+            <div class="ratingTitle">Please <strong>Subscribe</strong> this podcast to listen episodes </div>
+            <div class="starRate">
+                <button class="subBtn" (click)="addSubscription(modal)">Subscrie</button>
+            </div>
+        </div>
+        <!-- <div class="modal-footer ratingSaveBtn">
+        <button type="button" class="btn btn-outline-dark"
+          (click)="addSubscription()">Save</button>
+      </div> -->
+    </div>
+</ng-template>
+<!-- Subscribe popup modal end -->
