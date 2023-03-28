@@ -574,70 +574,69 @@ class DetailPageComponent {
         var api = (type == src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.tabType.audiobook &&
             this.apiService.getData(`web/audioBook/${id}`)) ||
             (type == src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.tabType.ebook && this.apiService.getData(`web/eBook/${id}`));
+        console.log('============== api ', api);
         api.subscribe((result) => {
             var _a, _b, _c, _d, _e, _f;
-            if (result.responseCode === 200) {
-                this.sortOrders = [];
-                this.audioBookDetail.splice(0, 1, result.data);
-                localStorage.setItem('type', result.data.bookType);
-                if (result.data.bookType.toLocaleLowerCase() == src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.tabType.ebook) {
-                    for (let item of result.data.bookByChapters) {
-                        this.sortOrders.push([item.chapterName, item.chapterLength]);
-                    }
-                    this.bookDuration = result.data.length + ' pages';
+            this.sortOrders = [];
+            this.audioBookDetail.splice(0, 1, result.data);
+            localStorage.setItem('type', result.data.bookType);
+            if (result.data.bookType.toLocaleLowerCase() == src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.tabType.ebook) {
+                for (let item of result.data.bookByChapters) {
+                    this.sortOrders.push([item.chapterName, item.chapterLength]);
+                }
+                this.bookDuration = result.data.length + ' pages';
+            }
+            else {
+                for (let item of result.data.bookByChapters) {
+                    this.sortOrders.push([item.chapterName, this.chapterTimeFormat(item.chapterLength)]);
+                }
+                this.timeFormat(result.data.length);
+            }
+            this.similarBooks = result.data.similarBooks;
+            this.errorMessage =
+                result.data.similarBooks == undefined ||
+                    result.data.similarBooks.length < 1
+                    ? 'No record found !!!'
+                    : '';
+            for (let i = 0; i < 5; i++) {
+                if (result.data.rating <= i) {
+                    this.ratings.push(false);
                 }
                 else {
-                    for (let item of result.data.bookByChapters) {
-                        this.sortOrders.push([item.chapterName, this.chapterTimeFormat(item.chapterLength)]);
-                    }
-                    this.timeFormat(result.data.length);
+                    this.ratings.push(true);
                 }
-                this.similarBooks = result.data.similarBooks;
-                this.errorMessage =
-                    result.data.similarBooks == undefined ||
-                        result.data.similarBooks.length < 1
-                        ? 'No record found !!!'
-                        : '';
-                for (let i = 0; i < 5; i++) {
-                    if (result.data.rating <= i) {
-                        this.ratings.push(false);
-                    }
-                    else {
-                        this.ratings.push(true);
-                    }
-                }
-                this.averageRating = (_a = result === null || result === void 0 ? void 0 : result.data) === null || _a === void 0 ? void 0 : _a.rating;
-                this.modifiedCategory = [];
-                for (let i = 0; i < ((_c = (_b = result === null || result === void 0 ? void 0 : result.data) === null || _b === void 0 ? void 0 : _b.category) === null || _c === void 0 ? void 0 : _c.length); i++) {
-                    this.modifiedCategory.push({
-                        className: this.getClass(i),
-                        _id: (_d = result === null || result === void 0 ? void 0 : result.data) === null || _d === void 0 ? void 0 : _d.category[i]._id,
-                        name_EN: (_e = result === null || result === void 0 ? void 0 : result.data) === null || _e === void 0 ? void 0 : _e.category[i].item_text_EN,
-                        name_LV: (_f = result === null || result === void 0 ? void 0 : result.data) === null || _f === void 0 ? void 0 : _f.category[i].item_text_LV,
-                    });
-                }
-                if (localStorage.getItem('authorization') !== null) {
-                    this.apiService
-                        .getData(`web/isFavourite/${id}`)
-                        .subscribe((response) => {
-                        if (response.responseCode === 200) {
-                            this.isFavourite = response.data.isFavourite;
-                        }
-                    });
-                    this.apiService
-                        .getData(`web/getRating/${id}`)
-                        .subscribe((response) => {
-                        if (response.responseCode === 200) {
-                            this.currentRate = response.data.rating;
-                        }
-                    });
-                }
-                if (this.audioBookDetail[0].description.length >= 380) {
-                    this.showReadMoreButton = true;
-                }
-                this.showSpin = false;
-                this.bookDetailData = this.audioBookDetail[0];
             }
+            this.averageRating = (_a = result === null || result === void 0 ? void 0 : result.data) === null || _a === void 0 ? void 0 : _a.rating;
+            this.modifiedCategory = [];
+            for (let i = 0; i < ((_c = (_b = result === null || result === void 0 ? void 0 : result.data) === null || _b === void 0 ? void 0 : _b.category) === null || _c === void 0 ? void 0 : _c.length); i++) {
+                this.modifiedCategory.push({
+                    className: this.getClass(i),
+                    _id: (_d = result === null || result === void 0 ? void 0 : result.data) === null || _d === void 0 ? void 0 : _d.category[i]._id,
+                    name_EN: (_e = result === null || result === void 0 ? void 0 : result.data) === null || _e === void 0 ? void 0 : _e.category[i].item_text_EN,
+                    name_LV: (_f = result === null || result === void 0 ? void 0 : result.data) === null || _f === void 0 ? void 0 : _f.category[i].item_text_LV,
+                });
+            }
+            if (localStorage.getItem('authorization') !== null) {
+                this.apiService
+                    .getData(`web/isFavourite/${id}`)
+                    .subscribe((response) => {
+                    if (response.responseCode === 200) {
+                        this.isFavourite = response.data.isFavourite;
+                    }
+                });
+                this.apiService
+                    .getData(`web/getRating/${id}`)
+                    .subscribe((response) => {
+                    if (response.responseCode === 200) {
+                        this.currentRate = response.data.rating;
+                    }
+                });
+            }
+            if (this.audioBookDetail[0].description.length >= 380) {
+                this.showReadMoreButton = true;
+            }
+            this.showSpin = false;
+            this.bookDetailData = this.audioBookDetail[0];
         }, (error) => {
             this.toastr.error(error.error.responseMessage, 'Error!');
         });

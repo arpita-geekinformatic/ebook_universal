@@ -56,7 +56,7 @@ export class FavouritesComponent implements OnInit {
   }
 
   //  get book details  //
-  detailBook(id: any, type: any) {
+  detailBook(id: any, type: any) {    
     if (type.toLowerCase() == environment.tabType.podcast) {
       this.router.navigate(
         ['podcast-detail/'],

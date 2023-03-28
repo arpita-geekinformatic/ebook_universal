@@ -8,7 +8,7 @@
                         <div class="singleProduct" (click)="detailBook(data['bookId'], data['bookType'])">
 
                             <div class="singleProductInner">
-                                <!-- <button class="bookBtn yellow"> -->
+                                
                                 <button
                                     [ngClass]="data['bookType'].toLowerCase() == 'ebook'? 'ebookBtn'  : data['bookType'].toLowerCase() == 'audiobook'? 'audiobookBtn' : 'podcastBtn'">
                                     <img [src]="data['bookType'].toLowerCase() == 'ebook'? 'assets/images/openBookIcon.svg' : data['bookType'].toLowerCase() == 'audiobook'?

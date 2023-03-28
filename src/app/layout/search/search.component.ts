@@ -64,11 +64,19 @@ export class SearchComponent implements OnInit {
   }
 
   //  get book details  //
-  detailBook(id: any, type: any) {
-    this.router.navigate(
-      ['detail/'],
-      { queryParams: { 'id': id, 'type': type == 'Audiobook' ? 'audiobooks' : 'ebooks' } }
-    );
+  detailBook(id: any, type: any) {    
+    if (type.toLowerCase() == environment.tabType.podcast) {
+      this.router.navigate(
+        ['podcast-detail/'],
+        { queryParams: { 'id': id, 'type': type.toLowerCase() } }
+      );
+    }
+    else {
+      this.router.navigate(
+        ['detail/'],
+        { queryParams: { 'id': id, 'type': type.toLowerCase() } }
+      );
+    }
   }
 
   //  get rating html //

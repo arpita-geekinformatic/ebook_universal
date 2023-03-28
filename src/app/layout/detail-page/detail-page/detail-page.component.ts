@@ -129,9 +129,10 @@ export class DetailPageComponent implements OnInit {
       (type == environment.tabType.audiobook &&
         this.apiService.getData(`web/audioBook/${id}`)) ||
       (type == environment.tabType.ebook && this.apiService.getData(`web/eBook/${id}`))
+      console.log('============== api ',api);
+      
     api.subscribe(
       (result: any) => {
-        if (result.responseCode === 200) {
           this.sortOrders = []
           this.audioBookDetail.splice(0, 1, result.data)
 
@@ -193,7 +194,6 @@ export class DetailPageComponent implements OnInit {
           }
           this.showSpin = false;
           this.bookDetailData = this.audioBookDetail[0]
-        }
       },
       (error: any) => {
         this.toastr.error(error.error.responseMessage, 'Error!')
