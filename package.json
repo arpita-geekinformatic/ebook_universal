@@ -7,10 +7,10 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "dev:ssr": "ng run angularU-testing:serve-ssr",
-    "serve:ssr": "node dist/angularU-testing/server/main.js",
-    "build:ssr": "ng build && ng run angularU-testing:server",
-    "prerender": "ng run angularU-testing:prerender"
+    "dev:ssr": "ng run ebook_universal:serve-ssr",
+    "serve:ssr": "node dist/ebook_universal/server/main.js",
+    "build:ssr": "ng build && ng run ebook_universal:server",
+    "prerender": "ng run ebook_universal:prerender"
   },
   "private": true,
   "dependencies": {
@@ -33,11 +33,13 @@
     "@ng-bootstrap/ng-bootstrap": "^13.0.0",
     "@nguniversal/express-engine": "^14.2.3",
     "@popperjs/core": "^2.11.6",
+    "@types/memory-cache": "^0.2.2",
     "bootstrap": "^5.2.0",
     "domino": "^2.1.6",
     "express": "^4.15.2",
     "firebase": "^9.18.0",
     "localstorage-polyfill": "^1.0.1",
+    "memory-cache": "^0.2.0",
     "ng2-pdf-viewer": "^9.1.4",
     "ngx-bootstrap": "^9.0.0",
     "ngx-cookie-service": "^15.0.0",

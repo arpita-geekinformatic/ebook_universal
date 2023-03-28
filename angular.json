@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angularU-testing": {
+    "ebook_universal": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/angularU-testing/browser",
+            "outputPath": "dist/ebook_universal/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -72,10 +72,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "angularU-testing:build:production"
+              "browserTarget": "ebook_universal:build:production"
             },
             "development": {
-              "browserTarget": "angularU-testing:build:development"
+              "browserTarget": "ebook_universal:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -83,7 +83,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angularU-testing:build"
+            "browserTarget": "ebook_universal:build"
           }
         },
         "test": {
@@ -107,7 +107,7 @@
         "server": {
           "builder": "@angular-devkit/build-angular:server",
           "options": {
-            "outputPath": "dist/angularU-testing/server",
+            "outputPath": "dist/ebook_universal/server",
             "main": "server.ts",
             "tsConfig": "tsconfig.server.json",
             "inlineStyleLanguage": "scss"
@@ -134,12 +134,12 @@
           "builder": "@nguniversal/builders:ssr-dev-server",
           "configurations": {
             "development": {
-              "browserTarget": "angularU-testing:build:development",
-              "serverTarget": "angularU-testing:server:development"
+              "browserTarget": "ebook_universal:build:development",
+              "serverTarget": "ebook_universal:server:development"
             },
             "production": {
-              "browserTarget": "angularU-testing:build:production",
-              "serverTarget": "angularU-testing:server:production"
+              "browserTarget": "ebook_universal:build:production",
+              "serverTarget": "ebook_universal:server:production"
             }
           },
           "defaultConfiguration": "development"
@@ -153,12 +153,12 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "angularU-testing:build:production",
-              "serverTarget": "angularU-testing:server:production"
+              "browserTarget": "ebook_universal:build:production",
+              "serverTarget": "ebook_universal:server:production"
             },
             "development": {
-              "browserTarget": "angularU-testing:build:development",
-              "serverTarget": "angularU-testing:server:development"
+              "browserTarget": "ebook_universal:build:development",
+              "serverTarget": "ebook_universal:server:development"
             }
           },
           "defaultConfiguration": "production"

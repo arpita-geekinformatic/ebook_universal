@@ -220,7 +220,6 @@ export class HeaderComponent implements OnInit {
   getFavouriteList() {
     this.apiService.getData('web/favouriteCount').subscribe(
       (res: any) => {
-        console.log('223 ============ res ',res);
         this.totalRecords = res.data.totalRecord
       },
       (error) => {

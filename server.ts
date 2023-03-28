@@ -13,7 +13,7 @@ const domino = require('domino');
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
   const server = express();
-  const distFolder = join(process.cwd(), 'dist/angularU-testing/browser');
+  const distFolder = join(process.cwd(), 'dist/ebook_universal/browser');
   const indexHtml = existsSync(join(distFolder, 'index.original.html')) ? 'index.original.html' : 'index';
   const window = domino.createWindow(indexHtml);
   global['window'] = window;
@@ -37,9 +37,6 @@ export function app(): express.Express {
 
   // All regular routes use the Universal engine
   server.get('*', (req, res) => {
-    console.log('40 ============== req ',req.headers);
-    console.log('41  @@@@@@@@@@@@@@  req.baseUrl ',req.baseUrl);
-    
     res.render(indexHtml, { req, providers: [{ provide: APP_BASE_HREF, useValue: req.baseUrl }] });
   });
 

@@ -17,6 +17,7 @@ export class FavouritesComponent implements OnInit {
   skip = 0;
   errorMessage: string = '';
   showSpin = false;
+  token: any = '';
 
   constructor(
     private apiService: ApiService,
@@ -25,7 +26,11 @@ export class FavouritesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getFavouriteList(this.skip);
+    this.token = localStorage.getItem('authorization')
+    if (this.token != null || this.token != undefined) {
+      this.getFavouriteList(this.skip);
+    }
+    // this.getFavouriteList(this.skip);
   }
 
   getType(event: any) {
@@ -36,17 +41,13 @@ export class FavouritesComponent implements OnInit {
   getFavouriteList(skip: any) {
     this.showSpin = true;
     this.apiService.getData(`web/favourite?skip=${skip}&limit=10`).subscribe(
-      (res: any) => {
-        console.log('========== res.data ',res.data);
-        
+      (res: any) => {        
         this.favouriteList.push(...res.data);
         this.totalRecords = res.totalRecord;
         this.errorMessage = res.data == undefined || res.data.length < 1 ? 'No record found !!!' : ''
         this.showSpin = false;
       },
-      (error) => {
-        console.log('>>>>>>>>..... error ',error);
-        
+      (error) => {        
         this.showSpin = false;
         this.toastr.error(error.error.responseMessage, 'Error!');
         this.errorMessage = error.error.responseMessage;
