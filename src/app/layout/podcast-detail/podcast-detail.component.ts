@@ -66,7 +66,7 @@ export class PodcastDetailComponent implements OnInit {
 
     this.currentUrl = this.router.url;
     if (isPlatformBrowser(this.platformId)) {
-    window.scroll({ top: 0, left: 0, behavior: 'smooth' });
+      window.scroll({ top: 0, left: 0, behavior: 'smooth' });
     }
 
     this.route.queryParams.subscribe(params => {
@@ -87,7 +87,11 @@ export class PodcastDetailComponent implements OnInit {
       (result: any) => {
         this.showShimmer = false
         this.podcastDetail = result.data;
-        localStorage.setItem('type', this.tabType)
+
+        if (isPlatformBrowser(this.platformId)) {
+          localStorage.setItem('type', this.tabType)
+        }
+
         this.similarPodcasts = this.podcastDetail.similarPodcasts;
 
         this.errorMessage = (this.similarPodcasts == undefined || this.similarPodcasts.length < 1) ? 'No record found !!!' : '';
@@ -103,24 +107,26 @@ export class PodcastDetailComponent implements OnInit {
           this.sortOrders.push([item.episodeName, this.chapterTimeFormat(item.episodeLength)])
         }
 
-        if (localStorage.getItem('authorization') !== null) {
-          this.apiService.getData(`web/isFavourite/${id}`).subscribe(
-            (response: any) => {
-              this.isFavourite = response.data.isFavourite
-            }
-          )
+        if (isPlatformBrowser(this.platformId)) {
+          if (localStorage.getItem('authorization') !== null) {
+            this.apiService.getData(`web/isFavourite/${id}`).subscribe(
+              (response: any) => {
+                this.isFavourite = response.data.isFavourite
+              }
+            )
 
-          this.apiService.getData(`web/getSubscription/${id}`).subscribe(
-            (response: any) => {
-              this.isSubscribed = response.data.isSubscribed
-            }
-          )
+            this.apiService.getData(`web/getSubscription/${id}`).subscribe(
+              (response: any) => {
+                this.isSubscribed = response.data.isSubscribed
+              }
+            )
 
-          this.apiService.getData(`web/getRating/${id}`).subscribe(
-            (response: any) => {
-              this.currentRate = response.data.rating
-            }
-          )
+            this.apiService.getData(`web/getRating/${id}`).subscribe(
+              (response: any) => {
+                this.currentRate = response.data.rating
+              }
+            )
+          }
         }
 
         if (this.podcastDetail.description.length >= 380) {
@@ -225,49 +231,55 @@ export class PodcastDetailComponent implements OnInit {
 
   //  podcast favourite / unfavourite  //
   favouriteBook(id: any, isFavourite: any) {
-    if (localStorage.getItem('authorization') !== null) {
-      let favourite: any = (isFavourite == true) ? false : true;
-      this.isFavourite = favourite;
-      let type = this.tabType;
+    if (isPlatformBrowser(this.platformId)) {
 
-      this.apiService.putData(`web/favourite/${id}?isFavourite=${favourite}&type=${type}`, '')
-        .subscribe(
-          (result: any) => {
-            this.apiService.passValue(result.data.favouriteCount);
-            this.toastr.success(result.responseMessage, 'Success!');
-          },
-          (error: any) => {
-            this.toastr.error(error.error.responseMessage, 'Error!');
-          },
-        )
-    } else {
-      this.router.navigate(
-        ['/login']
-      );
+      if (localStorage.getItem('authorization') !== null) {
+        let favourite: any = (isFavourite == true) ? false : true;
+        this.isFavourite = favourite;
+        let type = this.tabType;
+
+        this.apiService.putData(`web/favourite/${id}?isFavourite=${favourite}&type=${type}`, '')
+          .subscribe(
+            (result: any) => {
+              this.apiService.passValue(result.data.favouriteCount);
+              this.toastr.success(result.responseMessage, 'Success!');
+            },
+            (error: any) => {
+              this.toastr.error(error.error.responseMessage, 'Error!');
+            },
+          )
+      } else {
+        this.router.navigate(
+          ['/login']
+        );
+      }
     }
   }
 
   //  subscribe Podcast  //
   subscribePodcast(id: any, podcastSubscribed: any) {
-    if (localStorage.getItem('authorization') !== null) {
-      let subscribe: any = (podcastSubscribed == true) ? false : true;
-      this.isSubscribed = subscribe;
-      let type = this.tabType;
+    if (isPlatformBrowser(this.platformId)) {
 
-      this.apiService.putData(`webPodcast/addSubscription/${id}?isSubscribed=${this.isSubscribed}&bookType=${type}`, '')
-        .subscribe(
-          (result: any) => {
-            this.totalSubscribers = result.data.followers
-            this.toastr.success(result.responseMessage, 'Success!');
-          },
-          (error: any) => {
-            this.toastr.error(error.error.responseMessage, 'Error!');
-          },
-        )
-    } else {
-      this.router.navigate(
-        ['/login']
-      );
+      if (localStorage.getItem('authorization') !== null) {
+        let subscribe: any = (podcastSubscribed == true) ? false : true;
+        this.isSubscribed = subscribe;
+        let type = this.tabType;
+
+        this.apiService.putData(`webPodcast/addSubscription/${id}?isSubscribed=${this.isSubscribed}&bookType=${type}`, '')
+          .subscribe(
+            (result: any) => {
+              this.totalSubscribers = result.data.followers
+              this.toastr.success(result.responseMessage, 'Success!');
+            },
+            (error: any) => {
+              this.toastr.error(error.error.responseMessage, 'Error!');
+            },
+          )
+      } else {
+        this.router.navigate(
+          ['/login']
+        );
+      }
     }
   }
 
@@ -286,12 +298,15 @@ export class PodcastDetailComponent implements OnInit {
 
   //  open rating modal  //
   openSm(content: any) {
-    if (localStorage.getItem('authorization') !== null) {
-      this.modalService.open(content, { size: 'sm' });
-    } else {
-      this.router.navigate(
-        ['/login']
-      );
+    if (isPlatformBrowser(this.platformId)) {
+
+      if (localStorage.getItem('authorization') !== null) {
+        this.modalService.open(content, { size: 'sm' });
+      } else {
+        this.router.navigate(
+          ['/login']
+        );
+      }
     }
   }
 
@@ -318,18 +333,21 @@ export class PodcastDetailComponent implements OnInit {
     this.podcastDetail.podcastByChapters = this.podcastChapters;
     this.podcastDetail.isFavourite = this.isFavourite;
 
-    if ((((localStorage.getItem('authorization') == null) || (localStorage.getItem('authorization') != null)) && ((urlType == 'audioPresentation') || (episodeDetails.season == 1 && episodeDetails.episode == 1)))) {
-      this.cusModalService.open(this.podcastDetail, chapterName, urlType);
-    }
-    else if ((localStorage.getItem('authorization') != null) && ((episodeDetails.season != 1) || (episodeDetails.episode != 1)) &&  !this.isSubscribed) {
-      this.toastr.error('Subscribe podcast to listen the latest episodes.', 'Error!');
-    }
-    else if ((localStorage.getItem('authorization') != null) && ((episodeDetails.season != 1) || (episodeDetails.episode != 1)) &&  this.isSubscribed) {
-      this.cusModalService.open(this.podcastDetail, chapterName, urlType);
-    }
-    else {
-      this.router.navigate(
-        ['/login']);
+    if (isPlatformBrowser(this.platformId)) {
+
+      if ((((localStorage.getItem('authorization') == null) || (localStorage.getItem('authorization') != null)) && ((urlType == 'audioPresentation') || (episodeDetails.season == 1 && episodeDetails.episode == 1)))) {
+        this.cusModalService.open(this.podcastDetail, chapterName, urlType);
+      }
+      else if ((localStorage.getItem('authorization') != null) && ((episodeDetails.season != 1) || (episodeDetails.episode != 1)) && !this.isSubscribed) {
+        this.toastr.error('Subscribe podcast to listen the latest episodes.', 'Error!');
+      }
+      else if ((localStorage.getItem('authorization') != null) && ((episodeDetails.season != 1) || (episodeDetails.episode != 1)) && this.isSubscribed) {
+        this.cusModalService.open(this.podcastDetail, chapterName, urlType);
+      }
+      else {
+        this.router.navigate(
+          ['/login']);
+      }
     }
   }
 

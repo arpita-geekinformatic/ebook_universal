@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { environment } from "src/environments/environment";
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { CookieService } from 'ngx-cookie-service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-home-page',
@@ -22,31 +23,36 @@ export class HomePageComponent implements OnInit {
   showGetStarted: any = true;
   hide: string = 'show';
   recommend: any = {};
-  
+
 
   constructor(
     private apiService: ApiService,
     private router: Router,
     public authService: AuthService,
     private toastr: ToastrService,
-    public cookieService: CookieService
+    public cookieService: CookieService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) { }
 
   ngOnInit(): void {
     this.toggleBookType();
-    const token = localStorage.getItem('authorization');
-    
-    if (token !== null) {
-      this.showGetStarted = false;
+
+    if (isPlatformBrowser(this.platformId)) {
+      const token = localStorage.getItem('authorization');
+      if (token !== null) {
+        this.showGetStarted = false;
+      }
     }
     if (this.cookieService.get('name') !== '') {
       this.hide = 'hide';
     }
   }
 
-  toggleBookType() {        
-    this.tabType = localStorage.getItem('type')?.toLocaleLowerCase() == environment.tabType.podcast ? environment.tabType.podcast : localStorage.getItem('type')?.toLocaleLowerCase() == environment.tabType.ebook ? environment.tabType.ebook : environment.tabType.audiobook;
-    localStorage.setItem('type',  this.tabType )
+  toggleBookType() {
+    if (isPlatformBrowser(this.platformId)) {
+      this.tabType = localStorage.getItem('type')?.toLocaleLowerCase() == environment.tabType.podcast ? environment.tabType.podcast : localStorage.getItem('type')?.toLocaleLowerCase() == environment.tabType.ebook ? environment.tabType.ebook : environment.tabType.audiobook;
+      localStorage.setItem('type', this.tabType)
+    }
 
     if (this.tabType === environment.tabType.audiobook) {
       this.BannerList('Audiobook');
@@ -76,7 +82,9 @@ export class HomePageComponent implements OnInit {
               this.recommend = item.data[0];
             }
           }
-          localStorage.removeItem('type')
+          if (isPlatformBrowser(this.platformId)) {
+            localStorage.removeItem('type')
+          }
         }
       },
       (error: any) => {
@@ -92,9 +100,9 @@ export class HomePageComponent implements OnInit {
     );
   }
 
-  getType(event: any) {        
+  getType(event: any) {
     this.tabType = event;
-    
+
     if (event === environment.tabType.audiobook) {
       this.getAudioBook();
       this.BannerList('Audiobook');
@@ -122,7 +130,9 @@ export class HomePageComponent implements OnInit {
               this.recommend = item.data[0];
             }
           }
-          localStorage.removeItem('type')
+          if (isPlatformBrowser(this.platformId)) {
+            localStorage.removeItem('type')
+          }
         }
       },
       (error: any) => {
@@ -159,7 +169,7 @@ export class HomePageComponent implements OnInit {
   }
 
   //  get category //
-  categoryList(type:any) {    
+  categoryList(type: any) {
     this.apiService.getData(`category?type=${type}`).subscribe(
       (res: any) => {
         if (res.responseCode === 200) {
@@ -199,7 +209,7 @@ export class HomePageComponent implements OnInit {
   viewBookByCategory(id: any) {
     this.router.navigate(
       ['/view-more/'],
-      { queryParams: { 'id': id , 'pageType': 'category' } }
+      { queryParams: { 'id': id, 'pageType': 'category' } }
     );
   }
 

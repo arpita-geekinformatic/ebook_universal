@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import { Router } from '@angular/router';
 import { environment } from "src/environments/environment";
 import { ToastrService } from 'ngx-toastr';
+import { isPlatformBrowser } from '@angular/common';
 
 
 @Component({
@@ -20,11 +21,14 @@ export class UpdateProfileComponent implements OnInit {
   updateId: any = "";
   uploadedFile!: string;
   public IMAGE_URL = environment.IMAGE_URL;
+
   constructor(
     private formBuilder: FormBuilder,
     private apiService: ApiService,
     private router: Router,
     private toastr: ToastrService,
+    @Inject(PLATFORM_ID) private platformId: Object
+
   ) { }
 
   ngOnInit(): void {
@@ -46,9 +50,11 @@ export class UpdateProfileComponent implements OnInit {
     if (this.updateId) {
       this.apiService.putFileData(`user/update/${this.updateId}`, formData).subscribe(
         (result: any) => {
-          localStorage.setItem("name", result.data.name);
-          this.toastr.success('Profile Updated.', 'Success!');
-          this.router.navigateByUrl('/home');
+          if (isPlatformBrowser(this.platformId)) {
+            localStorage.setItem("name", result.data.name);
+            this.toastr.success('Profile Updated.', 'Success!');
+            this.router.navigateByUrl('/home');
+          }
         },
         (error) => {
           this.hasError = true;

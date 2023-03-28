@@ -129,49 +129,52 @@ export class DetailPageComponent implements OnInit {
       (type == environment.tabType.audiobook &&
         this.apiService.getData(`web/audioBook/${id}`)) ||
       (type == environment.tabType.ebook && this.apiService.getData(`web/eBook/${id}`))
-      console.log('============== api ',api);
-      
+
     api.subscribe(
       (result: any) => {
-          this.sortOrders = []
-          this.audioBookDetail.splice(0, 1, result.data)
+        this.sortOrders = []
+        this.audioBookDetail.splice(0, 1, result.data)
 
+        if (isPlatformBrowser(this.platformId)) {
           localStorage.setItem('type', result.data.bookType)
-          if (result.data.bookType.toLocaleLowerCase() == environment.tabType.ebook) {
-            for (let item of result.data.bookByChapters) {
-              this.sortOrders.push([item.chapterName, item.chapterLength])
-            }
-            this.bookDuration = result.data.length + ' pages'
-          } else {
-            for (let item of result.data.bookByChapters) {
-              this.sortOrders.push([item.chapterName, this.chapterTimeFormat(item.chapterLength)])
-            }
-            this.timeFormat(result.data.length)
-          }
-          this.similarBooks = result.data.similarBooks
-          this.errorMessage =
-            result.data.similarBooks == undefined ||
-              result.data.similarBooks.length < 1
-              ? 'No record found !!!'
-              : ''
-          for (let i = 0; i < 5; i++) {
-            if (result.data.rating <= i) {
-              this.ratings.push(false)
-            } else {
-              this.ratings.push(true)
-            }
-          }
-          this.averageRating = result?.data?.rating
-          this.modifiedCategory = []
-          for (let i = 0; i < result?.data?.category?.length; i++) {
-            this.modifiedCategory.push({
-              className: this.getClass(i),
-              _id: result?.data?.category[i]._id,
-              name_EN: result?.data?.category[i].item_text_EN,
-              name_LV: result?.data?.category[i].item_text_LV,
-            })
-          }
+        }
 
+        if (result.data.bookType.toLocaleLowerCase() == environment.tabType.ebook) {
+          for (let item of result.data.bookByChapters) {
+            this.sortOrders.push([item.chapterName, item.chapterLength])
+          }
+          this.bookDuration = result.data.length + ' pages'
+        } else {
+          for (let item of result.data.bookByChapters) {
+            this.sortOrders.push([item.chapterName, this.chapterTimeFormat(item.chapterLength)])
+          }
+          this.timeFormat(result.data.length)
+        }
+        this.similarBooks = result.data.similarBooks
+        this.errorMessage =
+          result.data.similarBooks == undefined ||
+            result.data.similarBooks.length < 1
+            ? 'No record found !!!'
+            : ''
+        for (let i = 0; i < 5; i++) {
+          if (result.data.rating <= i) {
+            this.ratings.push(false)
+          } else {
+            this.ratings.push(true)
+          }
+        }
+        this.averageRating = result?.data?.rating
+        this.modifiedCategory = []
+        for (let i = 0; i < result?.data?.category?.length; i++) {
+          this.modifiedCategory.push({
+            className: this.getClass(i),
+            _id: result?.data?.category[i]._id,
+            name_EN: result?.data?.category[i].item_text_EN,
+            name_LV: result?.data?.category[i].item_text_LV,
+          })
+        }
+
+        if (isPlatformBrowser(this.platformId)) {
           if (localStorage.getItem('authorization') !== null) {
             this.apiService
               .getData(`web/isFavourite/${id}`)
@@ -189,11 +192,12 @@ export class DetailPageComponent implements OnInit {
                 }
               })
           }
-          if (this.audioBookDetail[0].description.length >= 380) {
-            this.showReadMoreButton = true
-          }
-          this.showSpin = false;
-          this.bookDetailData = this.audioBookDetail[0]
+        }
+        if (this.audioBookDetail[0].description.length >= 380) {
+          this.showReadMoreButton = true
+        }
+        this.showSpin = false;
+        this.bookDetailData = this.audioBookDetail[0]
       },
       (error: any) => {
         this.toastr.error(error.error.responseMessage, 'Error!')
@@ -207,46 +211,52 @@ export class DetailPageComponent implements OnInit {
 
   //  book favourite / unfavourite  //
   favouriteBook(id: any, isFavourite: any) {
-    if (localStorage.getItem('authorization') !== null) {
-      let favourite: any = isFavourite == true ? false : true
-      this.isFavourite = favourite
-      let type = this.tabType
+    if (isPlatformBrowser(this.platformId)) {
+      if (localStorage.getItem('authorization') !== null) {
+        let favourite: any = isFavourite == true ? false : true
+        this.isFavourite = favourite
+        let type = this.tabType
 
-      var api: any = this.apiService.putData(
-        `web/favourite/${id}?isFavourite=${favourite}&type=${type}`,
-        '',
-      )
-      api.subscribe(
-        (result: any) => {
-          this.apiService.passValue(result.data.favouriteCount)
-          this.toastr.success(result.responseMessage, 'Error!')
-        },
-        (error: any) => {
-          this.toastr.error(error.error.responseMessage, 'Error!')
-        },
-      )
-    } else {
-      this.router.navigate(['/login'])
+        var api: any = this.apiService.putData(
+          `web/favourite/${id}?isFavourite=${favourite}&type=${type}`,
+          '',
+        )
+        api.subscribe(
+          (result: any) => {
+            this.apiService.passValue(result.data.favouriteCount)
+            this.toastr.success(result.responseMessage, 'Error!')
+          },
+          (error: any) => {
+            this.toastr.error(error.error.responseMessage, 'Error!')
+          },
+        )
+      } else {
+        this.router.navigate(['/login'])
+      }
     }
   }
 
   openModal(content: any, url: any, type: any, urlType: any, chapterName: any) {
     this.bookDetailData.modalStatus = 'open';
     this.cusModalService.open(this.bookDetailData, chapterName, urlType);
-    if (localStorage.getItem('authorization') != null || urlType == 'bookFragment') {
-      if (type == 'audiobooks') {
-        this.playerType = urlType
-        this.selectedChapter = chapterName
-        this.audioFile = this.IMAGE_URL + url
-        // this.modalService.open(content)
-        this.loadMusic(chapterName, this.playerType)
+
+    if (isPlatformBrowser(this.platformId)) {
+
+      if (localStorage.getItem('authorization') != null || urlType == 'bookFragment') {
+        if (type == 'audiobooks') {
+          this.playerType = urlType
+          this.selectedChapter = chapterName
+          this.audioFile = this.IMAGE_URL + url
+          // this.modalService.open(content)
+          this.loadMusic(chapterName, this.playerType)
+        }
+        if (type == 'ebooks') {
+          let fileExt = url.split('.')[1]
+          this.openReader(urlType, fileExt, chapterName)
+        }
+      } else {
+        this.router.navigate(['/login'])
       }
-      if (type == 'ebooks') {
-        let fileExt = url.split('.')[1]
-        this.openReader(urlType, fileExt, chapterName)
-      }
-    } else {
-      this.router.navigate(['/login'])
     }
   }
 
@@ -361,10 +371,12 @@ export class DetailPageComponent implements OnInit {
 
   //  open rating modal  //
   openSm(content: any) {
-    if (localStorage.getItem('authorization') !== null) {
-      this.modalService.open(content, { size: 'sm' })
-    } else {
-      this.router.navigate(['/login'])
+    if (isPlatformBrowser(this.platformId)) {
+      if (localStorage.getItem('authorization') !== null) {
+        this.modalService.open(content, { size: 'sm' })
+      } else {
+        this.router.navigate(['/login'])
+      }
     }
   }
 

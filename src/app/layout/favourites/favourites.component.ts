@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { environment } from "src/environments/environment";
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-favourites',
@@ -23,12 +24,16 @@ export class FavouritesComponent implements OnInit {
     private apiService: ApiService,
     private router: Router,
     private toastr: ToastrService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) { }
 
   ngOnInit(): void {
-    this.token = localStorage.getItem('authorization')
-    if (this.token != null || this.token != undefined) {
-      this.getFavouriteList(this.skip);
+    if (isPlatformBrowser(this.platformId)) {
+      this.token = localStorage.getItem('authorization')
+
+      if (this.token != null || this.token != undefined) {
+        this.getFavouriteList(this.skip);
+      }
     }
     // this.getFavouriteList(this.skip);
   }
@@ -41,13 +46,13 @@ export class FavouritesComponent implements OnInit {
   getFavouriteList(skip: any) {
     this.showSpin = true;
     this.apiService.getData(`web/favourite?skip=${skip}&limit=10`).subscribe(
-      (res: any) => {        
+      (res: any) => {
         this.favouriteList.push(...res.data);
         this.totalRecords = res.totalRecord;
         this.errorMessage = res.data == undefined || res.data.length < 1 ? 'No record found !!!' : ''
         this.showSpin = false;
       },
-      (error) => {        
+      (error) => {
         this.showSpin = false;
         this.toastr.error(error.error.responseMessage, 'Error!');
         this.errorMessage = error.error.responseMessage;
@@ -56,7 +61,7 @@ export class FavouritesComponent implements OnInit {
   }
 
   //  get book details  //
-  detailBook(id: any, type: any) {    
+  detailBook(id: any, type: any) {
     if (type.toLowerCase() == environment.tabType.podcast) {
       this.router.navigate(
         ['podcast-detail/'],
@@ -99,9 +104,9 @@ export class FavouritesComponent implements OnInit {
     }
     if (this.favouriteList.length != this.totalRecords) {
       this.skip = this.skip + 10;
-      setTimeout(() => {
-        this.getFavouriteList(this.skip)
-      }, 1000)
+      // setTimeout(() => {
+      this.getFavouriteList(this.skip)
+      // }, 1000)
     }
   }
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { FacebookAuthProvider, GoogleAuthProvider } from 'firebase/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import {
@@ -11,6 +11,7 @@ import { Observable } from 'rxjs/index';
 import firebase from 'firebase/compat';
 import { ApiService } from 'src/app/services/api.service';
 import { ToastrService } from 'ngx-toastr';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +22,7 @@ export class AuthService implements CanActivate {
     public afAuth: AngularFireAuth,
     private apiService: ApiService,
     private toastr: ToastrService,
+    @Inject(PLATFORM_ID) private platformId: Object
 
   ) { }
 
@@ -31,13 +33,15 @@ export class AuthService implements CanActivate {
     return this.isAuthenticated();
   }
 
-  public isAuthenticated(): boolean {
-    const token = localStorage.getItem('authorization');
-    if (token === null) {
-      this.router.navigate(['/login']);
-      return false;
+  public isAuthenticated(): any {
+    if (isPlatformBrowser(this.platformId)) {
+      const token = localStorage.getItem('authorization');
+      if (token === null) {
+        this.router.navigate(['/login']);
+        return false;
+      }
+      return true;
     }
-    return true;
   }
   // Sign in with Google
   GoogleAuth(type: any) {
@@ -85,7 +89,7 @@ export class AuthService implements CanActivate {
   login(obj: any) {
     this.apiService.postData("user/signin", obj).subscribe(
       (result: any) => {
-        if (result.responseCode === 200) {
+        if (isPlatformBrowser(this.platformId)) {
           localStorage.setItem("authorization", result.data.accessToken);
           localStorage.setItem("name", result.data.name);
         }

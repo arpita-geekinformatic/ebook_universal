@@ -7,6 +7,8 @@ import {
   TemplateRef,
   ViewChild,
   ElementRef,
+  Inject,
+  PLATFORM_ID,
 } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { ApiService } from 'src/app/services/api.service'
@@ -18,6 +20,7 @@ import { ModalService } from 'src/app/services/modal.service'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { environment } from 'src/environments/environment'
 import { first, take } from 'rxjs/operators'
+import { isPlatformBrowser } from '@angular/common'
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -70,6 +73,8 @@ export class HeaderComponent implements OnInit {
     private toastr: ToastrService,
     private modalService: NgbModal,
     private cusModalService: ModalService,
+    @Inject(PLATFORM_ID) private platformId: Object
+
   ) { }
 
   ngOnInit(): void {
@@ -89,9 +94,11 @@ export class HeaderComponent implements OnInit {
       })
     }, 200)
 
-    this.tabType = localStorage.getItem('type')?.toLocaleLowerCase() == environment.tabType.podcast ? environment.tabType.podcast : localStorage.getItem('type')?.toLocaleLowerCase() == environment.tabType.ebook ? environment.tabType.ebook : environment.tabType.audiobook;
+    if (isPlatformBrowser(this.platformId)) {
+      this.tabType = localStorage.getItem('type')?.toLocaleLowerCase() == environment.tabType.podcast ? environment.tabType.podcast : localStorage.getItem('type')?.toLocaleLowerCase() == environment.tabType.ebook ? environment.tabType.ebook : environment.tabType.audiobook;
 
-    localStorage.setItem('type', this.tabType)
+      localStorage.setItem('type', this.tabType)
+    }
 
     this.searchForm = this.formBuilder.group({ search: [''] })
     this.favouriteCount()
@@ -108,10 +115,13 @@ export class HeaderComponent implements OnInit {
         this.updateid = this.router.url.split('?')[0]
       }
     })
-    this.name = localStorage.getItem('name')
-    this.token = localStorage.getItem('authorization')
-    if (localStorage.getItem('authorization') != null || localStorage.getItem('authorization') != undefined) {
-      this.getFavouriteList()
+
+    if (isPlatformBrowser(this.platformId)) {
+      this.name = localStorage.getItem('name')
+      this.token = localStorage.getItem('authorization')
+      if (localStorage.getItem('authorization') != null || localStorage.getItem('authorization') != undefined) {
+        this.getFavouriteList()
+      }
     }
   }
 
@@ -123,10 +133,12 @@ export class HeaderComponent implements OnInit {
   subscribedData(modalData: any) {
     console.log('176 ################ ',);
 
-    if (localStorage.getItem('isMini') == 'true') {
-      this.isMini = true;
-    } else {
-      localStorage.setItem('isMini', 'false')
+    if (isPlatformBrowser(this.platformId)) {
+      if (localStorage.getItem('isMini') == 'true') {
+        this.isMini = true;
+      } else {
+        localStorage.setItem('isMini', 'false')
+      }
     }
 
     if (modalData.bookType.toLocaleLowerCase() == environment.tabType.ebook) {
@@ -137,11 +149,14 @@ export class HeaderComponent implements OnInit {
     }
     if (modalData.bookType.toLocaleLowerCase() == environment.tabType.podcast) {
 
-      if (this.sortOrders.length == 0 && localStorage.getItem('authorization') !== null && modalData.isSubscribed) {
-        for (let item of modalData.podcastByChapters) {
-          this.sortOrders.push([item.episodeName, item.episodeLength])
+      if (isPlatformBrowser(this.platformId)) {
+        if (this.sortOrders.length == 0 && localStorage.getItem('authorization') !== null && modalData.isSubscribed) {
+          for (let item of modalData.podcastByChapters) {
+            this.sortOrders.push([item.episodeName, item.episodeLength])
+          }
         }
       }
+
       this.currentChapterName = modalData.currentChapterName;
       this.playerType = modalData.currentUrlType;
       this.mSet();
@@ -171,7 +186,9 @@ export class HeaderComponent implements OnInit {
 
   //  on book type tab change  //
   tabClick(type: any) {
-    localStorage.setItem('type', type)
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem('type', type)
+    }
 
     this.newItemEvent.emit(type);
     if (type.toLocaleLowerCase() == environment.tabType.podcast) {
@@ -189,10 +206,13 @@ export class HeaderComponent implements OnInit {
 
   //  logout  //
   logout() {
-    localStorage.removeItem('authorization')
-    localStorage.removeItem('name');
-    localStorage.removeItem('email');
-    localStorage.removeItem('isMini');
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.removeItem('authorization')
+      localStorage.removeItem('name');
+      localStorage.removeItem('email');
+      localStorage.removeItem('isMini');
+    }
+
     this.token = null
 
     this.cusModalService.open('', '', '');
@@ -224,7 +244,8 @@ export class HeaderComponent implements OnInit {
   //  get all favourite list  //
   favouriteClick(url: any) {
     if (this.authService.isAuthenticated()) {
-      this.router.navigate([url])
+      this.router.navigateByUrl(url);
+      // this.router.navigate([url])
     } else {
       this.router.navigate(['/login'])
     }
@@ -253,54 +274,66 @@ export class HeaderComponent implements OnInit {
   //  add Playback  //
   addPlayback(id: any) {
     console.log('311 &&&&&&&&&&&&&& addPlayback');
+    if (isPlatformBrowser(this.platformId)) {
 
-    // if (localStorage.getItem('authorization') !== null) {
-    //   this.playbackUpdate = true
-    //   // this.apiService.putData(`webPodcast/addPlaybacks/${id}`, '')
-    //   //   .subscribe(
-    //   //     (result: any) => {
-    //   //       // this.toastr.success(result.responseMessage, 'Success!');
-    //   //     },
-    //   //     (error: any) => {
-    //   //       // this.toastr.error(error.error.responseMessage, 'Error!');
-    //   //     },
-    //   //   )
-    // } else {
-    //   this.router.navigate(
-    //     ['/login']
-    //   );
-    // }
+      // if (localStorage.getItem('authorization') !== null) {
+      //   this.playbackUpdate = true
+      //   // this.apiService.putData(`webPodcast/addPlaybacks/${id}`, '')
+      //   //   .subscribe(
+      //   //     (result: any) => {
+      //   //       // this.toastr.success(result.responseMessage, 'Success!');
+      //   //     },
+      //   //     (error: any) => {
+      //   //       // this.toastr.error(error.error.responseMessage, 'Error!');
+      //   //     },
+      //   //   )
+      // } else {
+      //   this.router.navigate(
+      //     ['/login']
+      //   );
+      // }
+    }
   }
 
   miniPlayer() {
     this.isMini = true;
-    localStorage.setItem('isMini', 'true');
+
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem('isMini', 'true');
+    }
   }
 
   maximizePlayer() {
     this.isMini = false;
-    localStorage.setItem('isMini', 'false');
+
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem('isMini', 'false');
+    }
   }
+
 
   //  book favourite / unfavourite  //
   favouriteBook(id: any, isFavourite: any) {
-    if (localStorage.getItem('authorization') !== null) {
-      let favourite: any = isFavourite == true ? false : true
-      this.isFavourite = favourite
-      let type = this.tabType
+    if (isPlatformBrowser(this.platformId)) {
 
-      var api: any = this.apiService.putData(`web/favourite/${id}?isFavourite=${favourite}&type=${type}`, '')
-      api.subscribe(
-        (result: any) => {
-          this.apiService.passValue(result.data.favouriteCount)
-          this.toastr.success(result.responseMessage, 'Error!')
-        },
-        (error: any) => {
-          this.toastr.error(error.error.responseMessage, 'Error!')
-        }
-      )
-    } else {
-      this.router.navigate(['/login'])
+      if (localStorage.getItem('authorization') !== null) {
+        let favourite: any = isFavourite == true ? false : true
+        this.isFavourite = favourite
+        let type = this.tabType
+
+        var api: any = this.apiService.putData(`web/favourite/${id}?isFavourite=${favourite}&type=${type}`, '')
+        api.subscribe(
+          (result: any) => {
+            this.apiService.passValue(result.data.favouriteCount)
+            this.toastr.success(result.responseMessage, 'Error!')
+          },
+          (error: any) => {
+            this.toastr.error(error.error.responseMessage, 'Error!')
+          }
+        )
+      } else {
+        this.router.navigate(['/login'])
+      }
     }
   }
 
@@ -309,34 +342,37 @@ export class HeaderComponent implements OnInit {
     let dur: any = document.getElementById('dur')
     console.log('>>>>> dur', !localStorage.getItem('isMini'), dur);
 
-    if ((dur != null) && (!localStorage.getItem('isMini'))) {
-      console.log('334 4444444444444');
+    if (isPlatformBrowser(this.platformId)) {
 
-      this.selectedChapter = this.currentChapterName;
+      if ((dur != null) && (!localStorage.getItem('isMini'))) {
+        console.log('334 4444444444444');
 
-      for (let chapters of this.modalData.bookByChapters) {
-        if (chapters.chapterName == this.selectedChapter) {
+        this.selectedChapter = this.currentChapterName;
 
-          let oAudio: any = document.getElementById('main-audio');
-          this.mainAudio = oAudio.src;
-          oAudio.currentTime = dur.value;
+        for (let chapters of this.modalData.bookByChapters) {
+          if (chapters.chapterName == this.selectedChapter) {
 
-          this.mainAudioLength = parseInt(chapters.chapterLength)
-          this.timeCount = dur.value
-          this.timeLeft = this.mainAudioLength - this.timeCount
+            let oAudio: any = document.getElementById('main-audio');
+            this.mainAudio = oAudio.src;
+            oAudio.currentTime = dur.value;
 
-          var date = new Date(0)
-          date.setSeconds(this.timeLeft) // specify value for SECONDS here
-          this.timeLeftString = date.toISOString().substring(11, 19)
-          var date = new Date(0)
-          date.setSeconds(0) // specify value for SECONDS here
-          this.timeCountString = date.toISOString().substring(11, 19)
+            this.mainAudioLength = parseInt(chapters.chapterLength)
+            this.timeCount = dur.value
+            this.timeLeft = this.mainAudioLength - this.timeCount
+
+            var date = new Date(0)
+            date.setSeconds(this.timeLeft) // specify value for SECONDS here
+            this.timeLeftString = date.toISOString().substring(11, 19)
+            var date = new Date(0)
+            date.setSeconds(0) // specify value for SECONDS here
+            this.timeCountString = date.toISOString().substring(11, 19)
+          }
         }
       }
-    }
-    else {
-      console.log('357 777777777777');
-      return this.loadMusic(this.currentChapterName, this.playerType);
+      else {
+        console.log('357 777777777777');
+        return this.loadMusic(this.currentChapterName, this.playerType);
+      }
     }
   }
 
@@ -558,7 +594,9 @@ export class HeaderComponent implements OnInit {
     this.isPlay = false
     this.pauseTimer()
 
-    localStorage.setItem('isMini', 'false');
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem('isMini', 'false');
+    }
     this.cusModalService.open({ modalStatus: 'close' }, '', '');
   }
 }

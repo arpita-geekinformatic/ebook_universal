@@ -49,7 +49,7 @@ export class PodcastEpisodesComponent implements OnInit {
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
-    window.scroll({ top: 0, left: 0, behavior: 'smooth' });
+      window.scroll({ top: 0, left: 0, behavior: 'smooth' });
     }
 
     this.route.queryParams.subscribe(params => {
@@ -118,12 +118,14 @@ export class PodcastEpisodesComponent implements OnInit {
 
   //  open subscribtion modal  // 
   openMd(content: any) {
-    if (localStorage.getItem('authorization') !== null) {
-      this.modalService.open(content, { size: 'md' });
-    } else {
-      this.router.navigate(
-        ['/login']
-      );
+    if (isPlatformBrowser(this.platformId)) {
+      if (localStorage.getItem('authorization') !== null) {
+        this.modalService.open(content, { size: 'md' });
+      } else {
+        this.router.navigate(
+          ['/login']
+        );
+      }
     }
   }
 
@@ -134,43 +136,47 @@ export class PodcastEpisodesComponent implements OnInit {
       this.playEpisode(episodeData.episodeName, '', [episodeData], this.tabType, 'podcastByChapters')
     }
     else {
-      if (localStorage.getItem('authorization') !== null) {
-        this.apiService.getData(`web/isFavourite/${this.updateid}`).subscribe(
-          (response: any) => {
-            this.isFavourite = response.data.isFavourite
-          }
-        )
+      if (isPlatformBrowser(this.platformId)) {
+        if (localStorage.getItem('authorization') !== null) {
+          this.apiService.getData(`web/isFavourite/${this.updateid}`).subscribe(
+            (response: any) => {
+              this.isFavourite = response.data.isFavourite
+            }
+          )
 
-        this.apiService.getData(`web/getSubscription/${this.updateid}`).subscribe(
-          (response: any) => {
-            this.isSubscribed = response.data.isSubscribed
+          this.apiService.getData(`web/getSubscription/${this.updateid}`).subscribe(
+            (response: any) => {
+              this.isSubscribed = response.data.isSubscribed
 
-            if (this.isSubscribed) {
-              console.log('111111111111 ', this.isSubscribed);
-              this.playEpisode(episodeData.episodeName, '', this.episodeList, this.tabType, 'podcastByChapters')
+              if (this.isSubscribed) {
+                console.log('111111111111 ', this.isSubscribed);
+                this.playEpisode(episodeData.episodeName, '', this.episodeList, this.tabType, 'podcastByChapters')
+              }
+              else {
+                console.log('22222222222', this.isSubscribed);
+                this.openMd(modalContent)
+              }
+            },
+            (error: any) => {
+              if (error.error.responseCode == 403) {
+                if (isPlatformBrowser(this.platformId)) {
+                  localStorage.removeItem('authorization')
+                  localStorage.removeItem('name');
+                  this.router.navigate(
+                    ['/login']);
+                }
+              }
+              else {
+                this.toastr.error(error.error.responseMessage, 'Kļūda!');
+              }
             }
-            else {
-              console.log('22222222222', this.isSubscribed);
-              this.openMd(modalContent)
-            }
-          },
-          (error: any) => {
-            if (error.error.responseCode == 403) {
-              localStorage.removeItem('authorization')
-              localStorage.removeItem('name');
-              this.router.navigate(
-                ['/login']);
-            }
-            else {
-              this.toastr.error(error.error.responseMessage, 'Kļūda!');
-            }
-          }
-        )
-      }
-      else {
-        this.router.navigate(
-          ['/login']
-        );
+          )
+        }
+        else {
+          this.router.navigate(
+            ['/login']
+          );
+        }
       }
     }
   }
@@ -193,18 +199,20 @@ export class PodcastEpisodesComponent implements OnInit {
     this.podcastDetail.isFavourite = this.isFavourite;
     this.podcastDetail.isSubscribed = this.isSubscribed;
 
-    if ((localStorage.getItem('authorization') != null) || (urlType == 'bookFragment') || (urlType == 'audioPresentation') || (episodeDetails.season == 1 && episodeDetails.episode == 1)) {
-      this.cusModalService.open(this.podcastDetail, chapterName, urlType);
-    } else {
-      this.router.navigate(
-        ['/login']);
+    if (isPlatformBrowser(this.platformId)) {
+      if ((localStorage.getItem('authorization') != null) || (urlType == 'bookFragment') || (urlType == 'audioPresentation') || (episodeDetails.season == 1 && episodeDetails.episode == 1)) {
+        this.cusModalService.open(this.podcastDetail, chapterName, urlType);
+      } else {
+        this.router.navigate(
+          ['/login']);
+      }
     }
   }
 
 
   addSubscription(modal: any) {
     console.log('######### this.updateid ', this.updateid);
-    
+
     if (this.updateid) {
       // this.apiService.putData(`webPodcast/addRating/${this.updateid}?bookType=${this.tabType}&rating=${bookRating}`, '').subscribe(
       //   (result: any) => {

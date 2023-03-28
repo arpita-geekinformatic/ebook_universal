@@ -572,11 +572,12 @@ class DetailPageComponent {
         var api = (type == src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.tabType.audiobook &&
             this.apiService.getData(`web/audioBook/${id}`)) ||
             (type == src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.tabType.ebook && this.apiService.getData(`web/eBook/${id}`));
-        console.log('============== api ', api);
         api.subscribe((result) => {
             this.sortOrders = [];
             this.audioBookDetail.splice(0, 1, result.data);
-            localStorage.setItem('type', result.data.bookType);
+            if ((0,_angular_common__WEBPACK_IMPORTED_MODULE_6__.isPlatformBrowser)(this.platformId)) {
+                localStorage.setItem('type', result.data.bookType);
+            }
             if (result.data.bookType.toLocaleLowerCase() == src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.tabType.ebook) {
                 for (let item of result.data.bookByChapters) {
                     this.sortOrders.push([item.chapterName, item.chapterLength]);
@@ -613,21 +614,23 @@ class DetailPageComponent {
                     name_LV: result?.data?.category[i].item_text_LV,
                 });
             }
-            if (localStorage.getItem('authorization') !== null) {
-                this.apiService
-                    .getData(`web/isFavourite/${id}`)
-                    .subscribe((response) => {
-                    if (response.responseCode === 200) {
-                        this.isFavourite = response.data.isFavourite;
-                    }
-                });
-                this.apiService
-                    .getData(`web/getRating/${id}`)
-                    .subscribe((response) => {
-                    if (response.responseCode === 200) {
-                        this.currentRate = response.data.rating;
-                    }
-                });
+            if ((0,_angular_common__WEBPACK_IMPORTED_MODULE_6__.isPlatformBrowser)(this.platformId)) {
+                if (localStorage.getItem('authorization') !== null) {
+                    this.apiService
+                        .getData(`web/isFavourite/${id}`)
+                        .subscribe((response) => {
+                        if (response.responseCode === 200) {
+                            this.isFavourite = response.data.isFavourite;
+                        }
+                    });
+                    this.apiService
+                        .getData(`web/getRating/${id}`)
+                        .subscribe((response) => {
+                        if (response.responseCode === 200) {
+                            this.currentRate = response.data.rating;
+                        }
+                    });
+                }
             }
             if (this.audioBookDetail[0].description.length >= 380) {
                 this.showReadMoreButton = true;
@@ -643,40 +646,44 @@ class DetailPageComponent {
     }
     //  book favourite / unfavourite  //
     favouriteBook(id, isFavourite) {
-        if (localStorage.getItem('authorization') !== null) {
-            let favourite = isFavourite == true ? false : true;
-            this.isFavourite = favourite;
-            let type = this.tabType;
-            var api = this.apiService.putData(`web/favourite/${id}?isFavourite=${favourite}&type=${type}`, '');
-            api.subscribe((result) => {
-                this.apiService.passValue(result.data.favouriteCount);
-                this.toastr.success(result.responseMessage, 'Error!');
-            }, (error) => {
-                this.toastr.error(error.error.responseMessage, 'Error!');
-            });
-        }
-        else {
-            this.router.navigate(['/login']);
+        if ((0,_angular_common__WEBPACK_IMPORTED_MODULE_6__.isPlatformBrowser)(this.platformId)) {
+            if (localStorage.getItem('authorization') !== null) {
+                let favourite = isFavourite == true ? false : true;
+                this.isFavourite = favourite;
+                let type = this.tabType;
+                var api = this.apiService.putData(`web/favourite/${id}?isFavourite=${favourite}&type=${type}`, '');
+                api.subscribe((result) => {
+                    this.apiService.passValue(result.data.favouriteCount);
+                    this.toastr.success(result.responseMessage, 'Error!');
+                }, (error) => {
+                    this.toastr.error(error.error.responseMessage, 'Error!');
+                });
+            }
+            else {
+                this.router.navigate(['/login']);
+            }
         }
     }
     openModal(content, url, type, urlType, chapterName) {
         this.bookDetailData.modalStatus = 'open';
         this.cusModalService.open(this.bookDetailData, chapterName, urlType);
-        if (localStorage.getItem('authorization') != null || urlType == 'bookFragment') {
-            if (type == 'audiobooks') {
-                this.playerType = urlType;
-                this.selectedChapter = chapterName;
-                this.audioFile = this.IMAGE_URL + url;
-                // this.modalService.open(content)
-                this.loadMusic(chapterName, this.playerType);
+        if ((0,_angular_common__WEBPACK_IMPORTED_MODULE_6__.isPlatformBrowser)(this.platformId)) {
+            if (localStorage.getItem('authorization') != null || urlType == 'bookFragment') {
+                if (type == 'audiobooks') {
+                    this.playerType = urlType;
+                    this.selectedChapter = chapterName;
+                    this.audioFile = this.IMAGE_URL + url;
+                    // this.modalService.open(content)
+                    this.loadMusic(chapterName, this.playerType);
+                }
+                if (type == 'ebooks') {
+                    let fileExt = url.split('.')[1];
+                    this.openReader(urlType, fileExt, chapterName);
+                }
             }
-            if (type == 'ebooks') {
-                let fileExt = url.split('.')[1];
-                this.openReader(urlType, fileExt, chapterName);
+            else {
+                this.router.navigate(['/login']);
             }
-        }
-        else {
-            this.router.navigate(['/login']);
         }
     }
     openReader(urlType, fileExt, chapterName) {
@@ -780,11 +787,13 @@ class DetailPageComponent {
     }
     //  open rating modal  //
     openSm(content) {
-        if (localStorage.getItem('authorization') !== null) {
-            this.modalService.open(content, { size: 'sm' });
-        }
-        else {
-            this.router.navigate(['/login']);
+        if ((0,_angular_common__WEBPACK_IMPORTED_MODULE_6__.isPlatformBrowser)(this.platformId)) {
+            if (localStorage.getItem('authorization') !== null) {
+                this.modalService.open(content, { size: 'sm' });
+            }
+            else {
+                this.router.navigate(['/login']);
+            }
         }
     }
     //  add book rating  //

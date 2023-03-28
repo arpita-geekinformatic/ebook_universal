@@ -9,7 +9,12 @@ export const environment = {
     ebook: "ebook",
     podcast: "podcast"
   },
-
+  
+  bookSearchType: {
+    Audiobook: "audiobook",
+    Ebook: "ebook",
+    Podcast: "podcast"
+  },
   
   firebase: {
     // databaseURL: "xxxxxxxxxxxxxxxxxxxxxxxx",

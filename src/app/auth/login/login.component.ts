@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import { Router } from '@angular/router';
@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
 import { AuthService } from '../../services/auth.service';
+import { isPlatformBrowser } from '@angular/common';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -31,14 +32,18 @@ export class LoginComponent implements OnInit {
     private toastr: ToastrService,
     private modalService: NgbModal,
     config: NgbModalConfig,
-    public authService: AuthService
+    public authService: AuthService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     config.backdrop = 'static';
     config.keyboard = false;
   }
 
   ngOnInit(): void {
-    if (localStorage.getItem('authorization') != null) this.router.navigate(['/home']);
+    if (isPlatformBrowser(this.platformId)) {
+      if (localStorage.getItem('authorization') != null) this.router.navigate(['/home']);
+    }
+
     this.loginForm = this.formBuilder.group({
       email: ["", Validators.compose([
         Validators.required,
@@ -88,10 +93,12 @@ export class LoginComponent implements OnInit {
     }
     this.apiService.postData("user/signin", this.loginForm.value).subscribe(
       (result: any) => {
-        localStorage.setItem("name", result.data.name);
-        localStorage.setItem("authorization", result.data.accessToken);
-        this.toastr.success("Logged In.", "Success!");
-        this.router.navigate(['/home']);
+        if (isPlatformBrowser(this.platformId)) {
+          localStorage.setItem("name", result.data.name);
+          localStorage.setItem("authorization", result.data.accessToken);
+          this.toastr.success("Logged In.", "Success!");
+          this.router.navigate(['/home']);
+        }
       },
       (error) => {
         this.hasError = true;

@@ -37,11 +37,10 @@ export class PodcastComponent implements OnInit {
   }
 
   //  change book type tab  //
-  toggleBookType() {  
+  toggleBookType() {
     if (isPlatformBrowser(this.platformId)) {
-
-    this.tabType = localStorage.getItem('type')?.toLocaleLowerCase() == environment.tabType.podcast ? environment.tabType.podcast : localStorage.getItem('type')?.toLocaleLowerCase() == environment.tabType.ebook ? environment.tabType.ebook : environment.tabType.audiobook;
-    localStorage.setItem('type',  this.tabType )
+      this.tabType = localStorage.getItem('type')?.toLocaleLowerCase() == environment.tabType.podcast ? environment.tabType.podcast : localStorage.getItem('type')?.toLocaleLowerCase() == environment.tabType.ebook ? environment.tabType.ebook : environment.tabType.audiobook;
+      localStorage.setItem('type', this.tabType)
     }
 
     if (this.tabType.toLocaleLowerCase() === environment.tabType.audiobook) {
@@ -50,7 +49,7 @@ export class PodcastComponent implements OnInit {
     if (this.tabType.toLocaleLowerCase() === environment.tabType.ebook) {
       this.router.navigateByUrl('/home');
     }
-    else{
+    else {
       this.BannerList(this.tabType);
       this.categoryList();
       this.getPodcast()
@@ -62,15 +61,15 @@ export class PodcastComponent implements OnInit {
     this.apiService.getData("webPodcast").subscribe(
       (res: any) => {
         this.finalData = [];
-          this.finalData = res.data;
-          for (let item of res.data) {
-            if (item['categoryName_EN'] == "Recomendations") {
-              this.recommend = item.data[0];
-            }
+        this.finalData = res.data;
+        for (let item of res.data) {
+          if (item['categoryName_EN'] == "Recomendations") {
+            this.recommend = item.data[0];
           }
-          if (isPlatformBrowser(this.platformId)) {
+        }
+        if (isPlatformBrowser(this.platformId)) {
           localStorage.removeItem('type')
-          }
+        }
       },
       (error: any) => {
         this.toastr.error(error.error.responseMessage, 'Error!');
@@ -84,7 +83,7 @@ export class PodcastComponent implements OnInit {
     this.apiService.getData(`banner?type=${type}`).subscribe(
       (res: any) => {
         this.isSpinner = true
-        this.bannerLists = res.data ? res.data : []        
+        this.bannerLists = res.data ? res.data : []
       },
       (error: any) => {
         this.toastr.error(error.error.responseMessage, 'Error!');
@@ -93,10 +92,10 @@ export class PodcastComponent implements OnInit {
   }
 
   //  get category  //
-  categoryList() {    
+  categoryList() {
     this.apiService.getData("category?type=podcast").subscribe(
       (res: any) => {
-          this.categoryArr = res.data;
+        this.categoryArr = res.data;
       },
       (error: any) => {
         this.toastr.error(error.error.responseMessage, 'Error!');
@@ -112,7 +111,7 @@ export class PodcastComponent implements OnInit {
     );
   }
 
-  
+
   getStarted() {
     // if (this.authService.isAuthenticated()) {
     //   this.showGetStarted = false;
@@ -126,7 +125,7 @@ export class PodcastComponent implements OnInit {
   //  view podcast by category ID  //
   viewBookByCategoryId(type: any, categoryId: any) {
     if (isPlatformBrowser(this.platformId)) {
-    localStorage.setItem('type',  type )
+      localStorage.setItem('type', type)
     }
     this.router.navigate(
       ['/all-podcasts/'],
@@ -137,7 +136,7 @@ export class PodcastComponent implements OnInit {
   //  view more by category name //
   viewMore(type: any, categoryName: any) {
     if (isPlatformBrowser(this.platformId)) {
-    localStorage.setItem('type',  type )
+      localStorage.setItem('type', type)
     }
     this.router.navigate(
       ['/all-podcasts/'],
