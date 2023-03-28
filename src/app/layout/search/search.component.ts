@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from "src/environments/environment";
+import { ApiService } from 'src/app/services/api.service'
+import { ToastrService } from 'ngx-toastr'
 
 @Component({
   selector: 'app-search',
@@ -8,45 +10,83 @@ import { environment } from "src/environments/environment";
   styleUrls: ['./search.component.scss']
 })
 export class SearchComponent implements OnInit {
-  totalSearchList:any = [];
   public IMAGE_URL = environment.IMAGE_URL;
-  // skip=0;
+  audiobookSearch = environment.bookSearchType.Audiobook;
+  ebookSearch = environment.bookSearchType.Ebook;
+  podcastSearch = environment.bookSearchType.Podcast;
+  skip = 0;
+  limit: number = 10;
+  totalRecords = 0;
+  searchFilter: string = ''
+  searchListData: any = [];
 
   constructor(
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute,
+    private apiService: ApiService,
+    private toastr: ToastrService,
   ) { }
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      this.searchFilter = params['searchFilter'] != undefined ? params['searchFilter'] : '';
+      
+      if (this.searchFilter && this.searchFilter != undefined) {
+        this.searchListData = []
+        this.skip = 0;
+        this.getSearchData(this.searchFilter, this.skip, this.limit)
+      }
+    });
   }
-  getSearchData(event:any){
-    this.totalSearchList = event;
+
+  //  get searched book list  //
+  getSearchData(searchFilter: any, skip: any, limit: any) {
+    this.apiService.getData(`web/bookSearch?searchFilter=${searchFilter}&skip=${skip}&limit=${limit}`).subscribe(
+      (res: any) => {
+        this.searchListData.push(...res.data);
+        this.totalRecords = res.totalRecord || 0;
+      },
+      (error) => {
+        this.toastr.error(error.error.responseMessage, 'Error!')
+      },
+    )
   }
+
+  //  load book on page scroll  //
   onScroll() {
-    // if (this.skip == 0 && this.totalSearchList.length < 1) {
-    //   this.skip = 0;
-    // }
-    // if (this.totalSearchList.length != this.totalRecords) {
-    //   this.skip = this.skip + 10;
-    //   setTimeout(() => {
-    //     this.updateAudioBook(this.updatetype, this.category, this.skip, 10)
-    //   }, 1000)
-    // }
+    if (this.skip == 0 && this.searchListData.length < 1) {
+      this.skip = 0;
+    }
+    if (this.searchListData.length != this.totalRecords) {
+      this.skip = this.skip + 10;
+      this.getSearchData(this.searchFilter, this.skip, 10)
+    }
   }
-  detailBook(id: any, type:any) {
+
+  //  get book details  //
+  detailBook(id: any, type: any) {
     this.router.navigate(
       ['detail/'],
       { queryParams: { 'id': id, 'type': type == 'Audiobook' ? 'audiobooks' : 'ebooks' } }
     );
   }
+
+  //  get rating html //
   getRating(data: any) {
+    let beforePointValue = data.toString().split(".")[0]
+    let afterPointValue = data.toString().split(".")[1]
     var temp: any = [0, 1, 2, 3, 4];
     let html = '';
-
     for (let i = 0; i < temp.length; i++) {
-      if (data <= i) {
-        html += '<li ><img src="assets/images/starBlankIcon.svg" alt="Star FIll" /></li>'
+      if (beforePointValue <= i) {
+        if (afterPointValue && afterPointValue != 0) {
+          html += `<li ><img src="/assets/images/halfStarRating.svg" alt="Star half" height=20; width=20; /></li>`;
+          afterPointValue = undefined;
+        } else {
+          html += `<li ><img src="/assets/images/starBlankIcon.svg" alt="Star blank" height=20; width=20; /></li>`
+        }
       } else {
-        html += '<li ><img src="assets/images/starFillIcon.svg" alt="Star FIll" /></li>';
+        html += `<li ><img src="/assets/images/starFillIcon.svg" alt="Star FIll" height=20; width=20; /></li>`;
       }
     }
     return html;

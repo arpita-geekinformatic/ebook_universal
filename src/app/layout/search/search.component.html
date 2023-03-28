@@ -1,54 +1,24 @@
-<app-header (newSearchEvent)="getSearchData($event)"></app-header>
+<!-- <app-header (newSearchEvent)="getSearchData($event)"></app-header> -->
+<app-header></app-header>
 <div class="contentPart">
     <ng-container>
         <div class="container">
-            <!-- <div class="productTitle">
-                <div class="d-flex justify-content-between align-items-center productTitleInner mb-4">
-                    <h2>{{category}}</h2>
-                </div>
-            </div> -->
-
-
-            <!-- <div class="productline">
-                <div class="row" 
-                    infiniteScroll
-                    [infiniteScrollDistance]="0.1"
-                    (scrolled)="onScroll()">
-                    <div class="col-md-3 mb-5" *ngFor='let data of totalSearchList; let i = index'>
-                        <div class="singleProduct" (click)="detailBook(data['_id'], data['bookType'])">
-                            <div class="singleProductInner">
-                                <button class="bookBtn yellow">
-                                    <img [src]="data['bookType'] == 'Ebook'? 'assets/images/openBookIcon.svg' : 'assets/images/headphoneIcon.svg'"
-                                        alt="Book icon" />
-                                </button>
-                                <div class="productImage">
-                                    <img [src]="data['photo'] ? this.IMAGE_URL + data['photo'] : 'assets/images/productBusinessOne.svg'"
-                                        alt="prduct Image" />
-                                </div>
-                                <div class="productTxt">
-                                    <h2>{{ data['name'] }}</h2>
-                                    <p>{{ data.author }}</p>
-                                    <ul class="ratingWrap" [innerHtml]="getRating(data.rating)">
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
 
             <div class="productline">
                 <div class="row" infiniteScroll [infiniteScrollDistance]="0.1" (scrolled)="onScroll()">
                     <div class="col-sm-6 col-md-3 col-lg-3 mb-5 five-image-row"
-                        *ngFor='let data of totalSearchList; let i = index'>
+                        *ngFor='let data of searchListData; let i = index'>
                         <div class="singleProduct" (click)="detailBook(data['_id'], data['bookType'])">
                             <div class="singleProductInner">
-                                <button class="bookBtn yellow">
-                                    <img [src]="data['bookType'] == 'ebooks'? 'assets/images/openBookIcon.svg' : 'assets/images/headphoneIcon.svg'"
+                               
+                                <button
+                                    [ngClass]="data['bookType'].toLowerCase() == 'ebook'? 'ebookBtn'  : data['bookType'].toLowerCase() == 'audiobook'? 'audiobookBtn' : 'podcastBtn'">
+
+                                    <img [src]="data['bookType'].toLowerCase() == ebookSearch ? 'assets/images/openBookIcon.svg' : data['bookType'].toLowerCase() == audiobookSearch ? 'assets/images/headphoneIcon.svg' : 'assets/images/mic.svg'"
                                         alt="Book icon" />
                                 </button>
                                 <div class="productImage">
-                                    <img [src]="data['photo'] ? this.IMAGE_URL + data['photo'] : 'assets/images/productBusinessOne.svg'"
+                                    <img [src]="data['photo'] ? this.IMAGE_URL + data['photo'] : data['image'] ? this.IMAGE_URL + data['image'] : 'assets/images/smallDefaultBook.png'"
                                         alt="prduct Image" />
                                 </div>
                                 <div class="productTxt">
@@ -63,17 +33,12 @@
                 </div>
             </div>
 
-
-
-
-
-
-
         </div>
     </ng-container>
 </div>
+
 <!-- Shimmer Start -->
-<!-- <div class="contentPart" *ngIf="totalSearchList.length != totalRecords && totalSearchList.length != 0">
+<div class="contentPart" *ngIf="searchListData.length != totalRecords && searchListData.length != 0">
     <ng-container>
         <div class="container">
             <div class="productTitle">
@@ -131,6 +96,7 @@
             </div>
         </div>
     </ng-container>
-</div> -->
+</div>
 <!-- Shimmer Ends -->
+
 <app-footer></app-footer>

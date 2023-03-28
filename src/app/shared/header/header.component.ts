@@ -100,15 +100,8 @@ export class HeaderComponent implements OnInit {
         this.searchForm.patchValue({
           search: params['searchFilter'],
         })
-        this.apiService.getData(`web/bookSearch?searchFilter=${params['searchFilter']}&skip=0&limit=10`).subscribe(
-          (res: any) => {
-            this.newSearchEvent.emit(res.data)
-          },
-          (error) => {
-            this.toastr.error(error.error.responseMessage, 'Error!')
-          },
-        )
       }
+
       if (params['id'] != undefined) {
         this.updateid = '/all'
       } else {
@@ -249,20 +242,6 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/search/'], {
       queryParams: { searchFilter: event.target.value },
     })
-    this.apiService
-      .getData(
-        `web/bookSearch?searchFilter=${event.target.value}&skip=0&limit=10`,
-      )
-      .subscribe(
-        (res: any) => {
-          if (res.responseCode === 200) {
-            this.newSearchEvent.emit(res.data)
-          }
-        },
-        (error) => {
-          this.toastr.error(error.error.responseMessage, 'Error!')
-        },
-      )
   }
 
   // search() {
@@ -332,7 +311,7 @@ export class HeaderComponent implements OnInit {
 
     if ((dur != null) && (!localStorage.getItem('isMini'))) {
       console.log('334 4444444444444');
-      
+
       this.selectedChapter = this.currentChapterName;
 
       for (let chapters of this.modalData.bookByChapters) {
@@ -418,7 +397,7 @@ export class HeaderComponent implements OnInit {
     let oAudio: any = document.getElementById('main-audio')
     oAudio.currentTime += 30.0
   }
- 
+
   //  timer count on play  //
   startTimer() {
     this.interval = setInterval(() => {
