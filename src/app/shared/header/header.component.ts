@@ -20,7 +20,7 @@ import { ModalService } from 'src/app/services/modal.service'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { environment } from 'src/environments/environment'
 import { first, take } from 'rxjs/operators'
-import { isPlatformBrowser } from '@angular/common'
+// import { isPlatformBrowser } from '@angular/common'
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -73,7 +73,7 @@ export class HeaderComponent implements OnInit {
     private toastr: ToastrService,
     private modalService: NgbModal,
     private cusModalService: ModalService,
-    @Inject(PLATFORM_ID) private platformId: Object
+    // @Inject(PLATFORM_ID) private platformId: Object
 
   ) { }
 
@@ -94,11 +94,11 @@ export class HeaderComponent implements OnInit {
       })
     }, 200)
 
-    if (isPlatformBrowser(this.platformId)) {
+    // if (isPlatformBrowser(this.platformId)) {
       this.tabType = localStorage.getItem('type')?.toLocaleLowerCase() == environment.tabType.podcast ? environment.tabType.podcast : localStorage.getItem('type')?.toLocaleLowerCase() == environment.tabType.ebook ? environment.tabType.ebook : environment.tabType.audiobook;
 
       localStorage.setItem('type', this.tabType)
-    }
+    // }
 
     this.searchForm = this.formBuilder.group({ search: [''] })
     this.favouriteCount()
@@ -116,13 +116,13 @@ export class HeaderComponent implements OnInit {
       }
     })
 
-    if (isPlatformBrowser(this.platformId)) {
+    // if (isPlatformBrowser(this.platformId)) {
       this.name = localStorage.getItem('name')
       this.token = localStorage.getItem('authorization')
       if (localStorage.getItem('authorization') != null || localStorage.getItem('authorization') != undefined) {
         this.getFavouriteList()
       }
-    }
+    // }
   }
 
   ngOnDestroy() {
@@ -133,13 +133,13 @@ export class HeaderComponent implements OnInit {
   subscribedData(modalData: any) {
     console.log('176 ################ ',);
 
-    if (isPlatformBrowser(this.platformId)) {
+    // if (isPlatformBrowser(this.platformId)) {
       if (localStorage.getItem('isMini') == 'true') {
         this.isMini = true;
       } else {
         localStorage.setItem('isMini', 'false')
       }
-    }
+    // }
 
     if (modalData.bookType.toLocaleLowerCase() == environment.tabType.ebook) {
       for (let item of modalData.bookByChapters) {
@@ -149,13 +149,13 @@ export class HeaderComponent implements OnInit {
     }
     if (modalData.bookType.toLocaleLowerCase() == environment.tabType.podcast) {
 
-      if (isPlatformBrowser(this.platformId)) {
+      // if (isPlatformBrowser(this.platformId)) {
         if (this.sortOrders.length == 0 && localStorage.getItem('authorization') !== null && modalData.isSubscribed) {
           for (let item of modalData.podcastByChapters) {
             this.sortOrders.push([item.episodeName, item.episodeLength])
           }
         }
-      }
+      // }
 
       this.currentChapterName = modalData.currentChapterName;
       this.playerType = modalData.currentUrlType;
@@ -186,9 +186,9 @@ export class HeaderComponent implements OnInit {
 
   //  on book type tab change  //
   tabClick(type: any) {
-    if (isPlatformBrowser(this.platformId)) {
+    // if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem('type', type)
-    }
+    // }
 
     this.newItemEvent.emit(type);
     if (type.toLocaleLowerCase() == environment.tabType.podcast) {
@@ -206,12 +206,12 @@ export class HeaderComponent implements OnInit {
 
   //  logout  //
   logout() {
-    if (isPlatformBrowser(this.platformId)) {
+    // if (isPlatformBrowser(this.platformId)) {
       localStorage.removeItem('authorization')
       localStorage.removeItem('name');
       localStorage.removeItem('email');
       localStorage.removeItem('isMini');
-    }
+    // }
 
     this.token = null
 
@@ -274,7 +274,7 @@ export class HeaderComponent implements OnInit {
   //  add Playback  //
   addPlayback(id: any) {
     console.log('311 &&&&&&&&&&&&&& addPlayback');
-    if (isPlatformBrowser(this.platformId)) {
+    // if (isPlatformBrowser(this.platformId)) {
 
       // if (localStorage.getItem('authorization') !== null) {
       //   this.playbackUpdate = true
@@ -292,29 +292,29 @@ export class HeaderComponent implements OnInit {
       //     ['/login']
       //   );
       // }
-    }
+    // }
   }
 
   miniPlayer() {
     this.isMini = true;
 
-    if (isPlatformBrowser(this.platformId)) {
+    // if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem('isMini', 'true');
-    }
+    // }
   }
 
   maximizePlayer() {
     this.isMini = false;
 
-    if (isPlatformBrowser(this.platformId)) {
+    // if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem('isMini', 'false');
-    }
+    // }
   }
 
 
   //  book favourite / unfavourite  //
   favouriteBook(id: any, isFavourite: any) {
-    if (isPlatformBrowser(this.platformId)) {
+    // if (isPlatformBrowser(this.platformId)) {
 
       if (localStorage.getItem('authorization') !== null) {
         let favourite: any = isFavourite == true ? false : true
@@ -334,7 +334,7 @@ export class HeaderComponent implements OnInit {
       } else {
         this.router.navigate(['/login'])
       }
-    }
+    // }
   }
 
   //  AUDIO PLAYER  //
@@ -342,7 +342,7 @@ export class HeaderComponent implements OnInit {
     let dur: any = document.getElementById('dur')
     console.log('>>>>> dur', !localStorage.getItem('isMini'), dur);
 
-    if (isPlatformBrowser(this.platformId)) {
+    // if (isPlatformBrowser(this.platformId)) {
 
       if ((dur != null) && (!localStorage.getItem('isMini'))) {
         console.log('334 4444444444444');
@@ -373,7 +373,7 @@ export class HeaderComponent implements OnInit {
         console.log('357 777777777777');
         return this.loadMusic(this.currentChapterName, this.playerType);
       }
-    }
+    // }
   }
 
   //  restart Audio  //
@@ -594,9 +594,9 @@ export class HeaderComponent implements OnInit {
     this.isPlay = false
     this.pauseTimer()
 
-    if (isPlatformBrowser(this.platformId)) {
+    // if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem('isMini', 'false');
-    }
+    // }
     this.cusModalService.open({ modalStatus: 'close' }, '', '');
   }
 }

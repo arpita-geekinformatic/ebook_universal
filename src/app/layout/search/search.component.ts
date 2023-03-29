@@ -19,6 +19,7 @@ export class SearchComponent implements OnInit {
   totalRecords = 0;
   searchFilter: string = ''
   searchListData: any = [];
+  errorMessage: string = '';
 
   constructor(
     private router: Router,
@@ -45,6 +46,8 @@ export class SearchComponent implements OnInit {
       (res: any) => {
         this.searchListData.push(...res.data);
         this.totalRecords = res.totalRecord || 0;
+
+        this.errorMessage = this.totalRecords == 0 ? 'No record found !!!' : ''
       },
       (error) => {
         this.toastr.error(error.error.responseMessage, 'Error!')

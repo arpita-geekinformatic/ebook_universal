@@ -2,7 +2,6 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 import { BehaviorSubject } from 'rxjs';
-import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -14,17 +13,13 @@ export class ApiService {
 
   constructor(
     private http: HttpClient,
-    @Inject(PLATFORM_ID) private platformId: Object
-
   ) { }
 
   getToken() {
-    if (isPlatformBrowser(this.platformId)) {
       let token: any = localStorage.getItem("authorization")
         ? localStorage.getItem("authorization")
         : "";
       return token;
-    }
   }
 
   postData(url: string, data: any) {
