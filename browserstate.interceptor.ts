@@ -18,9 +18,7 @@ export class BrowserStateInterceptor implements HttpInterceptor {
       
       return next.handle(req);
     }
-    // console.log('get', req.method);
     const storedResponse = this.transferState.get(makeStateKey(req.url), null);
-    console.log('21 ############## storedResponse ',storedResponse);
     
     if (storedResponse) {
       const response = new HttpResponse({ body: storedResponse, status: 200 });

@@ -22,7 +22,7 @@ export class ViewMoreComponent implements OnInit {
   public IMAGE_URL = environment.IMAGE_URL;
   skip = 0;
   totalRecords = 0;
-  showSpin = false;
+  showSpin = true;
   errorMessage: string = '';
   pageType: string = '';
 
@@ -56,13 +56,12 @@ export class ViewMoreComponent implements OnInit {
         if ((this.id != undefined) && (this.updatetype == 'genre')) {
           this.getBookByGenre(this.id, this.skip, 8);
         }
-
       }, 4000)
     });
   }
 
   //  get audioBook data  //
-  updateAudioBook(type: any, category: any, skip: any, limit: any) {
+  updateAudioBook(type: any, category: any, skip: any, limit: any) {    
     this.showSpin = true;
     this.tabType = type;
     var api: any = this.apiService.getData(`web/dataList/?type=${type}&category=${category}&skip=${skip}&limit=${limit}`)
@@ -133,9 +132,9 @@ export class ViewMoreComponent implements OnInit {
       );
     }
   }
-  onScroll() {
+  onScroll() {    
     this.showSpin = true;
-    if (this.skip == 0 && this.dataList.length < 1) {
+    if (this.skip == 0 && this.dataList.length < 1) {      
       this.skip = 0;
     }
     if (this.dataList.length != this.totalRecords) {
@@ -151,6 +150,9 @@ export class ViewMoreComponent implements OnInit {
           this.getBookByGenre(this.id, this.skip, 10);
         }
       }, 1000)
+    }
+    if((this.totalRecords != 0) && (this.dataList.length == this.totalRecords)){
+      this.showSpin = false;
     }
   }
 
