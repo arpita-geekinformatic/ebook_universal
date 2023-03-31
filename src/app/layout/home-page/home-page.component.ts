@@ -38,10 +38,10 @@ export class HomePageComponent implements OnInit {
     this.toggleBookType();
 
     // if (isPlatformBrowser(this.platformId)) {
-      const token = localStorage.getItem('authorization');
-      if (token !== null) {
-        this.showGetStarted = false;
-      }
+    const token = localStorage.getItem('authorization');
+    if (token !== null) {
+      this.showGetStarted = false;
+    }
     // }
     if (this.cookieService.get('name') !== '') {
       this.hide = 'hide';
@@ -50,8 +50,8 @@ export class HomePageComponent implements OnInit {
 
   toggleBookType() {
     // if (isPlatformBrowser(this.platformId)) {
-      this.tabType = localStorage.getItem('type')?.toLocaleLowerCase() == environment.tabType.podcast ? environment.tabType.podcast : localStorage.getItem('type')?.toLocaleLowerCase() == environment.tabType.ebook ? environment.tabType.ebook : environment.tabType.audiobook;
-      localStorage.setItem('type', this.tabType)
+    this.tabType = localStorage.getItem('type')?.toLocaleLowerCase() == environment.tabType.podcast ? environment.tabType.podcast : localStorage.getItem('type')?.toLocaleLowerCase() == environment.tabType.ebook ? environment.tabType.ebook : environment.tabType.audiobook;
+    localStorage.setItem('type', this.tabType)
     // }
 
     if (this.tabType === environment.tabType.audiobook) {
@@ -83,7 +83,7 @@ export class HomePageComponent implements OnInit {
             }
           }
           // if (isPlatformBrowser(this.platformId)) {
-            localStorage.removeItem('type')
+          localStorage.removeItem('type')
           // }
         }
       },
@@ -130,7 +130,7 @@ export class HomePageComponent implements OnInit {
           }
         }
         // if (isPlatformBrowser(this.platformId)) {
-          localStorage.removeItem('type')
+        localStorage.removeItem('type')
         // }
       },
       (error: any) => {
@@ -204,11 +204,16 @@ export class HomePageComponent implements OnInit {
   }
 
 
-  viewBookByCategory(id: any) {
+  viewBookByCategory(id: any, categoryName: any) {
     this.router.navigate(
       ['/view-more/'],
-      { queryParams: { 'id': id, 'pageType': 'category' } }
+      { queryParams: { 'id': id, 'category': categoryName } }
     );
+
+    // this.router.navigate(
+    //   ['/view-more/'],
+    //   { queryParams: { 'id': id, 'pageType': 'category' } }
+    // );
   }
 
   acceptCookies() {

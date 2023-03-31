@@ -46,11 +46,13 @@ export class ViewMoreComponent implements OnInit {
       this.id = params['id'] != undefined ? params['id'] : null;
       this.pageType = params['pageType'] != undefined ? params['pageType'] : null;
 
+      localStorage.setItem('type', this.updatetype)
+
       setTimeout(() => {
         if ((this.category != undefined) && (this.updatetype != undefined)) {
           this.updateAudioBook(this.updatetype, this.category, this.skip, 8);
         }
-        if ((this.id != undefined) && (this.category != undefined)) {
+        if ((this.id != undefined) && ((this.category != undefined) || (this.pageType == 'category'))) {
           this.getCategoryByBook(this.id, this.skip, 8);
         }
         if ((this.id != undefined) && (this.updatetype == 'genre')) {
@@ -61,7 +63,7 @@ export class ViewMoreComponent implements OnInit {
   }
 
   //  get audioBook data  //
-  updateAudioBook(type: any, category: any, skip: any, limit: any) {    
+  updateAudioBook(type: any, category: any, skip: any, limit: any) {
     this.showSpin = true;
     this.tabType = type;
     var api: any = this.apiService.getData(`web/dataList/?type=${type}&category=${category}&skip=${skip}&limit=${limit}`)
@@ -132,9 +134,9 @@ export class ViewMoreComponent implements OnInit {
       );
     }
   }
-  onScroll() {    
+  onScroll() {
     this.showSpin = true;
-    if (this.skip == 0 && this.dataList.length < 1) {      
+    if (this.skip == 0 && this.dataList.length < 1) {
       this.skip = 0;
     }
     if (this.dataList.length != this.totalRecords) {
@@ -151,7 +153,7 @@ export class ViewMoreComponent implements OnInit {
         }
       }, 1000)
     }
-    if((this.totalRecords != 0) && (this.dataList.length == this.totalRecords)){
+    if ((this.totalRecords != 0) && (this.dataList.length == this.totalRecords)) {
       this.showSpin = false;
     }
   }

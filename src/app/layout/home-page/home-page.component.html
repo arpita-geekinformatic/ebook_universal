@@ -197,7 +197,7 @@
         <div class="productTitle">
           <div class="d-flex justify-content-between align-items-center productTitleInner mb-4">
             <h2>{{ data['categoryName_LV'] | titlecase }}</h2>
-            <a class="viewMore" (click)="viewMore(tabType, data['categoryName_EN'])">Lasīt vairāk</a>
+            <a class="viewMore" (click)="viewMore(tabType, data['categoryName_LV'])">Lasīt vairāk</a>
           </div>
         </div>
 
@@ -247,7 +247,7 @@
                 <div class="blockInner">
                   <img [src]="category.image ? this.IMAGE_URL + category.image : 'assets/images/smallDefaultBook.png'"
                     alt="" />
-                  <div class="blockTxt" type="button" (click)="viewBookByCategory(category._id)">
+                  <div class="blockTxt" type="button" (click)="viewBookByCategory(category._id, category.lvName)">
                     <h3>{{category ? (category.lvName | titlecase) : '-'}}</h3>
                   </div>
                 </div>

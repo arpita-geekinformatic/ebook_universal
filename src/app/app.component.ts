@@ -24,8 +24,7 @@ export class AppComponent {
       data: 'my-custom-event',
     };
     this.gtmService.pushTag(gtmTag);
-
-    console.log('28 ========== this is a custom event', event);
+    // console.log('28 ========== this is a custom event', event);
   }
 
   ngOnInit() {

@@ -11,13 +11,24 @@
             cursor: pointer;
 
             .singleProductInner {
-                button.bookBtn {
+                button.ebookBtn {
                     position: absolute;
                     background: #3080FF;
                     width: 50px;
                     height: 50px;
                     border-radius: 100px;
                     border: 1px solid #3080FF;
+                    right: 0;
+                    top: -20px;
+                    z-index: 3;
+                }
+                button.audiobookBtn {
+                    position: absolute;
+                    background: #FF9D0C;
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 100px;
+                    border: 1px solid #FF9D0C;
                     right: 0;
                     top: -20px;
                     z-index: 3;

@@ -4,16 +4,19 @@
         <div class="container">
             <div class="productTitle">
                 <div class="d-flex justify-content-between align-items-center productTitleInner mb-4">
-                    <h2>{{category}}</h2>
+                    <h2>{{category == 'Recomendations' ? 'Ieteikumi' : category == 'Free' ? 'Bezmaksas' : category |
+                        titlecase}}</h2>
                 </div>
             </div>
             <div class="productline">
                 <div class="row" infiniteScroll [infiniteScrollDistance]="0.1" (scrolled)="onScroll()">
                     <div class="col-md-4 col-sm-12 mb-5 five-image-row" *ngFor='let data of dataList; let i = index'>
                         <div class="singleProduct" (click)="detailBook(data['_id'], data['bookType'])">
+
                             <div class="singleProductInner">
-                                <button class="bookBtn yellow">
-                                    <img [src]="tabType == 'ebooks'? 'assets/images/openBookIcon.svg' : 'assets/images/headphoneIcon.svg'"
+                                <button
+                                    [ngClass]="data['bookType'].toLowerCase() == 'ebook'? 'ebookBtn'  : 'audiobookBtn'">
+                                    <img [src]="data['bookType'].toLowerCase() == 'ebook'? 'assets/images/openBookIcon.svg' : 'assets/images/headphoneIcon.svg'"
                                         alt="Book icon" />
                                 </button>
                                 <div class="productImage">
@@ -30,41 +33,14 @@
                         </div>
                     </div>
                     <h6>{{ errorMessage }}</h6>
-
-                    <!-- <div class="row productline">
-                        <div class="col mb-4" *ngFor="let innerData of dataList; let i = index">
-                            <div class="singleProduct" (click)="detailBook(innerData['_id'])">
-                                <div class="singleProductInner">
-                                    <button class="bookBtn yellow">
-                                        <img [src]="
-                                      tabType == 'ebooks'
-                                        ? 'assets/images/openBookIcon.svg'
-                                        : 'assets/images/headphoneIcon.svg'
-                                    " alt="Book icon" />
-                                    </button>
-                                    <div class="productImage">
-                                        <img [src]="innerData['photo'] ? this.IMAGE_URL + innerData['photo'] : 'assets/images/productBusinessOne.svg'"
-                                            alt="prduct Image" />
-                                    </div>
-                                    <div class="productTxt">
-                                        <h2>{{ innerData['name'] | titlecase }}</h2>
-                                        <p><span *ngFor="let author of innerData.author">{{ author | titlecase }}</span>
-                                        </p>
-                                        <ul class="ratingWrap" [innerHtml]="getRating(innerData.rating)">
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
                 </div>
             </div>
         </div>
     </ng-container>
 </div>
+
 <!-- Shimmer Start -->
 <div class="contentPart" *ngIf="showSpin">
-    <!-- <div class="contentPart" *ngIf="dataList.length != totalRecords && dataList.length != 0"> -->
     <ng-container>
         <div class="container">
             <!-- <div class="productTitle">
@@ -72,7 +48,6 @@
                     <h2 class="shimmer"></h2>
                 </div>
             </div> -->
-
 
             <div class="productline">
                 <div class="row">
