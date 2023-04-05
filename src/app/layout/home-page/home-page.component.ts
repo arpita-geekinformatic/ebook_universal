@@ -6,6 +6,7 @@ import { AuthService } from '../../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { CookieService } from 'ngx-cookie-service';
 // import { isPlatformBrowser } from '@angular/common';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-home-page',
@@ -31,10 +32,13 @@ export class HomePageComponent implements OnInit {
     public authService: AuthService,
     private toastr: ToastrService,
     public cookieService: CookieService,
-    // @Inject(PLATFORM_ID) private platformId: Object
+    private titleService: Title, 
+    private metaService: Meta,
+    // @Inject(PLATFORM_ID) private platformId: Object,
   ) { }
 
   ngOnInit(): void {
+    this.setMetaInfo();
     this.toggleBookType();
 
     // if (isPlatformBrowser(this.platformId)) {
@@ -46,6 +50,19 @@ export class HomePageComponent implements OnInit {
     if (this.cookieService.get('name') !== '') {
       this.hide = 'hide';
     }
+  }
+
+  setMetaInfo() {
+    let metaTitle = 'Populārkā audiogrāmatu, e-grāmatu un podkāstu platforma Latvijā!';
+    let metaDescription = 'Tevi gaida daudz aizraujošu stāstu. Atrodi savas iecienītākās audiogrāmatas, e-grāmatas, podkāstus un presi Audiolasītavā. Klausies, lasi un baudi!';
+    let metaUrl = window.location.href;
+
+    this.titleService.setTitle(metaTitle);
+    this.metaService.updateTag({ name: 'description', content: metaDescription });
+
+    this.metaService.addTag({ property: 'og:title', content: metaTitle });
+    this.metaService.addTag({ property: 'og:description', content: metaDescription });
+    this.metaService.addTag({ property: 'og:url', content: metaUrl });
   }
 
   toggleBookType() {

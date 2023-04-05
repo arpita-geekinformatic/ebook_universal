@@ -91,7 +91,7 @@ export class DetailPageComponent implements OnInit {
     }
     this.route.queryParams.subscribe((params) => {
       this.updateid = params['id'] != undefined ? params['id'] : null
-      this.updatetype = params['type'] != undefined ? params['type'] : null
+      this.updatetype = params['type'] != undefined ? params['type'] : null      
       if (this.updateid != undefined) {
         this.updateAudioBook(this.updateid, this.updatetype)
       }
@@ -125,6 +125,7 @@ export class DetailPageComponent implements OnInit {
   updateAudioBook(id: any, type: any) {
     this.showSpin = true
     this.tabType = type
+    
     var api: any =
       (type == environment.tabType.audiobook &&
         this.apiService.getData(`web/audioBook/${id}`)) ||

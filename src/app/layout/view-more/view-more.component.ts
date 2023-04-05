@@ -82,10 +82,10 @@ export class ViewMoreComponent implements OnInit {
 
   //  get book details  //
   detailBook(id: any, type: any) {
-    if (this.id != undefined) {
+    if (this.id != undefined) {      
       this.router.navigate(
         ['detail/'],
-        { queryParams: { 'id': id, 'type': type == 'Audiobook' ? 'audiobooks' : 'ebooks' } }
+        { queryParams: { 'id': id, 'type': type == 'Audiobook' ? 'audiobook' : 'ebook' } }
       );
     } else {
       this.router.navigate(

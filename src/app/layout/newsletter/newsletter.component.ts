@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/services/api.service';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-newsletter',
@@ -22,6 +23,8 @@ export class NewsletterComponent implements OnInit {
     private apiService: ApiService,
     private toastr: ToastrService,
     private router: Router,
+    private titleService: Title,
+    private metaService: Meta,
   ) { }
 
   ngOnInit(): void {
@@ -35,6 +38,21 @@ export class NewsletterComponent implements OnInit {
       ])
       ],
     });
+
+    this.setMetaInfo();
+  }
+
+  setMetaInfo() {
+    let metaTitle = 'Paraksties uz Audiolasītavas jaunumiem';
+    let metaDescription = 'Seko visiem grāmatu jaunumiem, konkursiem un  platformas ziņām, ko Audiolasītava regulāri izsūta lietotājiem';
+    let metaUrl = window.location.href;
+
+    this.titleService.setTitle(metaTitle);
+    this.metaService.updateTag({ name: 'description', content: metaDescription });
+
+    this.metaService.addTag({ property: 'og:title', content: metaTitle });
+    this.metaService.addTag({ property: 'og:description', content: metaDescription });
+    this.metaService.addTag({ property: 'og:url', content: metaUrl });
   }
 
   onSubmit() {

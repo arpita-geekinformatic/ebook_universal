@@ -6,12 +6,14 @@ import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { environment } from 'src/environments/environment';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-podcast',
   templateUrl: './podcast.component.html',
   styleUrls: ['./podcast.component.scss']
 })
+
 export class PodcastComponent implements OnInit {
   images = [944, 1011, 984].map((n) => `https://picsum.photos/id/${n}/900/500`);
   bannerLists: any = [];
@@ -30,10 +32,26 @@ export class PodcastComponent implements OnInit {
     private toastr: ToastrService,
     public cookieService: CookieService,
     @Inject(PLATFORM_ID) private platformId: Object,
+    private titleService: Title,
+    private metaService: Meta,
   ) { }
 
   ngOnInit(): void {
     this.toggleBookType();
+    this.setMetaInfo();
+  }
+
+  setMetaInfo() {
+    let metaTitle = 'Populārkā audiogrāmatu, e-grāmatu un podkāstu platforma Latvijā!';
+    let metaDescription = 'Tevi gaida daudz aizraujošu stāstu. Atrodi savas iecienītākās audiogrāmatas, e-grāmatas, podkāstus un presi Audiolasītavā. Klausies, lasi un baudi!';
+    let metaUrl = window.location.href;
+
+    this.titleService.setTitle(metaTitle);
+    this.metaService.updateTag({ name: 'description', content: metaDescription });
+
+    this.metaService.addTag({ property: 'og:title', content: metaTitle });
+    this.metaService.addTag({ property: 'og:description', content: metaDescription });
+    this.metaService.addTag({ property: 'og:url', content: metaUrl });
   }
 
   //  change book type tab  //

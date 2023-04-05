@@ -3,12 +3,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/services/api.service';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-contact-us',
   templateUrl: './contact-us.component.html',
   styleUrls: ['./contact-us.component.scss']
 })
+
 export class ContactUsComponent implements OnInit {
   contactForm!: FormGroup;
   emailRegex = /^[a-z0-9._-]+@[a-z0-9.-]+\.[a-z]{2,6}$/;
@@ -21,10 +23,11 @@ export class ContactUsComponent implements OnInit {
     private apiService: ApiService,
     private toastr: ToastrService,
     private router: Router,
+    private titleService: Title,
+    private metaService: Meta,
     ) { }
 
   ngOnInit(): void {
-
     this.contactForm = this.formBuilder.group({
       name: ["", Validators.required],
       email: ["", Validators.compose([
@@ -41,8 +44,21 @@ export class ContactUsComponent implements OnInit {
       isConsent: [false, Validators.requiredTrue],
     });
 
+    this.setMetaInfo();
   }
   
+  setMetaInfo() {
+    let metaTitle = 'Sazinies ar Audiolasītavas klientu apkalpošanas dienestu';
+    let metaDescription = 'Ja rodas jautājumi, lūdzu sazinieteis ar mums. Mēs atbildēsim uz jautājumu 48 stundu laikā.';
+    let metaUrl = window.location.href;
+
+    this.titleService.setTitle(metaTitle);
+    this.metaService.updateTag({ name: 'description', content: metaDescription });
+
+    this.metaService.addTag({ property: 'og:title', content: metaTitle });
+    this.metaService.addTag({ property: 'og:description', content: metaDescription });
+    this.metaService.addTag({ property: 'og:url', content: metaUrl });
+  }
 
   onSubmit() {
     this.submitted = true;

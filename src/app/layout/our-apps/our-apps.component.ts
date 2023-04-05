@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Meta, Title } from '@angular/platform-browser';
 // import QRCodeStyling from 'qr-code-styling';
 // import * as QRCodeStyling from "qr-code-styling";
 
@@ -16,9 +17,14 @@ export class OurAppsComponent implements OnInit {
   qrCode: any;
   qrCode1: any;
 
-  constructor() { }
+  constructor(
+    private titleService: Title,
+    private metaService: Meta,
+  ) { }
 
   ngOnInit(): void {
+    this.setMetaInfo();
+
     // this.qrCode = new QRCodeStyling({
     //   width: 100,
     //   height: 100,
@@ -131,7 +137,19 @@ export class OurAppsComponent implements OnInit {
 
     // this.qrCode.append(this.canvas.nativeElement);
     // this.qrCode1.append(this.canvas1.nativeElement);
-    
+
   }
 
+  setMetaInfo() {
+    let metaTitle = 'Lejuplādē Audiolasītavas lietotni Android un iOS vidēm';
+    let metaDescription = 'Klausies visas Audiolasītavas audiogrāmatas, podkāstus, e-grāmatas savā mobilajā tālrunī, lejuplādējot lietotni Android un iOS vidēs. Tavas audiogrāmatas vienas lejuplādes attālumā!';
+    let metaUrl = window.location.href;
+
+    this.titleService.setTitle(metaTitle);
+    this.metaService.updateTag({ name: 'description', content: metaDescription });
+
+    this.metaService.addTag({ property: 'og:title', content: metaTitle });
+    this.metaService.addTag({ property: 'og:description', content: metaDescription });
+    this.metaService.addTag({ property: 'og:url', content: metaUrl });
+  }
 }
