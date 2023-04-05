@@ -8,6 +8,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { environment } from 'src/environments/environment';
 import { ModalService } from './../../services/modal.service';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-podcast-detail',
@@ -55,7 +56,9 @@ export class PodcastDetailComponent implements OnInit {
     private toastr: ToastrService,
     private formBuilder: FormBuilder,
     @Inject(DOCUMENT) document: Document,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private titleService: Title,
+    private metaService: Meta,
   ) { }
 
   ngOnInit(): void {
@@ -78,6 +81,24 @@ export class PodcastDetailComponent implements OnInit {
     });
   }
 
+  setMetaInfo(podcastDetails: any) {
+    let allCategoryName = []
+    for (let data of podcastDetails.category) {
+      allCategoryName.push(data.item_text_EN)
+    }
+    
+    let metaTitle = `${podcastDetails.name}. Podkast. ${podcastDetails.author}. ${allCategoryName}. Audiolasītava. Latvija. Klausies, Lasi, Baudi.`;
+    let metaDescription = `Audiolasītava piedāvā ${podcastDetails.name}. Podkāstu veidojis  ${podcastDetails.author}.  Labākie stāsti sākas Audiolasitava.lv , lielākajā audiogrāmatu, e-grāmatu un podkāstu platformā Latvijā. Klausies, lasi un baudi`;
+    let metaUrl = window.location.href;
+
+    this.titleService.setTitle(metaTitle);
+    this.metaService.updateTag({ name: 'description', content: metaDescription });
+
+    this.metaService.addTag({ property: 'og:title', content: metaTitle });
+    this.metaService.addTag({ property: 'og:description', content: metaDescription });
+    this.metaService.addTag({ property: 'og:url', content: metaUrl });
+  }
+
   //  get podcast details  //
   getPodcastDetails(id: any, type: any) {
     this.sortOrders = []
@@ -87,6 +108,7 @@ export class PodcastDetailComponent implements OnInit {
       (result: any) => {
         this.showShimmer = false
         this.podcastDetail = result.data;
+        this.setMetaInfo(result.data)
 
         if (isPlatformBrowser(this.platformId)) {
           localStorage.setItem('type', this.tabType)

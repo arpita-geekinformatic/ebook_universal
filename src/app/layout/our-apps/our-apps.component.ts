@@ -8,6 +8,7 @@ import { Meta, Title } from '@angular/platform-browser';
   templateUrl: './our-apps.component.html',
   styleUrls: ['./our-apps.component.scss']
 })
+
 export class OurAppsComponent implements OnInit {
   @ViewChild("canvas", { static: true }) canvas!: ElementRef;
   @ViewChild("canvas1", { static: true }) canvas1!: ElementRef;

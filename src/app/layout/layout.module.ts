@@ -30,8 +30,9 @@ import { BestsellersComponent } from './bestsellers/bestsellers.component';
 import { NewBooksComponent } from './new-books/new-books.component';
 import { PublishersComponent } from './publishers/publishers.component';
 import { PodcastEpisodesComponent } from './podcast-episodes/podcast-episodes.component';
+import { FaqsPodcastComponent } from './faqs-podcast/faqs-podcast.component';
 @NgModule({
-  declarations: [LayoutComponent, ViewMoreComponent, ChangePasswordComponent, UpdateProfileComponent, FavouritesComponent, SearchComponent, CookiePolicyComponent, AboutUsComponent, WorkWithUsComponent, ContactUsComponent, EpubReaderComponent, PodcastComponent, PodcastDetailComponent, AllPodcastsComponent, OurAppsComponent, AuthorsComponent, NewsletterComponent, UploadYourPodcastComponent, PrivacyPolicyComponent, CookiesPreferencesComponent, TermsAndConditionsComponent, BestsellersComponent, NewBooksComponent, PublishersComponent, PodcastEpisodesComponent],
+  declarations: [LayoutComponent, ViewMoreComponent, ChangePasswordComponent, UpdateProfileComponent, FavouritesComponent, SearchComponent, CookiePolicyComponent, AboutUsComponent, WorkWithUsComponent, ContactUsComponent, EpubReaderComponent, PodcastComponent, PodcastDetailComponent, AllPodcastsComponent, OurAppsComponent, AuthorsComponent, NewsletterComponent, UploadYourPodcastComponent, PrivacyPolicyComponent, CookiesPreferencesComponent, TermsAndConditionsComponent, BestsellersComponent, NewBooksComponent, PublishersComponent, PodcastEpisodesComponent, FaqsPodcastComponent],
   imports: [CommonModule, LayoutRoutingModule, SharedModule, NgbModule, RouterModule,],
 })
 export class LayoutModule { }

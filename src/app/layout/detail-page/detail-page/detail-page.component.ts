@@ -10,12 +10,14 @@ import { DOCUMENT } from '@angular/common'
 import { timer } from 'rxjs'
 import { ModalService } from './../../../services/modal.service';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-detail-page',
   templateUrl: './detail-page.component.html',
   styleUrls: ['./detail-page.component.scss'],
 })
+
 export class DetailPageComponent implements OnInit {
   isPlay = false
   ratingForm!: FormGroup
@@ -69,7 +71,9 @@ export class DetailPageComponent implements OnInit {
     private toastr: ToastrService,
     private formBuilder: FormBuilder,
     @Inject(DOCUMENT) document: Document,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private titleService: Title,
+    private metaService: Meta,
   ) {
     config.backdrop = 'static'
     config.keyboard = false
@@ -91,11 +95,30 @@ export class DetailPageComponent implements OnInit {
     }
     this.route.queryParams.subscribe((params) => {
       this.updateid = params['id'] != undefined ? params['id'] : null
-      this.updatetype = params['type'] != undefined ? params['type'] : null      
+      this.updatetype = params['type'] != undefined ? params['type'] : null
       if (this.updateid != undefined) {
         this.updateAudioBook(this.updateid, this.updatetype)
+        // this.setMetaInfo();
       }
     })
+  }
+
+  setMetaInfo(bookDetails: any) {
+    let allCategoryName = []
+    for (let data of bookDetails.category) {
+      allCategoryName.push(data.item_text_EN)
+    }
+
+    let metaTitle = `${bookDetails.name}. ${bookDetails.bookType}. ${bookDetails.author}. ${allCategoryName}. Audiolasītava. Latvija. Klausies, Lasi, Baudi.`;
+    let metaDescription = `Audiolasītava piedāvā ${bookDetails.bookType} ${allCategoryName} darbs ${bookDetails.name} sarakstījis ${bookDetails.author} tulkojis / tulkojusi latviešu valodā ${bookDetails.narrator}. Atrodi līdzīgas grāmatas vietnē audiolasitava.lv , lielākajā audiogrāmatu, e-grāmatu un podkāstu platformā Latvijā. KLausies, lasi un baudi`;
+    let metaUrl = window.location.href;
+
+    this.titleService.setTitle(metaTitle);
+    this.metaService.updateTag({ name: 'description', content: metaDescription });
+
+    this.metaService.addTag({ property: 'og:title', content: metaTitle });
+    this.metaService.addTag({ property: 'og:description', content: metaDescription });
+    this.metaService.addTag({ property: 'og:url', content: metaUrl });
   }
 
   getClass(index: any) {
@@ -125,7 +148,7 @@ export class DetailPageComponent implements OnInit {
   updateAudioBook(id: any, type: any) {
     this.showSpin = true
     this.tabType = type
-    
+
     var api: any =
       (type == environment.tabType.audiobook &&
         this.apiService.getData(`web/audioBook/${id}`)) ||
@@ -133,6 +156,8 @@ export class DetailPageComponent implements OnInit {
 
     api.subscribe(
       (result: any) => {
+        this.setMetaInfo(result.data);
+
         this.sortOrders = []
         this.audioBookDetail.splice(0, 1, result.data)
 

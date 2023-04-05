@@ -1,0 +1,55 @@
+.titleHead {
+    display: flex;
+    justify-content: center;
+    margin: 50px 0;
+}
+.buttonClass {
+    display: flex;
+    justify-content: center;
+    margin: 30px;
+}
+.btn:first-child:hover {
+    color: #999999;
+    background-color:#79222a;
+    border-color: #79222a;
+}
+.styleChanges {
+    padding: 10px 20px;
+    background-color: #79222a;
+    border: 1px solid #79222a;
+}
+.accordianMain::ng-deep.accordion-item:first-of-type::ng-deep.accordion-button {
+    border-top-left-radius: 0;
+    box-shadow: none;
+    border-top-right-radius: 0;
+}
+.accordianMain::ng-deep button.accordion-button.collapsed{
+    border-top-left-radius: 0;
+    box-shadow: none;
+    border-top-right-radius: 0;
+}
+.accordianMain::ng-deep.accordion-item {
+    border-left: none !important;
+    border-right: none !important;
+    border-color: #79222a;
+    border-radius: 0 !important;
+}
+.accordianMain::ng-deep.accordion-button:not(.collapsed):focus{
+    box-shadow: none !important;
+}
+.accordianMain::ng-deep.accordion-button:not(.collapsed):hover{
+    box-shadow: none !important;
+}
+::ng-deep.accordion-button:not(.collapsed) {
+    color: #79222a !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border: #999999 !important;
+}
+.accordianMain::ng-deep.accordion-body {
+    font-size: 14px !important;
+}
+
+.accordianMain::ng-deep.accordion-button::after {
+    background-image: url('../../../assets/images/down-arrow.png') !important;
+}

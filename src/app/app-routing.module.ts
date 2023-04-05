@@ -128,6 +128,10 @@ const routes: Routes = [
     loadChildren: () => import('./layout/faqs/faqs.module').then(m => m.FaqsModule),
   },
   {
+    path: 'faqs_podkasti',
+    loadChildren: () => import('./layout/faqs-podcast/faqs-podcast.module').then(m => m.FaqsPodcastModule),
+  },
+  {
     path: 'privataPolitika',
     loadChildren: () => import('./layout/privacy-policy/privacy-policy.module').then(m => m.PrivacyPolicyModule),
   },
